@@ -3,6 +3,8 @@
 ALWAYS RESPOND IN KOREAN
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+**Do NOT modify any files in packages/before.**
+
 ## Project Overview
 
 Educational monorepo for UI component modularization and design system modernization. Contains two packages (`before`/`after`) demonstrating migration from legacy patterns to modern standards using TailwindCSS 4, CVA, and shadcn/ui patterns.
