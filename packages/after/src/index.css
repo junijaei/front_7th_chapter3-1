@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors - Primary */
+  --color-primary: #1976d2;
+  --color-primary-hover: #1565c0;
+  --color-primary-foreground: #ffffff;
+
+  /* Colors - Secondary */
+  --color-secondary: #757575;
+  --color-secondary-light: #f5f5f5;
+  --color-secondary-hover: #e0e0e0;
+  --color-secondary-foreground: #333333;
+
+  /* Colors - Destructive/Danger */
+  --color-destructive: #d32f2f;
+  --color-destructive-hover: #c62828;
+  --color-destructive-foreground: #ffffff;
+
+  /* Colors - Success */
+  --color-success: #388e3c;
+  --color-success-hover: #2e7d32;
+  --color-success-light: #e8f5e9;
+  --color-success-border: #81c784;
+  --color-success-foreground: #1b5e20;
+
+  /* Colors - Warning */
+  --color-warning: #f57c00;
+  --color-warning-light: #fff3e0;
+  --color-warning-border: #ffb74d;
+  --color-warning-foreground: #e65100;
+
+  /* Colors - Info */
+  --color-info: #0288d1;
+  --color-info-light: #e3f2fd;
+  --color-info-border: #90caf9;
+  --color-info-foreground: #0d47a1;
+
+  /* Colors - Error */
+  --color-error: #d32f2f;
+  --color-error-light: #ffebee;
+  --color-error-border: #e57373;
+  --color-error-foreground: #b71c1c;
+
+  /* Colors - Neutral */
+  --color-foreground: #000000;
+  --color-foreground-muted: #333333;
+  --color-foreground-subtle: #666666;
+  --color-background: #ffffff;
+  --color-background-muted: #fafafa;
+  --color-background-subtle: #f5f5f5;
+
+  /* Colors - Border */
+  --color-border: #cccccc;
+  --color-border-light: rgba(0, 0, 0, 0.08);
+  --color-border-medium: rgba(0, 0, 0, 0.12);
+  --color-border-dark: rgba(0, 0, 0, 0.23);
+
+  /* Colors - Gray Scale */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e0e0e0;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #bdbdbd;
+  --color-gray-500: #757575;
+  --color-gray-600: #6b7280;
+  --color-gray-700: #424242;
+  --color-gray-800: #374151;
+
+  /* Spacing */
+  --spacing-0: 0px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+
+  /* Border Radius */
+  --radius-sm: 2px;
+  --radius-default: 3px;
+  --radius-md: 4px;
+  --radius-lg: 10px;
+  --radius-full: 50%;
+
+  /* Font Sizes */
+  --font-size-xs: 0.625rem;     /* 10px */
+  --font-size-sm: 0.75rem;      /* 12px */
+  --font-size-base: 0.8125rem;  /* 13px */
+  --font-size-md: 0.875rem;     /* 14px */
+  --font-size-lg: 0.9375rem;    /* 15px */
+  --font-size-xl: 1rem;         /* 16px */
+  --font-size-2xl: 1.125rem;    /* 18px */
+  --font-size-3xl: 1.25rem;     /* 20px */
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1;
+  --line-height-snug: 1.4;
+  --line-height-normal: 1.43;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
+
+  /* Shadows */
+  --shadow-sm: 0px 1px 2px 0px rgba(0,0,0,0.08);
+  --shadow-default: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+  --shadow-md: 0px 2px 4px -1px rgba(0,0,0,0.12), 0px 1px 2px 0px rgba(0,0,0,0.08), 0px 1px 4px 0px rgba(0,0,0,0.08);
+  --shadow-lg: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
+
+  /* Opacity */
+  --opacity-disabled: 0.6;
+  --opacity-hover: 0.04;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 200ms cubic-bezier(0.0, 0, 0.2, 1);
+
+  /* Z-Index */
+  --z-index-modal: 1000;
+
+  /* Component Specific */
+  --button-padding-sm: 6px 12px;
+  --button-padding-md: 10px 20px;
+  --button-padding-lg: 12px 24px;
+
+  --input-padding: 8px 10px;
+  --textarea-padding: 16.5px 14px;
+
+  --badge-padding-sm: 0px 4px;
+  --badge-padding-md: 0px 8px;
+  --badge-padding-lg: 0px 10px;
+  --badge-height-sm: 16px;
+  --badge-height-md: 20px;
+  --badge-height-lg: 24px;
+
+  --card-padding: 20px;
+  --modal-padding: 24px;
+  --modal-padding-header: 16px 24px;
+  --table-padding: 16px;
+
+  /* Widths */
+  --width-input-sm: 200px;
+  --width-input-md: 300px;
+  --width-input-lg: 400px;
+  --width-modal-sm: 400px;
+  --width-modal-md: 600px;
+  --width-modal-lg: 900px;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  }
+}
