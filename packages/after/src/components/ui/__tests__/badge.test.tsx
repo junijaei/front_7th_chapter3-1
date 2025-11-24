@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Badge } from '@/components/atoms/Badge';
+import { Badge } from '@/components/ui/badge';
 
 describe('Badge', () => {
   it('기본 뱃지가 렌더링된다', () => {

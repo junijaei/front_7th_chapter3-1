@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ManagementPage } from '../ManagementPage';
+import { ManagementPage } from '@/pages/ManagementPage';
 
 describe('ManagementPage - User Management', () => {
   beforeEach(() => {

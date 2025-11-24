@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormCheckbox } from '@/components/molecules/FormCheckbox';
+import { FormCheckbox } from '@/components/ui/checkbox';
 
 describe('FormCheckbox', () => {
   it('기본 체크박스가 렌더링된다', () => {

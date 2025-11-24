@@ -1,49 +1,26 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormSelect } from '@/components/molecules/FormSelect';
+import { FormTextarea } from '@/components/ui/textarea';
 
-const mockOptions = [
-  { value: 'option1', label: '옵션 1' },
-  { value: 'option2', label: '옵션 2' },
-  { value: 'option3', label: '옵션 3' },
-];
-
-describe('FormSelect', () => {
-  it('기본 셀렉트가 렌더링된다', () => {
+describe('FormTextarea', () => {
+  it('기본 텍스트에어리어가 렌더링된다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={() => {}}
-        options={mockOptions}
       />
     );
-    expect(screen.getByRole('combobox')).toBeInTheDocument();
-  });
-
-  it('옵션들이 렌더링된다', () => {
-    render(
-      <FormSelect
-        name="test"
-        value=""
-        onChange={() => {}}
-        options={mockOptions}
-      />
-    );
-
-    expect(screen.getByText('옵션 1')).toBeInTheDocument();
-    expect(screen.getByText('옵션 2')).toBeInTheDocument();
-    expect(screen.getByText('옵션 3')).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('라벨이 표시된다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={() => {}}
-        options={mockOptions}
         label="테스트 라벨"
       />
     );
@@ -52,11 +29,10 @@ describe('FormSelect', () => {
 
   it('required일 때 별표가 표시된다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={() => {}}
-        options={mockOptions}
         label="필수 필드"
         required
       />
@@ -64,70 +40,65 @@ describe('FormSelect', () => {
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 
-  it('placeholder가 표시된다', () => {
-    render(
-      <FormSelect
-        name="test"
-        value=""
-        onChange={() => {}}
-        options={mockOptions}
-        placeholder="선택해주세요"
-      />
-    );
-    expect(screen.getByText('선택해주세요')).toBeInTheDocument();
-  });
-
   it('값 변경 시 onChange가 호출된다', async () => {
     const handleChange = vi.fn();
     const user = userEvent.setup();
 
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={handleChange}
-        options={mockOptions}
       />
     );
 
-    await user.selectOptions(screen.getByRole('combobox'), 'option1');
-    expect(handleChange).toHaveBeenCalledWith('option1');
+    await user.type(screen.getByRole('textbox'), 'a');
+    expect(handleChange).toHaveBeenCalledWith('a');
+  });
+
+  it('placeholder가 표시된다', () => {
+    render(
+      <FormTextarea
+        name="test"
+        value=""
+        onChange={() => {}}
+        placeholder="내용을 입력해주세요"
+      />
+    );
+    expect(screen.getByPlaceholderText('내용을 입력해주세요')).toBeInTheDocument();
   });
 
   it('disabled 상태가 적용된다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={() => {}}
-        options={mockOptions}
         disabled
       />
     );
-    expect(screen.getByRole('combobox')).toBeDisabled();
+    expect(screen.getByRole('textbox')).toBeDisabled();
   });
 
   it('error 메시지가 표시된다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={() => {}}
-        options={mockOptions}
         error="에러가 발생했습니다"
       />
     );
     expect(screen.getByText('에러가 발생했습니다')).toBeInTheDocument();
-    expect(screen.getByRole('combobox')).toHaveClass('error');
+    expect(screen.getByRole('textbox')).toHaveClass('error');
   });
 
   it('helpText가 표시된다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={() => {}}
-        options={mockOptions}
         helpText="도움말 텍스트"
       />
     );
@@ -136,11 +107,10 @@ describe('FormSelect', () => {
 
   it('error가 있을 때 helpText는 표시되지 않는다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={() => {}}
-        options={mockOptions}
         error="에러"
         helpText="도움말"
       />
@@ -149,40 +119,60 @@ describe('FormSelect', () => {
     expect(screen.queryByText('도움말')).not.toBeInTheDocument();
   });
 
-  it('선택된 값이 올바르게 표시된다', () => {
+  it('rows 속성이 올바르게 설정된다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
-        value="option2"
+        value=""
         onChange={() => {}}
-        options={mockOptions}
+        rows={6}
       />
     );
-    expect(screen.getByRole('combobox')).toHaveValue('option2');
+    expect(screen.getByRole('textbox')).toHaveAttribute('rows', '6');
+  });
+
+  it('기본 rows는 4이다', () => {
+    render(
+      <FormTextarea
+        name="test"
+        value=""
+        onChange={() => {}}
+      />
+    );
+    expect(screen.getByRole('textbox')).toHaveAttribute('rows', '4');
   });
 
   it('name 속성이 올바르게 설정된다', () => {
     render(
-      <FormSelect
-        name="test-select"
+      <FormTextarea
+        name="test-textarea"
         value=""
         onChange={() => {}}
-        options={mockOptions}
       />
     );
-    expect(screen.getByRole('combobox')).toHaveAttribute('name', 'test-select');
+    expect(screen.getByRole('textbox')).toHaveAttribute('name', 'test-textarea');
   });
 
   it('required 속성이 올바르게 설정된다', () => {
     render(
-      <FormSelect
+      <FormTextarea
         name="test"
         value=""
         onChange={() => {}}
-        options={mockOptions}
         required
       />
     );
-    expect(screen.getByRole('combobox')).toBeRequired();
+    expect(screen.getByRole('textbox')).toBeRequired();
+  });
+
+  it('value가 올바르게 표시된다', () => {
+    render(
+      <FormTextarea
+        name="test"
+        value="테스트 내용"
+        onChange={() => {}}
+      />
+    );
+    expect(screen.getByRole('textbox')).toHaveValue('테스트 내용');
   });
 });

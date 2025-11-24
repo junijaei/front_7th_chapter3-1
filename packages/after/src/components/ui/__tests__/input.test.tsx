@@ -1,12 +1,12 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormTextarea } from '@/components/molecules/FormTextarea';
+import { FormInput } from '@/components/ui/input';
 
-describe('FormTextarea', () => {
-  it('기본 텍스트에어리어가 렌더링된다', () => {
+describe('FormInput', () => {
+  it('기본 입력 필드가 렌더링된다', () => {
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
@@ -17,7 +17,7 @@ describe('FormTextarea', () => {
 
   it('라벨이 표시된다', () => {
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
@@ -29,7 +29,7 @@ describe('FormTextarea', () => {
 
   it('required일 때 별표가 표시된다', () => {
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
@@ -45,7 +45,7 @@ describe('FormTextarea', () => {
     const user = userEvent.setup();
 
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={handleChange}
@@ -58,19 +58,19 @@ describe('FormTextarea', () => {
 
   it('placeholder가 표시된다', () => {
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
-        placeholder="내용을 입력해주세요"
+        placeholder="입력해주세요"
       />
     );
-    expect(screen.getByPlaceholderText('내용을 입력해주세요')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('입력해주세요')).toBeInTheDocument();
   });
 
   it('disabled 상태가 적용된다', () => {
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
@@ -82,7 +82,7 @@ describe('FormTextarea', () => {
 
   it('error 메시지가 표시된다', () => {
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
@@ -95,7 +95,7 @@ describe('FormTextarea', () => {
 
   it('helpText가 표시된다', () => {
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
@@ -107,7 +107,7 @@ describe('FormTextarea', () => {
 
   it('error가 있을 때 helpText는 표시되지 않는다', () => {
     render(
-      <FormTextarea
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
@@ -119,60 +119,86 @@ describe('FormTextarea', () => {
     expect(screen.queryByText('도움말')).not.toBeInTheDocument();
   });
 
-  it('rows 속성이 올바르게 설정된다', () => {
-    render(
-      <FormTextarea
+  it('width에 따라 올바른 클래스가 적용된다', () => {
+    const { rerender } = render(
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
-        rows={6}
+        width="small"
       />
     );
-    expect(screen.getByRole('textbox')).toHaveAttribute('rows', '6');
-  });
+    expect(screen.getByRole('textbox')).toHaveClass('input-width-small');
 
-  it('기본 rows는 4이다', () => {
-    render(
-      <FormTextarea
+    rerender(
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
+        width="medium"
       />
     );
-    expect(screen.getByRole('textbox')).toHaveAttribute('rows', '4');
-  });
+    expect(screen.getByRole('textbox')).toHaveClass('input-width-medium');
 
-  it('name 속성이 올바르게 설정된다', () => {
-    render(
-      <FormTextarea
-        name="test-textarea"
-        value=""
-        onChange={() => {}}
-      />
-    );
-    expect(screen.getByRole('textbox')).toHaveAttribute('name', 'test-textarea');
-  });
-
-  it('required 속성이 올바르게 설정된다', () => {
-    render(
-      <FormTextarea
+    rerender(
+      <FormInput
         name="test"
         value=""
         onChange={() => {}}
-        required
+        width="large"
       />
     );
-    expect(screen.getByRole('textbox')).toBeRequired();
+    expect(screen.getByRole('textbox')).toHaveClass('input-width-large');
+
+    rerender(
+      <FormInput
+        name="test"
+        value=""
+        onChange={() => {}}
+        width="full"
+      />
+    );
+    expect(screen.getByRole('textbox')).toHaveClass('input-width-full');
   });
 
-  it('value가 올바르게 표시된다', () => {
-    render(
-      <FormTextarea
+  it('type 속성이 올바르게 설정된다', () => {
+    const { rerender } = render(
+      <FormInput
         name="test"
-        value="테스트 내용"
+        value=""
         onChange={() => {}}
+        type="email"
       />
     );
-    expect(screen.getByRole('textbox')).toHaveValue('테스트 내용');
+    expect(screen.getByRole('textbox')).toHaveAttribute('type', 'email');
+
+    rerender(
+      <FormInput
+        name="password"
+        value=""
+        onChange={() => {}}
+        type="password"
+      />
+    );
+    expect(document.querySelector('input[type="password"]')).toBeInTheDocument();
+  });
+
+  describe('fieldType 유효성 검사', () => {
+    it('username이 3자 미만이면 에러를 표시한다', async () => {
+      const user = userEvent.setup();
+
+      render(
+        <FormInput
+          name="username"
+          value=""
+          onChange={() => {}}
+          fieldType="username"
+        />
+      );
+
+      await user.type(screen.getByRole('textbox'), 'ab');
+      expect(screen.getByText('사용자명은 3자 이상이어야 합니다')).toBeInTheDocument();
+    });
+
   });
 });

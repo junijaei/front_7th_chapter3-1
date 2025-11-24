@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Header } from '@/components/organisms/Header';
+import { Header } from '@/components/ui/header';
 
 describe('Header', () => {
   it('헤더가 렌더링된다', () => {

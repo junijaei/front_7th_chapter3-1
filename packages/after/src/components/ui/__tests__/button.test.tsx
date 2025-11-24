@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/button';
 
 describe('Button', () => {
   it('기본 버튼이 렌더링된다', () => {
