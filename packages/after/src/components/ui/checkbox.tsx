@@ -1,57 +1,28 @@
-import React from 'react';
+import { forwardRef, type ComponentPropsWithoutRef, type ElementRef } from 'react';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import { Check } from 'lucide-react';
 
-// Checkbox Component - Completely different approach again
-interface FormCheckboxProps {
-  name: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-  label: string;
-  disabled?: boolean;
-  error?: string;
-  hint?: string;
-}
+import { cn } from '@/lib/utils';
 
-export const FormCheckbox: React.FC<FormCheckboxProps> = ({
-  name,
-  checked,
-  onChange,
-  label,
-  disabled = false,
-  error,
-  hint,
-}) => {
-  const wrapperClasses = ['checkbox-wrapper', disabled && 'disabled'].filter(Boolean).join(' ');
-  const customClasses = ['checkbox-custom', checked && 'checked', disabled && 'disabled'].filter(Boolean).join(' ');
-  const checkmarkClasses = ['checkbox-checkmark', checked && 'visible'].filter(Boolean).join(' ');
-  const labelClasses = ['checkbox-label', error && 'error', disabled && 'disabled'].filter(Boolean).join(' ');
+const Checkbox = forwardRef<
+  ElementRef<typeof CheckboxPrimitive.Root>,
+  ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <CheckboxPrimitive.Root
+    ref={ref}
+    className={cn(
+      'peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
+      className
+    )}
+    {...props}
+  >
+    <CheckboxPrimitive.Indicator
+      className={cn('flex items-center justify-center text-current')}
+    >
+      <Check className="h-4 w-4" />
+    </CheckboxPrimitive.Indicator>
+  </CheckboxPrimitive.Root>
+));
+Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 
-  const handleClick = () => {
-    if (!disabled) {
-      onChange(!checked);
-    }
-  };
-
-  return (
-    <div>
-      <div className={wrapperClasses} onClick={handleClick}>
-        <div className="checkbox-container">
-          <input
-            type="checkbox"
-            name={name}
-            checked={checked}
-            onChange={() => {}} // Handled by onClick
-            disabled={disabled}
-            className="checkbox-input"
-          />
-          <div className={customClasses}>
-            <span className={checkmarkClasses}>✓</span>
-          </div>
-        </div>
-        <label className={labelClasses}>{label}</label>
-      </div>
-
-      {error && <span className="checkbox-error">{error}</span>}
-      {hint && !error && <span className="checkbox-hint">{hint}</span>}
-    </div>
-  );
-};
+export { Checkbox };
