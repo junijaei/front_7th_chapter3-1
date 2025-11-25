@@ -15,20 +15,20 @@ describe('Alert', () => {
   });
 
   it('variant에 따라 올바른 클래스가 적용된다', () => {
-    const { container, rerender } = render(<Alert variant="default">내용</Alert>);
-    expect(container.querySelector('.alert')).toHaveClass('alert-default');
+    const { rerender } = render(<Alert variant="default">내용</Alert>);
+    expect(screen.getByRole('alert')).toHaveClass('alert-default');
 
     rerender(<Alert variant="info">내용</Alert>);
-    expect(container.querySelector('.alert')).toHaveClass('alert-info');
+    expect(screen.getByRole('alert')).toHaveClass('alert-info');
 
     rerender(<Alert variant="success">내용</Alert>);
-    expect(container.querySelector('.alert')).toHaveClass('alert-success');
+    expect(screen.getByRole('alert')).toHaveClass('alert-success');
 
     rerender(<Alert variant="warning">내용</Alert>);
-    expect(container.querySelector('.alert')).toHaveClass('alert-warning');
+    expect(screen.getByRole('alert')).toHaveClass('alert-warning');
 
     rerender(<Alert variant="error">내용</Alert>);
-    expect(container.querySelector('.alert')).toHaveClass('alert-error');
+    expect(screen.getByRole('alert')).toHaveClass('alert-error');
   });
 
   it('variant에 따라 올바른 아이콘이 표시된다', () => {
@@ -55,12 +55,12 @@ describe('Alert', () => {
 
   it('onClose가 있을 때 닫기 버튼이 표시된다', () => {
     render(<Alert onClose={() => {}}>내용</Alert>);
-    expect(screen.getByRole('button', { name: '×' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /닫기/i })).toBeInTheDocument();
   });
 
   it('onClose가 없을 때 닫기 버튼이 표시되지 않는다', () => {
     render(<Alert>내용</Alert>);
-    expect(screen.queryByRole('button', { name: '×' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /닫기/i })).not.toBeInTheDocument();
   });
 
   it('닫기 버튼 클릭 시 onClose가 호출된다', async () => {
@@ -69,7 +69,7 @@ describe('Alert', () => {
 
     render(<Alert onClose={handleClose}>내용</Alert>);
 
-    await user.click(screen.getByRole('button', { name: '×' }));
+    await user.click(screen.getByRole('button', { name: /닫기/i }));
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 
