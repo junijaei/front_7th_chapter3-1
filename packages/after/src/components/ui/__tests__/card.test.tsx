@@ -32,16 +32,17 @@ describe('Card', () => {
 
   it('variant에 따라 올바른 클래스가 적용된다', () => {
     const { container, rerender } = render(<Card variant="default">내용</Card>);
-    expect(container.querySelector('.card')).toHaveClass('card-default');
+    const card = container.firstChild as HTMLElement;
+    expect(card).toHaveClass('card-default');
 
     rerender(<Card variant="bordered">내용</Card>);
-    expect(container.querySelector('.card')).toHaveClass('card-bordered');
+    expect(container.firstChild as HTMLElement).toHaveClass('card-bordered');
 
     rerender(<Card variant="elevated">내용</Card>);
-    expect(container.querySelector('.card')).toHaveClass('card-elevated');
+    expect(container.firstChild as HTMLElement).toHaveClass('card-elevated');
 
     rerender(<Card variant="flat">내용</Card>);
-    expect(container.querySelector('.card')).toHaveClass('card-flat');
+    expect(container.firstChild as HTMLElement).toHaveClass('card-flat');
   });
 
   it('title이 없으면 card-header가 렌더링되지 않는다', () => {
