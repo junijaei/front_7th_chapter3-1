@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Table } from '@/components/ui/table';
+import { Table } from '../table';
 
 const mockColumns = [
   { key: 'id', header: 'ID' },
@@ -212,6 +212,157 @@ describe('Table', () => {
       expect(screen.getByRole('button', { name: '수정' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: '게시' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: '삭제' })).toBeInTheDocument();
+    });
+
+    describe('user role 뱃지 렌더링', () => {
+      it('admin 역할은 "관리자" 텍스트와 destructive variant로 표시된다', () => {
+        const userData = [{ id: 1, role: 'admin' }];
+        const columns = [{ key: 'role', header: '역할' }];
+
+        render(<Table columns={columns} data={userData} entityType="user" />);
+
+        const badge = screen.getByText('관리자');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-destructive');
+      });
+
+      it('moderator 역할은 "운영자" 텍스트와 warning variant로 표시된다', () => {
+        const userData = [{ id: 1, role: 'moderator' }];
+        const columns = [{ key: 'role', header: '역할' }];
+
+        render(<Table columns={columns} data={userData} entityType="user" />);
+
+        const badge = screen.getByText('운영자');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-yellow-500');
+      });
+
+      it('user 역할은 "사용자" 텍스트와 default variant로 표시된다', () => {
+        const userData = [{ id: 1, role: 'user' }];
+        const columns = [{ key: 'role', header: '역할' }];
+
+        render(<Table columns={columns} data={userData} entityType="user" />);
+
+        const badge = screen.getByText('사용자');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-primary');
+      });
+
+      it('guest 역할은 "게스트" 텍스트와 secondary variant로 표시된다', () => {
+        const userData = [{ id: 1, role: 'guest' }];
+        const columns = [{ key: 'role', header: '역할' }];
+
+        render(<Table columns={columns} data={userData} entityType="user" />);
+
+        const badge = screen.getByText('게스트');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-secondary');
+      });
+    });
+
+    describe('user status 뱃지 렌더링', () => {
+      it('active 상태는 "활성" 텍스트와 success variant로 표시된다', () => {
+        const userData = [{ id: 1, status: 'active' }];
+        const columns = [{ key: 'status', header: '상태' }];
+
+        render(<Table columns={columns} data={userData} entityType="user" />);
+
+        const badge = screen.getByText('활성');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-green-500');
+      });
+
+      it('inactive 상태는 "비활성" 텍스트와 warning variant로 표시된다', () => {
+        const userData = [{ id: 1, status: 'inactive' }];
+        const columns = [{ key: 'status', header: '상태' }];
+
+        render(<Table columns={columns} data={userData} entityType="user" />);
+
+        const badge = screen.getByText('비활성');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-yellow-500');
+      });
+    });
+
+    describe('post status 뱃지 렌더링', () => {
+      it('published 상태는 "게시됨" 텍스트와 success variant로 표시된다', () => {
+        const postData = [{ id: 1, status: 'published' }];
+        const columns = [{ key: 'status', header: '상태' }];
+
+        render(<Table columns={columns} data={postData} entityType="post" />);
+
+        const badge = screen.getByText('게시됨');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-green-500');
+      });
+
+      it('draft 상태는 "임시저장" 텍스트와 warning variant로 표시된다', () => {
+        const postData = [{ id: 1, status: 'draft' }];
+        const columns = [{ key: 'status', header: '상태' }];
+
+        render(<Table columns={columns} data={postData} entityType="post" />);
+
+        const badge = screen.getByText('임시저장');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-yellow-500');
+      });
+
+      it('archived 상태는 "보관됨" 텍스트와 secondary variant로 표시된다', () => {
+        const postData = [{ id: 1, status: 'archived' }];
+        const columns = [{ key: 'status', header: '상태' }];
+
+        render(<Table columns={columns} data={postData} entityType="post" />);
+
+        const badge = screen.getByText('보관됨');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-secondary');
+      });
+
+      it('pending 상태는 "대기중" 텍스트와 info variant로 표시된다', () => {
+        const postData = [{ id: 1, status: 'pending' }];
+        const columns = [{ key: 'status', header: '상태' }];
+
+        render(<Table columns={columns} data={postData} entityType="post" />);
+
+        const badge = screen.getByText('대기중');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-blue-500');
+      });
+    });
+
+    describe('post category 뱃지 렌더링', () => {
+      it('development 카테고리는 default variant로 표시된다', () => {
+        const postData = [{ id: 1, category: 'development' }];
+        const columns = [{ key: 'category', header: '카테고리' }];
+
+        render(<Table columns={columns} data={postData} entityType="post" />);
+
+        const badge = screen.getByText('development');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-primary');
+      });
+
+      it('design 카테고리는 info variant로 표시된다', () => {
+        const postData = [{ id: 1, category: 'design' }];
+        const columns = [{ key: 'category', header: '카테고리' }];
+
+        render(<Table columns={columns} data={postData} entityType="post" />);
+
+        const badge = screen.getByText('design');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-blue-500');
+      });
+
+      it('accessibility 카테고리는 destructive variant로 표시된다', () => {
+        const postData = [{ id: 1, category: 'accessibility' }];
+        const columns = [{ key: 'category', header: '카테고리' }];
+
+        render(<Table columns={columns} data={postData} entityType="post" />);
+
+        const badge = screen.getByText('accessibility');
+        expect(badge).toBeInTheDocument();
+        expect(badge).toHaveClass('bg-destructive');
+      });
     });
 
     it('onEdit 콜백이 올바르게 호출된다', async () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Alert } from '@/components/ui/alert';
+import { Alert } from '../alert';
 
 describe('Alert', () => {
   it('기본 알림이 렌더링된다', () => {

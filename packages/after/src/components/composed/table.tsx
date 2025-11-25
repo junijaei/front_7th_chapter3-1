@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui';
+import { Button } from '@/components/ui';
 
 interface Column {
   key: string;
@@ -111,14 +111,24 @@ export const Table: React.FC<TableProps> = ({
     // 도메인별 특수 렌더링
     if (entityType === 'user') {
       if (columnKey === 'role') {
-        return <Badge userRole={value} showIcon />;
+        const roleVariant =
+          value === 'admin' ? 'destructive' :
+          value === 'moderator' ? 'warning' :
+          value === 'user' ? 'default' : 'secondary';
+        const roleLabel =
+          value === 'admin' ? '관리자' :
+          value === 'moderator' ? '운영자' :
+          value === 'user' ? '사용자' : '게스트';
+        return <Badge variant={roleVariant}>{roleLabel}</Badge>;
       }
       if (columnKey === 'status') {
-        // User status를 Badge status로 변환
-        const badgeStatus =
-          value === 'active' ? 'published' :
-          value === 'inactive' ? 'draft' : 'rejected';
-        return <Badge status={badgeStatus} showIcon />;
+        const statusVariant =
+          value === 'active' ? 'success' :
+          value === 'inactive' ? 'warning' : 'destructive';
+        const statusLabel =
+          value === 'active' ? '활성' :
+          value === 'inactive' ? '비활성' : '정지';
+        return <Badge variant={statusVariant}>{statusLabel}</Badge>;
       }
       if (columnKey === 'lastLogin') {
         return value || '-';
@@ -139,15 +149,25 @@ export const Table: React.FC<TableProps> = ({
 
     if (entityType === 'post') {
       if (columnKey === 'category') {
-        const type =
-          value === 'development' ? 'primary' :
+        const variant =
+          value === 'development' ? 'default' :
           value === 'design' ? 'info' :
-          value === 'accessibility' ? 'danger' :
+          value === 'accessibility' ? 'destructive' :
           'secondary';
-        return <Badge type={type} pill>{value}</Badge>;
+        return <Badge variant={variant}>{value}</Badge>;
       }
       if (columnKey === 'status') {
-        return <Badge status={value} showIcon />;
+        const statusVariant =
+          value === 'published' ? 'success' :
+          value === 'draft' ? 'warning' :
+          value === 'archived' ? 'secondary' :
+          value === 'pending' ? 'info' : 'destructive';
+        const statusLabel =
+          value === 'published' ? '게시됨' :
+          value === 'draft' ? '임시저장' :
+          value === 'archived' ? '보관됨' :
+          value === 'pending' ? '대기중' : '거부됨';
+        return <Badge variant={statusVariant}>{statusLabel}</Badge>;
       }
       if (columnKey === 'views') {
         return value?.toLocaleString() || '0';

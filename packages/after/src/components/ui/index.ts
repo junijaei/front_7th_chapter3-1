@@ -1,11 +1,16 @@
-export { Alert } from './alert';
+// Primitives (ui)
 export { Badge } from './badge';
 export { Button } from './button';
-export { Card } from './card';
 export { Checkbox } from './checkbox';
-export { Header } from './header';
 export { Input } from './input';
-export { Modal } from './modal';
 export { FormSelect } from './select';
-export { Table } from './table';
 export { FormTextarea } from './textarea';
+
+// Composed
+export { Alert } from '../composed/alert';
+export { Card } from '../composed/card';
+export { Modal } from '../composed/modal';
+export { Table } from '../composed/table';
+
+// Layout
+export { Header } from '../layout/header';

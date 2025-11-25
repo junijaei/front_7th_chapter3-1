@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Card } from '@/components/ui/card';
+import { Card } from '../card';
 
 describe('Card', () => {
   it('기본 카드가 렌더링된다', () => {

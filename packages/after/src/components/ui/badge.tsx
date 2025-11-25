@@ -1,128 +1,36 @@
-import React from 'react';
+import { type HTMLAttributes } from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
+import { cn } from '@/lib/utils';
 
-interface BadgeProps {
-  children?: React.ReactNode;
-  type?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-  size?: 'small' | 'medium' | 'large';
-  pill?: boolean;
-  status?: 'published' | 'draft' | 'archived' | 'pending' | 'rejected';
-  userRole?: 'admin' | 'moderator' | 'user' | 'guest';
-  priority?: 'high' | 'medium' | 'low';
-  paymentStatus?: 'paid' | 'pending' | 'failed' | 'refunded';
-  showIcon?: boolean;
+const badgeVariants = cva(
+  'inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  {
+    variants: {
+      variant: {
+        default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
+        secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        success: 'border-transparent bg-success text-success-foreground hover:bg-success/80',
+        destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+        warning: 'border-transparent bg-warning text-warning-foreground hover:bg-warning/80',
+        info: 'border-transparent bg-info text-info-foreground hover:bg-info/80',
+        outline: 'text-foreground',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
+
+export interface BadgeProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, ...props }: BadgeProps) {
+  return (
+    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+  );
 }
 
-export const Badge: React.FC<BadgeProps> = ({
-  children,
-  type = 'primary',
-  size = 'medium',
-  pill = false,
-  status,
-  userRole,
-  priority,
-  paymentStatus,
-  showIcon = false,
-}) => {
-  void showIcon;
-
-  let actualType = type;
-  let actualContent = children;
-
-  if (status) {
-    switch (status) {
-      case 'published':
-        actualType = 'success';
-        actualContent = actualContent || '게시됨';
-        break;
-      case 'draft':
-        actualType = 'warning';
-        actualContent = actualContent || '임시저장';
-        break;
-      case 'archived':
-        actualType = 'secondary';
-        actualContent = actualContent || '보관됨';
-        break;
-      case 'pending':
-        actualType = 'info';
-        actualContent = actualContent || '대기중';
-        break;
-      case 'rejected':
-        actualType = 'danger';
-        actualContent = actualContent || '거부됨';
-        break;
-    }
-  }
-
-  if (userRole) {
-    switch (userRole) {
-      case 'admin':
-        actualType = 'danger';
-        actualContent = actualContent || '관리자';
-        break;
-      case 'moderator':
-        actualType = 'warning';
-        actualContent = actualContent || '운영자';
-        break;
-      case 'user':
-        actualType = 'primary';
-        actualContent = actualContent || '사용자';
-        break;
-      case 'guest':
-        actualType = 'secondary';
-        actualContent = actualContent || '게스트';
-        break;
-    }
-  }
-
-  if (priority) {
-    switch (priority) {
-      case 'high':
-        actualType = 'danger';
-        actualContent = actualContent || '높음';
-        break;
-      case 'medium':
-        actualType = 'warning';
-        actualContent = actualContent || '보통';
-        break;
-      case 'low':
-        actualType = 'info';
-        actualContent = actualContent || '낮음';
-        break;
-    }
-  }
-
-  if (paymentStatus) {
-    switch (paymentStatus) {
-      case 'paid':
-        actualType = 'success';
-        actualContent = actualContent || '결제완료';
-        break;
-      case 'pending':
-        actualType = 'warning';
-        actualContent = actualContent || '결제대기';
-        break;
-      case 'failed':
-        actualType = 'danger';
-        actualContent = actualContent || '결제실패';
-        break;
-      case 'refunded':
-        actualType = 'secondary';
-        actualContent = actualContent || '환불됨';
-        break;
-    }
-  }
-
-  const classes = [
-    'badge',
-    `badge-${actualType}`,
-    `badge-${size}`,
-    pill && 'badge-pill',
-  ].filter(Boolean).join(' ');
-
-  return (
-    <span className={classes}>
-      {actualContent}
-    </span>
-  );
-};
+export { Badge, badgeVariants };
