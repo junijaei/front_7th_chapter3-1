@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header } from './components/ui';
+import { Toaster } from './components/ui/sonner';
 import { ManagementPage } from './pages/ManagementPage';
 import './styles/components.css';
 
@@ -27,6 +28,7 @@ export const App: React.FC = () => {
       <main>
         <ManagementPage />
       </main>
+      <Toaster />
     </div>
   );
 };

@@ -5,45 +5,39 @@ import { Logo, type LogoProps } from '@/components/ui/logo';
 import { Avatar, type AvatarProps } from '@/components/ui/avatar';
 import { UserInfo, type UserInfoProps } from '@/components/ui/user-info';
 
-const headerVariants = cva(
-  'sticky top-0 z-[1000] border-b bg-white shadow-sm',
-  {
-    variants: {
-      size: {
-        sm: 'h-12',
-        md: 'h-16',
-        lg: 'h-20',
-      },
+const headerVariants = cva('sticky top-0 z-1000 border-b bg-white shadow-sm', {
+  variants: {
+    size: {
+      sm: 'h-12',
+      md: 'h-16',
+      lg: 'h-20',
     },
-    defaultVariants: {
-      size: 'md',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
 
-const containerVariants = cva(
-  'mx-auto flex items-center justify-between px-6',
-  {
-    variants: {
-      maxWidth: {
-        sm: 'max-w-screen-sm',
-        md: 'max-w-screen-md',
-        lg: 'max-w-screen-lg',
-        xl: 'max-w-screen-xl',
-        '2xl': 'max-w-[1400px]',
-      },
-      size: {
-        sm: 'h-12',
-        md: 'h-16',
-        lg: 'h-20',
-      },
+const containerVariants = cva('mx-auto flex items-center justify-between px-6', {
+  variants: {
+    maxWidth: {
+      sm: 'max-w-screen-sm',
+      md: 'max-w-3xl',
+      lg: 'max-w-5xl',
+      xl: 'max-w-7xl',
+      '2xl': 'max-w-[1400px]',
     },
-    defaultVariants: {
-      maxWidth: '2xl',
-      size: 'md',
+    size: {
+      sm: 'h-12',
+      md: 'h-16',
+      lg: 'h-20',
     },
-  }
-);
+  },
+  defaultVariants: {
+    maxWidth: '2xl',
+    size: 'md',
+  },
+});
 
 type HeaderContextValue = {
   size?: 'sm' | 'md' | 'lg';
@@ -68,7 +62,7 @@ export interface HeaderProps
 const HeaderRoot = forwardRef<HTMLElement, HeaderProps>(
   ({ className, size, maxWidth, children, ...props }, ref) => {
     return (
-      <HeaderContext.Provider value={{ size }}>
+      <HeaderContext.Provider value={{ size: size || 'md' }}>
         <header ref={ref} className={cn(headerVariants({ size }), className)} {...props}>
           <div className={cn(containerVariants({ maxWidth, size }))}>{children}</div>
         </header>

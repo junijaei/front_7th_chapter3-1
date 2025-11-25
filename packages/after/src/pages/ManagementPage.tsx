@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   Button,
   Badge,
-  Alert,
   Table,
   Modal,
   Input,
   FormSelect,
   FormTextarea,
 } from '@/components/ui';
-import { usePosts, useUsers, type User, type Post } from '@/hooks';
+import { usePosts, useUsers, useAlert, type User, type Post } from '@/hooks';
 import '@/styles/components.css';
 
 type EntityType = 'user' | 'post';
@@ -18,15 +17,12 @@ type Entity = User | Post;
 export const ManagementPage: React.FC = () => {
   const postsHook = usePosts();
   const usersHook = useUsers();
+  const alert = useAlert();
 
   const [entityType, setEntityType] = useState<EntityType>('post');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Entity | null>(null);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const [formData, setFormData] = useState<any>({});
 
@@ -60,11 +56,9 @@ export const ManagementPage: React.FC = () => {
 
       setIsCreateModalOpen(false);
       setFormData({});
-      setAlertMessage(`${entityType === 'user' ? '사용자' : '게시글'}가 생성되었습니다`);
-      setShowSuccessAlert(true);
+      alert.success(`${entityType === 'user' ? '사용자' : '게시글'}가 생성되었습니다`);
     } catch (error: any) {
-      setErrorMessage(error.message || '생성에 실패했습니다');
-      setShowErrorAlert(true);
+      alert.error(error.message || '생성에 실패했습니다');
     }
   };
 
@@ -106,11 +100,9 @@ export const ManagementPage: React.FC = () => {
       setIsEditModalOpen(false);
       setFormData({});
       setSelectedItem(null);
-      setAlertMessage(`${entityType === 'user' ? '사용자' : '게시글'}가 수정되었습니다`);
-      setShowSuccessAlert(true);
+      alert.success(`${entityType === 'user' ? '사용자' : '게시글'}가 수정되었습니다`);
     } catch (error: any) {
-      setErrorMessage(error.message || '수정에 실패했습니다');
-      setShowErrorAlert(true);
+      alert.error(error.message || '수정에 실패했습니다');
     }
   };
 
@@ -124,11 +116,9 @@ export const ManagementPage: React.FC = () => {
         postsHook.delete(id);
       }
 
-      setAlertMessage('삭제되었습니다');
-      setShowSuccessAlert(true);
+      alert.success('삭제되었습니다');
     } catch (error: any) {
-      setErrorMessage(error.message || '삭제에 실패했습니다');
-      setShowErrorAlert(true);
+      alert.error(error.message || '삭제에 실패했습니다');
     }
   };
 
@@ -145,11 +135,9 @@ export const ManagementPage: React.FC = () => {
       }
 
       const message = action === 'publish' ? '게시' : action === 'archive' ? '보관' : '복원';
-      setAlertMessage(`${message}되었습니다`);
-      setShowSuccessAlert(true);
+      alert.success(`${message}되었습니다`);
     } catch (error: any) {
-      setErrorMessage(error.message || '작업에 실패했습니다');
-      setShowErrorAlert(true);
+      alert.error(error.message || '작업에 실패했습니다');
     }
   };
 
@@ -306,22 +294,6 @@ export const ManagementPage: React.FC = () => {
                 새로 만들기
               </Button>
             </div>
-
-            {showSuccessAlert && (
-              <div style={{ marginBottom: '10px' }}>
-                <Alert variant="success" title="성공" onClose={() => setShowSuccessAlert(false)}>
-                  {alertMessage}
-                </Alert>
-              </div>
-            )}
-
-            {showErrorAlert && (
-              <div style={{ marginBottom: '10px' }}>
-                <Alert variant="error" title="오류" onClose={() => setShowErrorAlert(false)}>
-                  {errorMessage}
-                </Alert>
-              </div>
-            )}
 
             <div
               style={{
@@ -575,10 +547,20 @@ export const ManagementPage: React.FC = () => {
       >
         <div>
           {selectedItem && (
-            <Alert variant="info">
+            <div
+              style={{
+                padding: '12px',
+                marginBottom: '16px',
+                background: '#e3f2fd',
+                border: '1px solid #90caf9',
+                borderRadius: '4px',
+                fontSize: '14px',
+                color: '#1976d2',
+              }}
+            >
               ID: {selectedItem.id} | 생성일: {selectedItem.createdAt}
               {entityType === 'post' && ` | 조회수: ${(selectedItem as Post).views}`}
-            </Alert>
+            </div>
           )}
 
           {entityType === 'user' ? (

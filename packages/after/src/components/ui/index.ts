@@ -10,7 +10,6 @@ export { FormTextarea } from './textarea';
 export { UserInfo } from './user-info';
 
 // Composed
-export { Alert } from '../composed/alert';
 export { Card } from '../composed/card';
 export { Modal } from '../composed/modal';
 export { Table } from '../composed/table';

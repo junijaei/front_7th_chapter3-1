@@ -67,7 +67,7 @@ describe('Header', () => {
         <Header.Logo logo={{ text: 'L' }} />
       </Header>
     );
-    expect(container.querySelector('.max-w-screen-lg')).toBeInTheDocument();
+    expect(container.querySelector('.max-w-5xl')).toBeInTheDocument();
   });
 
   it('커스텀 className이 적용된다', () => {
