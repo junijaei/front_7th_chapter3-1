@@ -1,6 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { Button } from '@/components/ui/button';
 
 describe('Button', () => {
@@ -9,133 +8,70 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: '클릭' })).toBeInTheDocument();
   });
 
-  it('클릭 이벤트가 동작한다', async () => {
-    const handleClick = vi.fn();
-    const user = userEvent.setup();
-
-    render(<Button onClick={handleClick}>클릭</Button>);
-    await user.click(screen.getByRole('button'));
-
-    expect(handleClick).toHaveBeenCalledTimes(1);
-  });
-
-  it('disabled 상태에서는 클릭이 동작하지 않는다', async () => {
-    const handleClick = vi.fn();
-    const user = userEvent.setup();
-
-    render(<Button onClick={handleClick} disabled>클릭</Button>);
-    await user.click(screen.getByRole('button'));
-
-    expect(handleClick).not.toHaveBeenCalled();
-    expect(screen.getByRole('button')).toBeDisabled();
-  });
-
   it('variant에 따라 올바른 클래스가 적용된다', () => {
     const { rerender } = render(<Button variant="primary">버튼</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-primary');
+    expect(screen.getByRole('button')).toHaveClass('bg-primary');
 
     rerender(<Button variant="secondary">버튼</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-secondary');
+    expect(screen.getByRole('button')).toHaveClass('bg-secondary');
 
     rerender(<Button variant="danger">버튼</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-danger');
+    expect(screen.getByRole('button')).toHaveClass('bg-destructive');
 
     rerender(<Button variant="success">버튼</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-success');
+    expect(screen.getByRole('button')).toHaveClass('bg-success');
+
+    rerender(<Button variant="outline">버튼</Button>);
+    expect(screen.getByRole('button')).toHaveClass('border');
+
+    rerender(<Button variant="ghost">버튼</Button>);
+    expect(screen.getByRole('button')).toHaveClass('hover:bg-accent');
   });
 
   it('size에 따라 올바른 클래스가 적용된다', () => {
     const { rerender } = render(<Button size="sm">버튼</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-sm');
+    expect(screen.getByRole('button')).toHaveClass('h-8');
 
     rerender(<Button size="md">버튼</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-md');
+    expect(screen.getByRole('button')).toHaveClass('h-10');
 
     rerender(<Button size="lg">버튼</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-lg');
+    expect(screen.getByRole('button')).toHaveClass('h-11');
   });
 
-  it('fullWidth가 true일 때 btn-fullwidth 클래스가 적용된다', () => {
-    render(<Button fullWidth>버튼</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-fullwidth');
+  it('추가 className이 적용된다', () => {
+    render(<Button className="custom-class">버튼</Button>);
+    expect(screen.getByRole('button')).toHaveClass('custom-class');
   });
 
-  it('type 속성이 올바르게 설정된다', () => {
-    const { rerender } = render(<Button type="submit">제출</Button>);
-    expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
-
-    rerender(<Button type="reset">리셋</Button>);
-    expect(screen.getByRole('button')).toHaveAttribute('type', 'reset');
-
-    rerender(<Button type="button">버튼</Button>);
-    expect(screen.getByRole('button')).toHaveAttribute('type', 'button');
+  it('disabled 상태가 적용된다', () => {
+    render(<Button disabled>버튼</Button>);
+    expect(screen.getByRole('button')).toBeDisabled();
+    expect(screen.getByRole('button')).toHaveClass('disabled:pointer-events-none');
   });
 
-  it('entityType과 action이 있을 때 자동으로 레이블이 생성된다', () => {
-    const { rerender } = render(
-      <Button entityType="user" action="create" entity={{}} />
-    );
-    expect(screen.getByRole('button')).toHaveTextContent('새 사용자 만들기');
-
-    rerender(<Button entityType="post" action="create" entity={{}} />);
-    expect(screen.getByRole('button')).toHaveTextContent('새 게시글 만들기');
-
-    rerender(<Button entityType="user" action="edit" entity={{}} />);
-    expect(screen.getByRole('button')).toHaveTextContent('수정');
-
-    rerender(<Button entityType="user" action="delete" entity={{}} />);
-    expect(screen.getByRole('button')).toHaveTextContent('삭제');
-  });
-
-  it('admin 사용자는 삭제 버튼이 비활성화된다', () => {
+  it('children이 올바르게 렌더링된다', () => {
     render(
-      <Button
-        entityType="user"
-        action="delete"
-        entity={{ role: 'admin' }}
-      >
-        삭제
+      <Button>
+        <span>아이콘</span>
+        텍스트
       </Button>
     );
-    expect(screen.getByRole('button')).toBeDisabled();
+    expect(screen.getByText('아이콘')).toBeInTheDocument();
+    expect(screen.getByText('텍스트')).toBeInTheDocument();
   });
 
-  it('이미 게시된 글은 게시 버튼이 비활성화된다', () => {
-    render(
-      <Button
-        entityType="post"
-        action="publish"
-        entity={{ status: 'published' }}
-      >
-        게시
-      </Button>
-    );
-    expect(screen.getByRole('button')).toBeDisabled();
+  it('기본 variant는 primary, size는 md이다', () => {
+    render(<Button>버튼</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass('bg-primary');
+    expect(button).toHaveClass('h-10');
   });
 
-  it('게시되지 않은 글은 보관 버튼이 비활성화된다', () => {
-    render(
-      <Button
-        entityType="post"
-        action="archive"
-        entity={{ status: 'draft' }}
-      >
-        보관
-      </Button>
-    );
-    expect(screen.getByRole('button')).toBeDisabled();
-  });
-
-  it('action에 따라 variant가 자동 결정된다', () => {
-    const { rerender } = render(
-      <Button entityType="user" action="delete" entity={{}}>삭제</Button>
-    );
-    expect(screen.getByRole('button')).toHaveClass('btn-danger');
-
-    rerender(<Button entityType="post" action="publish" entity={{}}>게시</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-success');
-
-    rerender(<Button entityType="post" action="archive" entity={{}}>보관</Button>);
-    expect(screen.getByRole('button')).toHaveClass('btn-secondary');
+  it('HTML button 속성들이 전달된다', () => {
+    render(<Button type="submit" aria-label="제출">버튼</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('type', 'submit');
+    expect(button).toHaveAttribute('aria-label', '제출');
   });
 });

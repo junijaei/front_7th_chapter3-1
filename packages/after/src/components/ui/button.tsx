@@ -1,94 +1,48 @@
-import React from 'react';
+import { forwardRef, type ButtonHTMLAttributes } from 'react';
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-// 🚨 Bad Practice: UI 컴포넌트가 도메인 타입을 알고 있음
-interface ButtonProps {
-  children?: React.ReactNode;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-  variant?: 'primary' | 'secondary' | 'danger' | 'success';
-  size?: 'sm' | 'md' | 'lg';
-  fullWidth?: boolean;
+import { cn } from '@/lib/utils';
 
-  // 🚨 도메인 관심사 추가
-  entityType?: 'user' | 'post';
-  action?: 'create' | 'edit' | 'delete' | 'publish' | 'archive';
-  entity?: any; // 엔티티 객체를 직접 받음
+const buttonVariants = cva(
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  {
+    variants: {
+      variant: {
+        primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        danger: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        success: 'bg-success text-success-foreground hover:bg-success/90',
+        outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+      },
+      size: {
+        sm: 'h-8 px-3 text-sm',
+        md: 'h-10 px-4 text-sm',
+        lg: 'h-11 px-6 text-base',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'md',
+    },
+  }
+);
+
+export interface ButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  children,
-  onClick,
-  type = 'button',
-  disabled = false,
-  variant = 'primary',
-  size = 'md',
-  fullWidth = false,
-  entityType,
-  action,
-  entity,
-}) => {
-  // 🚨 Bad Practice: UI 컴포넌트가 비즈니스 규칙을 판단함
-  let actualDisabled = disabled;
-  let actualVariant = variant;
-  let actualChildren = children;
-
-  if (entityType && action && entity) {
-    // 비즈니스 규칙: 관리자는 삭제 불가
-    if (entityType === 'user' && action === 'delete' && entity.role === 'admin') {
-      actualDisabled = true;
-    }
-
-    // 비즈니스 규칙: 이미 게시된 글은 게시 버튼 비활성화
-    if (entityType === 'post' && action === 'publish' && entity.status === 'published') {
-      actualDisabled = true;
-    }
-
-    // 비즈니스 규칙: 게시된 글만 보관 가능
-    if (entityType === 'post' && action === 'archive' && entity.status !== 'published') {
-      actualDisabled = true;
-    }
-
-    // 자동 label 생성
-    if (!children) {
-      if (action === 'create') {
-        actualChildren = `새 ${entityType === 'user' ? '사용자' : '게시글'} 만들기`;
-      } else if (action === 'edit') {
-        actualChildren = '수정';
-      } else if (action === 'delete') {
-        actualChildren = '삭제';
-      } else if (action === 'publish') {
-        actualChildren = '게시';
-      } else if (action === 'archive') {
-        actualChildren = '보관';
-      }
-    }
-
-    // action에 따라 variant 자동 결정
-    if (action === 'delete') {
-      actualVariant = 'danger';
-    } else if (action === 'publish') {
-      actualVariant = 'success';
-    } else if (action === 'archive') {
-      actualVariant = 'secondary';
-    }
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'button';
+    return (
+      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+    );
   }
+);
+Button.displayName = 'Button';
 
-  const classes = [
-    'btn',
-    `btn-${actualVariant}`,
-    `btn-${size}`,
-    fullWidth && 'btn-fullwidth',
-  ].filter(Boolean).join(' ');
-
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={actualDisabled}
-      className={classes}
-    >
-      {actualChildren}
-    </button>
-  );
-};
+export { Button, buttonVariants };
