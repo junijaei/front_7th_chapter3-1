@@ -57,6 +57,8 @@ const userEmailVariants = cva('text-gray-600', {
 
 type UserInfoContextValue = {
   size?: 'sm' | 'md' | 'lg';
+  name?: string;
+  email?: string;
 };
 
 const UserInfoContext = createContext<UserInfoContextValue>({});
@@ -68,14 +70,27 @@ const useUserInfoContext = () => {
 
 export interface UserInfoProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof userInfoVariants> {}
+    VariantProps<typeof userInfoVariants> {
+  name?: string;
+  email?: string;
+}
 
 const UserInfoRoot = forwardRef<HTMLDivElement, UserInfoProps>(
-  ({ className, size, children, ...props }, ref) => {
+  ({ className, size, name, email, children, ...props }, ref) => {
+    // If name or email is provided but no children, render default structure
+    const shouldRenderDefault = (name || email) && !children;
+
     return (
-      <UserInfoContext.Provider value={{ size }}>
+      <UserInfoContext.Provider value={{ size, name, email }}>
         <div ref={ref} className={cn(userInfoVariants({ size }), className)} {...props}>
-          {children}
+          {shouldRenderDefault ? (
+            <UserInfoText>
+              <UserInfoName />
+              <UserInfoEmail />
+            </UserInfoText>
+          ) : (
+            children
+          )}
         </div>
       </UserInfoContext.Provider>
     );
@@ -122,10 +137,10 @@ export interface UserInfoNameProps extends HTMLAttributes<HTMLDivElement> {}
 
 const UserInfoName = forwardRef<HTMLDivElement, UserInfoNameProps>(
   ({ className, children, ...props }, ref) => {
-    const { size } = useUserInfoContext();
+    const { size, name } = useUserInfoContext();
     return (
       <div ref={ref} className={cn(userNameVariants({ size }), className)} {...props}>
-        {children}
+        {children || name}
       </div>
     );
   }
@@ -137,10 +152,10 @@ export interface UserInfoEmailProps extends HTMLAttributes<HTMLDivElement> {}
 
 const UserInfoEmail = forwardRef<HTMLDivElement, UserInfoEmailProps>(
   ({ className, children, ...props }, ref) => {
-    const { size } = useUserInfoContext();
+    const { size, email } = useUserInfoContext();
     return (
       <div ref={ref} className={cn(userEmailVariants({ size }), className)} {...props}>
-        {children}
+        {children || email}
       </div>
     );
   }

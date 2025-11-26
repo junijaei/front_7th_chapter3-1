@@ -44,7 +44,7 @@ describe('FormTextarea', () => {
   it('error 메시지가 표시된다', () => {
     render(<FormTextarea name="test" value="" onChange={() => {}} error="에러가 발생했습니다" />);
     expect(screen.getByText('에러가 발생했습니다')).toBeInTheDocument();
-    expect(screen.getByRole('textbox')).toHaveClass('error');
+    expect(screen.getByRole('textbox')).toHaveClass('border-red-600');
   });
 
   it('helpText가 표시된다', () => {

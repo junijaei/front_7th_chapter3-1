@@ -89,7 +89,7 @@ describe('FormSelect', () => {
       />
     );
     expect(screen.getByText('에러가 발생했습니다')).toBeInTheDocument();
-    expect(screen.getByRole('combobox')).toHaveClass('error');
+    expect(screen.getByRole('combobox')).toHaveClass('border-red-600');
   });
 
   it('helpText가 표시된다', () => {
