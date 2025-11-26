@@ -5,5 +5,15 @@ export { Checkbox } from './checkbox';
 export { Input } from './input';
 export { Logo } from './logo';
 export { FormSelect } from './select';
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from './table';
 export { FormTextarea } from './textarea';
 export { UserInfo } from './user-info';
