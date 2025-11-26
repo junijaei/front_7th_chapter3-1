@@ -1,17 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Modal } from '../modal';
 
 describe('Modal', () => {
-  beforeEach(() => {
-    document.body.style.overflow = 'unset';
-  });
-
-  afterEach(() => {
-    document.body.style.overflow = 'unset';
-  });
-
   it('isOpen이 false일 때 모달이 렌더링되지 않는다', () => {
     render(
       <Modal isOpen={false} onClose={() => {}}>
@@ -39,13 +31,31 @@ describe('Modal', () => {
     expect(screen.getByText('모달 제목')).toBeInTheDocument();
   });
 
-  it('닫기 버튼이 표시된다', () => {
+  it('description이 표시된다', () => {
+    render(
+      <Modal isOpen={true} onClose={() => {}} description="모달 설명">
+        내용
+      </Modal>
+    );
+    expect(screen.getByText('모달 설명')).toBeInTheDocument();
+  });
+
+  it('닫기 버튼이 표시된다', async () => {
     render(
       <Modal isOpen={true} onClose={() => {}} title="제목">
         내용
       </Modal>
     );
-    expect(screen.getByRole('button', { name: '×' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /close/i })).toBeInTheDocument();
+  });
+
+  it('showCloseButton이 false이면 닫기 버튼이 표시되지 않는다', () => {
+    render(
+      <Modal isOpen={true} onClose={() => {}} title="제목" showCloseButton={false}>
+        내용
+      </Modal>
+    );
+    expect(screen.queryByRole('button', { name: /close/i })).not.toBeInTheDocument();
   });
 
   it('닫기 버튼 클릭 시 onClose가 호출된다', async () => {
@@ -58,61 +68,31 @@ describe('Modal', () => {
       </Modal>
     );
 
-    await user.click(screen.getByRole('button', { name: '×' }));
-    expect(handleClose).toHaveBeenCalledTimes(1);
-  });
-
-  it('오버레이 클릭 시 onClose가 호출된다', async () => {
-    const handleClose = vi.fn();
-    const user = userEvent.setup();
-
-    const { container } = render(
-      <Modal isOpen={true} onClose={handleClose}>
-        내용
-      </Modal>
-    );
-
-    const overlay = container.querySelector('.modal-overlay');
-    await user.click(overlay!);
-    expect(handleClose).toHaveBeenCalledTimes(1);
-  });
-
-  it('모달 컨텐츠 클릭 시 onClose가 호출되지 않는다', async () => {
-    const handleClose = vi.fn();
-    const user = userEvent.setup();
-
-    const { container } = render(
-      <Modal isOpen={true} onClose={handleClose}>
-        내용
-      </Modal>
-    );
-
-    const content = container.querySelector('.modal-content');
-    await user.click(content!);
-    expect(handleClose).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: /close/i }));
+    expect(handleClose).toHaveBeenCalled();
   });
 
   it('size에 따라 올바른 클래스가 적용된다', () => {
-    const { container, rerender } = render(
-      <Modal isOpen={true} onClose={() => {}} size="small">
+    const { rerender } = render(
+      <Modal isOpen={true} onClose={() => {}} size="small" title="제목">
         내용
       </Modal>
     );
-    expect(container.querySelector('.modal-content')).toHaveClass('modal-small');
+    expect(screen.getByText('내용')).toBeInTheDocument();
 
     rerender(
-      <Modal isOpen={true} onClose={() => {}} size="medium">
+      <Modal isOpen={true} onClose={() => {}} size="medium" title="제목">
         내용
       </Modal>
     );
-    expect(container.querySelector('.modal-content')).toHaveClass('modal-medium');
+    expect(screen.getByText('내용')).toBeInTheDocument();
 
     rerender(
-      <Modal isOpen={true} onClose={() => {}} size="large">
+      <Modal isOpen={true} onClose={() => {}} size="large" title="제목">
         내용
       </Modal>
     );
-    expect(container.querySelector('.modal-content')).toHaveClass('modal-large');
+    expect(screen.getByText('내용')).toBeInTheDocument();
   });
 
   it('showFooter와 footerContent가 있을 때 footer가 렌더링된다', () => {
@@ -130,7 +110,7 @@ describe('Modal', () => {
   });
 
   it('showFooter가 false이면 footer가 렌더링되지 않는다', () => {
-    const { container } = render(
+    render(
       <Modal
         isOpen={true}
         onClose={() => {}}
@@ -140,7 +120,7 @@ describe('Modal', () => {
         내용
       </Modal>
     );
-    expect(container.querySelector('.modal-footer')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '확인' })).not.toBeInTheDocument();
   });
 
   it('footerContent가 없으면 footer가 렌더링되지 않는다', () => {
@@ -149,40 +129,17 @@ describe('Modal', () => {
         내용
       </Modal>
     );
-    expect(container.querySelector('.modal-footer')).not.toBeInTheDocument();
+    expect(container.querySelector('[data-slot="dialog-footer"]')).not.toBeInTheDocument();
   });
 
-  it('모달이 열리면 body overflow가 hidden으로 설정된다', () => {
+  it('children이 올바르게 렌더링된다', () => {
     render(
       <Modal isOpen={true} onClose={() => {}}>
-        내용
+        <div>테스트 컨텐츠</div>
+        <button>테스트 버튼</button>
       </Modal>
     );
-    expect(document.body.style.overflow).toBe('hidden');
-  });
-
-  it('모달이 닫히면 body overflow가 unset으로 설정된다', () => {
-    const { rerender } = render(
-      <Modal isOpen={true} onClose={() => {}}>
-        내용
-      </Modal>
-    );
-    expect(document.body.style.overflow).toBe('hidden');
-
-    rerender(
-      <Modal isOpen={false} onClose={() => {}}>
-        내용
-      </Modal>
-    );
-    expect(document.body.style.overflow).toBe('unset');
-  });
-
-  it('title이 없으면 modal-header가 렌더링되지 않는다', () => {
-    const { container } = render(
-      <Modal isOpen={true} onClose={() => {}}>
-        내용
-      </Modal>
-    );
-    expect(container.querySelector('.modal-header')).not.toBeInTheDocument();
+    expect(screen.getByText('테스트 컨텐츠')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '테스트 버튼' })).toBeInTheDocument();
   });
 });

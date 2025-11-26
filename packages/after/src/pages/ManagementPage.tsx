@@ -8,7 +8,7 @@ import {
   FormSelect,
   FormTextarea,
 } from '@/components/ui';
-import { usePosts, useUsers, useAlert, type User, type Post } from '@/hooks';
+import { usePosts, useUsers, useAlert, useModal, type User, type Post } from '@/hooks';
 import '@/styles/components.css';
 
 type EntityType = 'user' | 'post';
@@ -18,10 +18,10 @@ export const ManagementPage: React.FC = () => {
   const postsHook = usePosts();
   const usersHook = useUsers();
   const alert = useAlert();
+  const createModal = useModal();
+  const editModal = useModal();
 
   const [entityType, setEntityType] = useState<EntityType>('post');
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Entity | null>(null);
 
   const [formData, setFormData] = useState<any>({});
@@ -30,10 +30,10 @@ export const ManagementPage: React.FC = () => {
 
   useEffect(() => {
     setFormData({});
-    setIsCreateModalOpen(false);
-    setIsEditModalOpen(false);
+    createModal.close();
+    editModal.close();
     setSelectedItem(null);
-  }, [entityType]);
+  }, [entityType, createModal, editModal]);
 
   const handleCreate = async () => {
     try {
@@ -54,7 +54,7 @@ export const ManagementPage: React.FC = () => {
         });
       }
 
-      setIsCreateModalOpen(false);
+      createModal.close();
       setFormData({});
       alert.success(`${entityType === 'user' ? '사용자' : '게시글'}가 생성되었습니다`);
     } catch (error: any) {
@@ -84,7 +84,7 @@ export const ManagementPage: React.FC = () => {
       });
     }
 
-    setIsEditModalOpen(true);
+    editModal.open();
   };
 
   const handleUpdate = async () => {
@@ -97,7 +97,7 @@ export const ManagementPage: React.FC = () => {
         postsHook.update(selectedItem.id, formData);
       }
 
-      setIsEditModalOpen(false);
+      editModal.close();
       setFormData({});
       setSelectedItem(null);
       alert.success(`${entityType === 'user' ? '사용자' : '게시글'}가 수정되었습니다`);
@@ -290,7 +290,7 @@ export const ManagementPage: React.FC = () => {
 
           <div>
             <div style={{ marginBottom: '15px', textAlign: 'right' }}>
-              <Button variant="primary" size="md" onClick={() => setIsCreateModalOpen(true)}>
+              <Button variant="primary" size="md" onClick={createModal.open}>
                 새로 만들기
               </Button>
             </div>
@@ -401,9 +401,9 @@ export const ManagementPage: React.FC = () => {
       </div>
 
       <Modal
-        isOpen={isCreateModalOpen}
+        isOpen={createModal.isOpen}
         onClose={() => {
-          setIsCreateModalOpen(false);
+          createModal.close();
           setFormData({});
         }}
         title={`새 ${entityType === 'user' ? '사용자' : '게시글'} 만들기`}
@@ -415,7 +415,7 @@ export const ManagementPage: React.FC = () => {
               variant="secondary"
               size="md"
               onClick={() => {
-                setIsCreateModalOpen(false);
+                createModal.close();
                 setFormData({});
               }}
             >
@@ -517,9 +517,9 @@ export const ManagementPage: React.FC = () => {
       </Modal>
 
       <Modal
-        isOpen={isEditModalOpen}
+        isOpen={editModal.isOpen}
         onClose={() => {
-          setIsEditModalOpen(false);
+          editModal.close();
           setFormData({});
           setSelectedItem(null);
         }}
@@ -532,7 +532,7 @@ export const ManagementPage: React.FC = () => {
               variant="secondary"
               size="md"
               onClick={() => {
-                setIsEditModalOpen(false);
+                editModal.close();
                 setFormData({});
                 setSelectedItem(null);
               }}
