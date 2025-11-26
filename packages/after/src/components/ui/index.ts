@@ -1,4 +1,3 @@
-// Primitives (ui)
 export { Avatar } from './avatar';
 export { Badge } from './badge';
 export { Button } from './button';
@@ -8,11 +7,3 @@ export { Logo } from './logo';
 export { FormSelect } from './select';
 export { FormTextarea } from './textarea';
 export { UserInfo } from './user-info';
-
-// Composed
-export { Card } from '../composed/card';
-export { Modal } from '../composed/modal';
-export { Table } from '../composed/table';
-
-// Layout
-export { Header } from '../layout/header';

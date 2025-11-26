@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Button,
-  Badge,
-  Table,
-  Modal,
-  Input,
-  FormSelect,
-  FormTextarea,
-} from '@/components/ui';
+import { Button, Badge, Input, FormSelect, FormTextarea } from '@/components/ui';
+import { Table, Modal } from '@/components/composed';
 import { usePosts, useUsers, useAlert, useModal, type User, type Post } from '@/hooks';
 import '@/styles/components.css';
 

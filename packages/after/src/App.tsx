@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from './components/ui';
+import { Header } from './components/layout';
 import { Toaster } from './components/ui/sonner';
 import { ManagementPage } from './pages/ManagementPage';
 import './styles/components.css';
