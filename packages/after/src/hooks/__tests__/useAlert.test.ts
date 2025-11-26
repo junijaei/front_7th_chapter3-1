@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { useAlert } from '../useAlert';
+import { useAlert } from '@/hooks/useAlert';
 import { toast } from 'sonner';
 
 vi.mock('sonner', () => ({

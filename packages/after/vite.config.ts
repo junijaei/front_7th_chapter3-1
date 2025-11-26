@@ -1,16 +1,16 @@
-import { defineConfig, mergeConfig } from 'vite'
-import { defineConfig as defineVitestConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig, mergeConfig } from 'vite';
+import { defineConfig as defineVitestConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
 const viteConfig = defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
-})
+});
 
 const vitestConfig = defineVitestConfig({
   test: {
@@ -19,6 +19,6 @@ const vitestConfig = defineVitestConfig({
     setupFiles: './src/test/setup.ts',
     css: true,
   },
-})
+});
 
-export default mergeConfig(viteConfig, vitestConfig)
+export default mergeConfig(viteConfig, vitestConfig);

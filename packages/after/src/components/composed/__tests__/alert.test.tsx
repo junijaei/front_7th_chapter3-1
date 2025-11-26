@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Alert } from '../alert';
+import { Alert } from '@/components/composed/alert';
 
 describe('Alert', () => {
   it('기본 알림이 렌더링된다', () => {
@@ -49,7 +49,11 @@ describe('Alert', () => {
   });
 
   it('showIcon이 false일 때 아이콘이 표시되지 않는다', () => {
-    render(<Alert variant="info" showIcon={false}>내용</Alert>);
+    render(
+      <Alert variant="info" showIcon={false}>
+        내용
+      </Alert>
+    );
     expect(screen.queryByText('ℹ️')).not.toBeInTheDocument();
   });
 
@@ -85,11 +89,7 @@ describe('Alert', () => {
   });
 
   it('title과 children이 함께 표시된다', () => {
-    render(
-      <Alert title="제목">
-        본문 내용
-      </Alert>
-    );
+    render(<Alert title="제목">본문 내용</Alert>);
     expect(screen.getByText('제목')).toBeInTheDocument();
     expect(screen.getByText('본문 내용')).toBeInTheDocument();
   });

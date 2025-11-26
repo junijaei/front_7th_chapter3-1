@@ -10,6 +10,7 @@ import {
   TableRow,
   TableHead,
   TableCell,
+  StatCard,
 } from '@/components/ui';
 import { Modal } from '@/components/composed';
 import { useUsers, useAlert, useModal, type User } from '@/hooks';
@@ -99,13 +100,12 @@ export const UserManagement: React.FC = () => {
   const renderStatusBadge = (status: string) => {
     const statusVariant =
       status === 'active' ? 'success' : status === 'inactive' ? 'warning' : 'destructive';
-    const statusLabel =
-      status === 'active' ? '활성' : status === 'inactive' ? '비활성' : '정지';
+    const statusLabel = status === 'active' ? '활성' : status === 'inactive' ? '비활성' : '정지';
     return <Badge variant={statusVariant}>{statusLabel}</Badge>;
   };
 
   const renderActions = (user: User) => (
-    <div style={{ display: 'flex', gap: '8px' }}>
+    <div className="flex gap-2">
       <Button size="sm" variant="primary" onClick={() => handleEdit(user)}>
         수정
       </Button>
@@ -130,103 +130,32 @@ export const UserManagement: React.FC = () => {
 
   return (
     <>
-      <div style={{ marginBottom: '15px', textAlign: 'right' }}>
+      <div className="mb-4 text-right">
         <Button variant="primary" size="md" onClick={createModal.open}>
           새로 만들기
         </Button>
       </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-          gap: '10px',
-          marginBottom: '15px',
-        }}
-      >
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#e3f2fd',
-            border: '1px solid #90caf9',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>전체</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#1976d2' }}>
-            {stats.total}
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#e8f5e9',
-            border: '1px solid #81c784',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>활성</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#388e3c' }}>
-            {stats.active}
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#fff3e0',
-            border: '1px solid #ffb74d',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>비활성</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#f57c00' }}>
-            {stats.inactive}
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#ffebee',
-            border: '1px solid #e57373',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>정지</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#d32f2f' }}>
-            {stats.suspended}
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#f5f5f5',
-            border: '1px solid #bdbdbd',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>관리자</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#424242' }}>
-            {stats.admin}
-          </div>
-        </div>
+      <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-2.5">
+        <StatCard variant="default" label="전체" value={stats.total} />
+        <StatCard variant="success" label="활성" value={stats.active} />
+        <StatCard variant="warning" label="비활성" value={stats.inactive} />
+        <StatCard variant="danger" label="정지" value={stats.suspended} />
+        <StatCard variant="gray" label="관리자" value={stats.admin} />
       </div>
 
-      <div style={{ border: '1px solid #ddd', background: 'white', overflow: 'auto' }}>
+      <div className="overflow-auto border border-gray-300 bg-white">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead style={{ width: '60px' }}>ID</TableHead>
-              <TableHead style={{ width: '150px' }}>사용자명</TableHead>
+              <TableHead className="w-[60px]">ID</TableHead>
+              <TableHead className="w-[150px]">사용자명</TableHead>
               <TableHead>이메일</TableHead>
-              <TableHead style={{ width: '120px' }}>역할</TableHead>
-              <TableHead style={{ width: '120px' }}>상태</TableHead>
-              <TableHead style={{ width: '120px' }}>생성일</TableHead>
-              <TableHead style={{ width: '140px' }}>마지막 로그인</TableHead>
-              <TableHead style={{ width: '200px' }}>관리</TableHead>
+              <TableHead className="w-[120px]">역할</TableHead>
+              <TableHead className="w-[120px]">상태</TableHead>
+              <TableHead className="w-[120px]">생성일</TableHead>
+              <TableHead className="w-[140px]">마지막 로그인</TableHead>
+              <TableHead className="w-[200px]">관리</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -273,7 +202,7 @@ export const UserManagement: React.FC = () => {
           </>
         }
       >
-        <div>
+        <div className="space-y-4">
           <Input
             name="username"
             value={formData.username || ''}
@@ -289,7 +218,7 @@ export const UserManagement: React.FC = () => {
             type="email"
             required
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="grid grid-cols-2 gap-4">
             <FormSelect
               name="role"
               value={formData.role || 'user'}
@@ -347,19 +276,9 @@ export const UserManagement: React.FC = () => {
           </>
         }
       >
-        <div>
+        <div className="space-y-4">
           {selectedUser && (
-            <div
-              style={{
-                padding: '12px',
-                marginBottom: '16px',
-                background: '#e3f2fd',
-                border: '1px solid #90caf9',
-                borderRadius: '4px',
-                fontSize: '14px',
-                color: '#1976d2',
-              }}
-            >
+            <div className="mb-4 rounded border border-blue-300 bg-blue-50 p-3 text-sm text-blue-700">
               ID: {selectedUser.id} | 생성일: {selectedUser.createdAt}
             </div>
           )}
@@ -379,7 +298,7 @@ export const UserManagement: React.FC = () => {
             type="email"
             required
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="grid grid-cols-2 gap-4">
             <FormSelect
               name="role"
               value={formData.role || 'user'}

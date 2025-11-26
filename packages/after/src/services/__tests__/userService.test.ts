@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { userService } from '../userService';
+import { userService } from '@/services/userService';
 import type { CreateUserData, UpdateUserData } from '@/hooks/types';
 
 describe('userService', () => {
@@ -80,14 +80,19 @@ describe('userService', () => {
     if (users.length >= 2) {
       const firstUsername = users[0].username;
       const secondUserId = users[1].id;
-      expect(() => userService.update(secondUserId, { username: firstUsername })).toThrow('Username already exists');
+      expect(() => userService.update(secondUserId, { username: firstUsername })).toThrow(
+        'Username already exists'
+      );
     }
   });
 
   it('자신의 사용자명으로 업데이트할 수 있다', () => {
     const users = userService.getAll();
     const firstUser = users[0];
-    const updatedUser = userService.update(firstUser.id, { username: firstUser.username, role: 'moderator' });
+    const updatedUser = userService.update(firstUser.id, {
+      username: firstUser.username,
+      role: 'moderator',
+    });
     expect(updatedUser.username).toBe(firstUser.username);
     expect(updatedUser.role).toBe('moderator');
   });
@@ -98,7 +103,7 @@ describe('userService', () => {
     userService.delete(firstUserId);
     const users = userService.getAll();
     expect(users).toHaveLength(initialUsers.length - 1);
-    expect(users.find(u => u.id === firstUserId)).toBeUndefined();
+    expect(users.find((u) => u.id === firstUserId)).toBeUndefined();
   });
 
   it('존재하지 않는 사용자 삭제 시 에러를 발생시킨다', () => {

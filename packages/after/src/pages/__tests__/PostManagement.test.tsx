@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { PostManagement } from '../PostManagement';
+import { PostManagement } from '@/pages/PostManagement';
 import * as hooks from '@/hooks';
 
 vi.mock('@/hooks', () => ({
@@ -67,9 +67,7 @@ describe('PostManagement', () => {
     (hooks.usePosts as any).mockReturnValue(mockPostsHook);
     (hooks.useAlert as any).mockReturnValue(mockAlert);
     // useModal is called twice: createModal and editModal
-    (hooks.useModal as any)
-      .mockReturnValueOnce(mockCreateModal)
-      .mockReturnValueOnce(mockEditModal);
+    (hooks.useModal as any).mockReturnValueOnce(mockCreateModal).mockReturnValueOnce(mockEditModal);
   });
 
   describe('렌더링', () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Modal } from '../modal';
+import { Modal } from '@/components/composed/modal';
 
 describe('Modal', () => {
   it('isOpen이 false일 때 모달이 렌더링되지 않는다', () => {
@@ -97,12 +97,7 @@ describe('Modal', () => {
 
   it('showFooter와 footerContent가 있을 때 footer가 렌더링된다', () => {
     render(
-      <Modal
-        isOpen={true}
-        onClose={() => {}}
-        showFooter
-        footerContent={<button>확인</button>}
-      >
+      <Modal isOpen={true} onClose={() => {}} showFooter footerContent={<button>확인</button>}>
         내용
       </Modal>
     );

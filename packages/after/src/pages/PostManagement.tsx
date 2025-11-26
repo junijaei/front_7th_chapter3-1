@@ -11,6 +11,7 @@ import {
   TableRow,
   TableHead,
   TableCell,
+  StatCard,
 } from '@/components/ui';
 import { Modal } from '@/components/composed';
 import { usePosts, useAlert, useModal, type Post } from '@/hooks';
@@ -143,7 +144,7 @@ export const PostManagement: React.FC = () => {
   };
 
   const renderActions = (post: Post) => (
-    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+    <div className="flex flex-wrap gap-2">
       <Button size="sm" variant="primary" onClick={() => handleEdit(post)}>
         수정
       </Button>
@@ -183,103 +184,32 @@ export const PostManagement: React.FC = () => {
 
   return (
     <>
-      <div style={{ marginBottom: '15px', textAlign: 'right' }}>
+      <div className="mb-4 text-right">
         <Button variant="primary" size="md" onClick={createModal.open}>
           새로 만들기
         </Button>
       </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-          gap: '10px',
-          marginBottom: '15px',
-        }}
-      >
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#e3f2fd',
-            border: '1px solid #90caf9',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>전체</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#1976d2' }}>
-            {stats.total}
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#e8f5e9',
-            border: '1px solid #81c784',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>게시됨</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#388e3c' }}>
-            {stats.published}
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#fff3e0',
-            border: '1px solid #ffb74d',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>임시저장</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#f57c00' }}>
-            {stats.draft}
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#ffebee',
-            border: '1px solid #e57373',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>보관됨</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#d32f2f' }}>
-            {stats.archived}
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: '12px 15px',
-            background: '#f5f5f5',
-            border: '1px solid #bdbdbd',
-            borderRadius: '3px',
-          }}
-        >
-          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>총 조회수</div>
-          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#424242' }}>
-            {stats.totalViews}
-          </div>
-        </div>
+      <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-2.5">
+        <StatCard variant="default" label="전체" value={stats.total} />
+        <StatCard variant="success" label="게시됨" value={stats.published} />
+        <StatCard variant="warning" label="임시저장" value={stats.draft} />
+        <StatCard variant="danger" label="보관됨" value={stats.archived} />
+        <StatCard variant="gray" label="총 조회수" value={stats.totalViews} />
       </div>
 
-      <div style={{ border: '1px solid #ddd', background: 'white', overflow: 'auto' }}>
+      <div className="overflow-auto border border-gray-300 bg-white">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead style={{ width: '60px' }}>ID</TableHead>
+              <TableHead className="w-[60px]">ID</TableHead>
               <TableHead>제목</TableHead>
-              <TableHead style={{ width: '120px' }}>작성자</TableHead>
-              <TableHead style={{ width: '140px' }}>카테고리</TableHead>
-              <TableHead style={{ width: '120px' }}>상태</TableHead>
-              <TableHead style={{ width: '100px' }}>조회수</TableHead>
-              <TableHead style={{ width: '120px' }}>작성일</TableHead>
-              <TableHead style={{ width: '250px' }}>관리</TableHead>
+              <TableHead className="w-[120px]">작성자</TableHead>
+              <TableHead className="w-[140px]">카테고리</TableHead>
+              <TableHead className="w-[120px]">상태</TableHead>
+              <TableHead className="w-[100px]">조회수</TableHead>
+              <TableHead className="w-[120px]">작성일</TableHead>
+              <TableHead className="w-[250px]">관리</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -326,7 +256,7 @@ export const PostManagement: React.FC = () => {
           </>
         }
       >
-        <div>
+        <div className="space-y-4">
           <Input
             name="title"
             value={formData.title || ''}
@@ -334,7 +264,7 @@ export const PostManagement: React.FC = () => {
             placeholder="게시글 제목을 입력하세요"
             required
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="grid grid-cols-2 gap-4">
             <Input
               name="author"
               value={formData.author || ''}
@@ -396,19 +326,9 @@ export const PostManagement: React.FC = () => {
           </>
         }
       >
-        <div>
+        <div className="space-y-4">
           {selectedPost && (
-            <div
-              style={{
-                padding: '12px',
-                marginBottom: '16px',
-                background: '#e3f2fd',
-                border: '1px solid #90caf9',
-                borderRadius: '4px',
-                fontSize: '14px',
-                color: '#1976d2',
-              }}
-            >
+            <div className="mb-4 rounded border border-blue-300 bg-blue-50 p-3 text-sm text-blue-700">
               ID: {selectedPost.id} | 생성일: {selectedPost.createdAt} | 조회수:{' '}
               {selectedPost.views}
             </div>
@@ -421,7 +341,7 @@ export const PostManagement: React.FC = () => {
             placeholder="게시글 제목을 입력하세요"
             required
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className="grid grid-cols-2 gap-4">
             <Input
               name="author"
               value={formData.author || ''}

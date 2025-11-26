@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { postService } from '../postService';
+import { postService } from '@/services/postService';
 import type { CreatePostData, UpdatePostData } from '@/hooks/types';
 
 describe('postService', () => {
@@ -50,7 +50,9 @@ describe('postService', () => {
       status: 'draft',
     };
 
-    expect(() => postService.create(invalidPostData)).toThrow('Title must be at least 5 characters');
+    expect(() => postService.create(invalidPostData)).toThrow(
+      'Title must be at least 5 characters'
+    );
   });
 
   it('포스트를 업데이트한다', () => {
@@ -72,7 +74,7 @@ describe('postService', () => {
     postService.delete(1);
     const posts = postService.getAll();
     expect(posts).toHaveLength(initialPosts.length - 1);
-    expect(posts.find(p => p.id === 1)).toBeUndefined();
+    expect(posts.find((p) => p.id === 1)).toBeUndefined();
   });
 
   it('존재하지 않는 포스트 삭제 시 에러를 발생시킨다', () => {
@@ -101,9 +103,11 @@ describe('postService', () => {
   it('archived 상태가 아닌 포스트 restore 시 에러를 발생시킨다', () => {
     // 확실히 published 상태인 포스트를 restore 시도
     const posts = postService.getAll();
-    const publishedPost = posts.find(p => p.status === 'published');
+    const publishedPost = posts.find((p) => p.status === 'published');
     if (publishedPost) {
-      expect(() => postService.restore(publishedPost.id)).toThrow('Only archived posts can be restored');
+      expect(() => postService.restore(publishedPost.id)).toThrow(
+        'Only archived posts can be restored'
+      );
     }
   });
 });

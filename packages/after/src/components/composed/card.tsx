@@ -3,22 +3,19 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
 
-const cardVariants = cva(
-  'rounded-lg card',
-  {
-    variants: {
-      variant: {
-        default: 'bg-card text-card-foreground shadow-sm card-default',
-        bordered: 'border bg-card text-card-foreground card-bordered',
-        elevated: 'bg-card text-card-foreground shadow-lg card-elevated',
-        flat: 'bg-card text-card-foreground card-flat',
-      },
+const cardVariants = cva('rounded-lg card', {
+  variants: {
+    variant: {
+      default: 'bg-card text-card-foreground shadow-sm card-default',
+      bordered: 'border bg-card text-card-foreground card-bordered',
+      elevated: 'bg-card text-card-foreground shadow-lg card-elevated',
+      flat: 'bg-card text-card-foreground card-flat',
     },
-    defaultVariants: {
-      variant: 'default',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
 
 interface CardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
   title?: string;
@@ -48,7 +45,10 @@ const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('card-header flex flex-row items-start justify-between space-y-0 p-6', className)}
+      className={cn(
+        'card-header flex flex-row items-start justify-between space-y-0 p-6',
+        className
+      )}
       {...props}
     />
   )
@@ -86,11 +86,7 @@ CardContent.displayName = 'CardContent';
 
 const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn('flex items-center p-6 pt-0', className)}
-      {...props}
-    />
+    <div ref={ref} className={cn('flex items-center p-6 pt-0', className)} {...props} />
   )
 );
 CardFooter.displayName = 'CardFooter';

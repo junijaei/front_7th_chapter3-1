@@ -93,9 +93,11 @@ export interface UserInfoAvatarProps {
 const UserInfoAvatar = forwardRef<HTMLDivElement, UserInfoAvatarProps>(
   ({ src, alt, fallback }, ref) => {
     const { size } = useUserInfoContext();
-    return <Avatar ref={ref} src={src} alt={alt} size={size}>
-      {fallback}
-    </Avatar>;
+    return (
+      <Avatar ref={ref} src={src} alt={alt} size={size}>
+        {fallback}
+      </Avatar>
+    );
   }
 );
 

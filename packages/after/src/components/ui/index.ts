@@ -17,3 +17,4 @@ export {
 } from './table';
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
 export { FormTextarea } from './textarea';
+export { StatCard } from './stat-card';

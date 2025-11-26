@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { UserManagement } from '../UserManagement';
+import { UserManagement } from '@/pages/UserManagement';
 import * as hooks from '@/hooks';
 
 vi.mock('@/hooks', () => ({
@@ -62,9 +62,7 @@ describe('UserManagement', () => {
     (hooks.useUsers as any).mockReturnValue(mockUsersHook);
     (hooks.useAlert as any).mockReturnValue(mockAlert);
     // useModal is called twice: createModal and editModal
-    (hooks.useModal as any)
-      .mockReturnValueOnce(mockCreateModal)
-      .mockReturnValueOnce(mockEditModal);
+    (hooks.useModal as any).mockReturnValueOnce(mockCreateModal).mockReturnValueOnce(mockEditModal);
   });
 
   describe('렌더링', () => {

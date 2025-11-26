@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Logo } from '../logo';
+import { Logo } from '@/components/ui/logo';
 
 describe('Logo', () => {
   it('로고 텍스트를 렌더링한다', () => {

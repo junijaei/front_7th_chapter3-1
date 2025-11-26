@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { usePosts } from '../usePosts';
+import { usePosts } from '@/hooks/usePosts';
 import { postService } from '@/services/postService';
 
 describe('usePosts', () => {
@@ -42,7 +42,16 @@ describe('usePosts', () => {
     const { result } = renderHook(() => usePosts());
 
     const mockPosts = [
-      { id: 99, title: 'External Post', content: 'Content', author: 'External', category: 'test', status: 'published' as const, views: 0, createdAt: '2024-01-01' }
+      {
+        id: 99,
+        title: 'External Post',
+        content: 'Content',
+        author: 'External',
+        category: 'test',
+        status: 'published' as const,
+        views: 0,
+        createdAt: '2024-01-01',
+      },
     ];
     localStorage.setItem('posts_data', JSON.stringify(mockPosts));
 

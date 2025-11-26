@@ -1,6 +1,6 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 
-// Select Component - Inconsistent with Input component
 interface Option {
   value: string;
   label: string;
@@ -33,16 +33,14 @@ export const FormSelect: React.FC<FormSelectProps> = ({
   helpText,
   size = 'md',
 }) => {
-  void size; // Keep for API consistency but not used in rendering
-  const selectClasses = ['form-select', error && 'error'].filter(Boolean).join(' ');
-  const helperClasses = ['form-helper-text', error && 'error'].filter(Boolean).join(' ');
+  void size; // Keep for API consistency
 
   return (
-    <div className="form-group">
+    <div className="mb-4">
       {label && (
-        <label className="form-label">
+        <label className="mb-1.5 block text-xs font-bold text-gray-800">
           {label}
-          {required && <span style={{ color: '#d32f2f' }}>*</span>}
+          {required && <span className="text-red-600">*</span>}
         </label>
       )}
 
@@ -52,7 +50,12 @@ export const FormSelect: React.FC<FormSelectProps> = ({
         onChange={(e) => onChange(e.target.value)}
         required={required}
         disabled={disabled}
-        className={selectClasses}
+        className={cn(
+          'w-full rounded border border-gray-400 bg-white px-2.5 py-2 text-sm text-black outline-none',
+          'focus:border-blue-700',
+          error && 'border-red-600',
+          disabled && 'cursor-not-allowed bg-gray-100'
+        )}
       >
         <option value="" disabled>
           {placeholder}
@@ -64,8 +67,8 @@ export const FormSelect: React.FC<FormSelectProps> = ({
         ))}
       </select>
 
-      {error && <span className={helperClasses}>{error}</span>}
-      {helpText && !error && <span className="form-helper-text">{helpText}</span>}
+      {error && <span className="mt-1 block text-xs text-red-600">{error}</span>}
+      {helpText && !error && <span className="mt-1 block text-xs text-gray-600">{helpText}</span>}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Logo, type LogoProps } from '@/components/ui/logo';
 import { Avatar, type AvatarProps } from '@/components/ui/avatar';
-import { UserInfo, type UserInfoProps } from '@/components/ui/user-info';
+import { UserInfo, type UserInfoProps } from '@/components/composed/user-info';
 
 const headerVariants = cva('sticky top-0 z-1000 border-b bg-white shadow-sm', {
   variants: {

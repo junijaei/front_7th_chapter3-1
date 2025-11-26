@@ -2,27 +2,24 @@ import { forwardRef, type HTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
-const logoVariants = cva(
-  'flex items-center justify-center rounded-lg font-bold text-white',
-  {
-    variants: {
-      size: {
-        sm: 'h-8 w-8 text-base',
-        md: 'h-10 w-10 text-xl',
-        lg: 'h-12 w-12 text-2xl',
-      },
-      variant: {
-        primary: 'bg-primary',
-        secondary: 'bg-secondary',
-        accent: 'bg-accent',
-      },
+const logoVariants = cva('flex items-center justify-center rounded-lg font-bold text-white', {
+  variants: {
+    size: {
+      sm: 'h-8 w-8 text-base',
+      md: 'h-10 w-10 text-xl',
+      lg: 'h-12 w-12 text-2xl',
     },
-    defaultVariants: {
-      size: 'md',
-      variant: 'primary',
+    variant: {
+      primary: 'bg-primary',
+      secondary: 'bg-secondary',
+      accent: 'bg-accent',
     },
-  }
-);
+  },
+  defaultVariants: {
+    size: 'md',
+    variant: 'primary',
+  },
+});
 
 const logoTextVariants = cva('m-0 font-bold leading-none text-gray-900', {
   variants: {
@@ -65,12 +62,8 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
         <div className={cn(logoVariants({ size, variant }))}>{text}</div>
         {(companyName || projectName) && (
           <div>
-            {companyName && (
-              <h1 className={cn(logoTextVariants({ size }))}>{companyName}</h1>
-            )}
-            {projectName && (
-              <p className={cn(logoSubtextVariants({ size }))}>{projectName}</p>
-            )}
+            {companyName && <h1 className={cn(logoTextVariants({ size }))}>{companyName}</h1>}
+            {projectName && <p className={cn(logoSubtextVariants({ size }))}>{projectName}</p>}
           </div>
         )}
       </div>

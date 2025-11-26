@@ -10,9 +10,12 @@ const alertVariants = cva(
       variant: {
         default: 'bg-background text-foreground alert-default',
         info: 'border-info/50 text-info dark:border-info [&>svg]:text-info alert-info',
-        success: 'border-success/50 text-success dark:border-success [&>svg]:text-success alert-success',
-        warning: 'border-warning/50 text-warning dark:border-warning [&>svg]:text-warning alert-warning',
-        error: 'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive alert-error',
+        success:
+          'border-success/50 text-success dark:border-success [&>svg]:text-success alert-success',
+        warning:
+          'border-warning/50 text-warning dark:border-warning [&>svg]:text-warning alert-warning',
+        error:
+          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive alert-error',
       },
     },
     defaultVariants: {
@@ -23,29 +26,30 @@ const alertVariants = cva(
 
 const Alert = forwardRef<
   HTMLDivElement,
-  HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants> & {
-    title?: string;
-    onClose?: () => void;
-    showIcon?: boolean;
-  }
+  HTMLAttributes<HTMLDivElement> &
+    VariantProps<typeof alertVariants> & {
+      title?: string;
+      onClose?: () => void;
+      showIcon?: boolean;
+    }
 >(({ className, variant, title, onClose, showIcon = true, children, ...props }, ref) => {
   const getIcon = () => {
     switch (variant) {
-      case 'info': return 'ℹ️';
-      case 'success': return '✓';
-      case 'warning': return '⚠️';
-      case 'error': return '✕';
-      default: return '•';
+      case 'info':
+        return 'ℹ️';
+      case 'success':
+        return '✓';
+      case 'warning':
+        return '⚠️';
+      case 'error':
+        return '✕';
+      default:
+        return '•';
     }
   };
 
   return (
-    <div
-      ref={ref}
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
-      {...props}
-    >
+    <div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props}>
       {showIcon && <div className="alert-icon">{getIcon()}</div>}
       <div className="alert-content">
         {title && <AlertTitle>{title}</AlertTitle>}
@@ -56,8 +60,7 @@ const Alert = forwardRef<
           onClick={onClose}
           className="alert-close absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
         >
-          ×
-          <span className="sr-only">닫기</span>
+          ×<span className="sr-only">닫기</span>
         </button>
       )}
     </div>
@@ -65,28 +68,26 @@ const Alert = forwardRef<
 });
 Alert.displayName = 'Alert';
 
-const AlertTitle = forwardRef<
-  HTMLParagraphElement,
-  HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h5
-    ref={ref}
-    className={cn('alert-title mb-1 font-medium leading-none tracking-tight', className)}
-    {...props}
-  />
-));
+const AlertTitle = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLHeadingElement>>(
+  ({ className, ...props }, ref) => (
+    <h5
+      ref={ref}
+      className={cn('alert-title mb-1 font-medium leading-none tracking-tight', className)}
+      {...props}
+    />
+  )
+);
 AlertTitle.displayName = 'AlertTitle';
 
-const AlertDescription = forwardRef<
-  HTMLParagraphElement,
-  HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('alert-body text-sm [&_p]:leading-relaxed', className)}
-    {...props}
-  />
-));
+const AlertDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn('alert-body text-sm [&_p]:leading-relaxed', className)}
+      {...props}
+    />
+  )
+);
 AlertDescription.displayName = 'AlertDescription';
 
 export { Alert, AlertTitle, AlertDescription };

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { UserInfo } from '../user-info';
+import { UserInfo } from '@/components/ui/user-info';
 
 describe('UserInfo', () => {
   it('사용자 이름과 이메일을 렌더링한다', () => {
@@ -16,25 +16,19 @@ describe('UserInfo', () => {
   });
 
   it('size prop이 올바르게 적용된다 - sm', () => {
-    const { container } = render(
-      <UserInfo name="John Doe" email="john@example.com" size="sm" />
-    );
+    const { container } = render(<UserInfo name="John Doe" email="john@example.com" size="sm" />);
     const nameElement = screen.getByText('John Doe');
     expect(nameElement).toHaveClass('text-xs');
   });
 
   it('size prop이 올바르게 적용된다 - md', () => {
-    const { container } = render(
-      <UserInfo name="John Doe" email="john@example.com" size="md" />
-    );
+    const { container } = render(<UserInfo name="John Doe" email="john@example.com" size="md" />);
     const nameElement = screen.getByText('John Doe');
     expect(nameElement).toHaveClass('text-sm');
   });
 
   it('size prop이 올바르게 적용된다 - lg', () => {
-    const { container } = render(
-      <UserInfo name="John Doe" email="john@example.com" size="lg" />
-    );
+    const { container } = render(<UserInfo name="John Doe" email="john@example.com" size="lg" />);
     const nameElement = screen.getByText('John Doe');
     expect(nameElement).toHaveClass('text-base');
   });

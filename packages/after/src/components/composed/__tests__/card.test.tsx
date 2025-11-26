@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Card } from '../card';
+import { Card } from '@/components/composed/card';
 
 describe('Card', () => {
   it('기본 카드가 렌더링된다', () => {
@@ -14,16 +14,17 @@ describe('Card', () => {
   });
 
   it('subtitle이 표시된다', () => {
-    render(<Card title="제목" subtitle="부제목">내용</Card>);
+    render(
+      <Card title="제목" subtitle="부제목">
+        내용
+      </Card>
+    );
     expect(screen.getByText('부제목')).toBeInTheDocument();
   });
 
   it('headerActions가 표시된다', () => {
     render(
-      <Card
-        title="제목"
-        headerActions={<button>액션 버튼</button>}
-      >
+      <Card title="제목" headerActions={<button>액션 버튼</button>}>
         내용
       </Card>
     );

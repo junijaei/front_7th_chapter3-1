@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useModal } from '../useModal';
+import { useModal } from '@/hooks/useModal';
 
 describe('useModal', () => {
   it('초기값이 false일 때 isOpen이 false이다', () => {

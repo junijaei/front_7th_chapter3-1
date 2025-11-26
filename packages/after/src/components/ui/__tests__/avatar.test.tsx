@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Avatar } from '../avatar';
+import { Avatar } from '@/components/ui/avatar';
 
 describe('Avatar', () => {
   it('텍스트를 children으로 렌더링한다', () => {

@@ -1,21 +1,24 @@
+export type PostStatus = 'published' | 'draft' | 'archived' | 'pending' | 'rejected';
 export interface Post {
   id: number;
   title: string;
   content: string;
   author: string;
   category: string;
-  status: 'draft' | 'published' | 'archived';
+  status: PostStatus;
   views: number;
   createdAt: string;
   updatedAt?: string;
 }
 
+export type UserStatus = 'admin' | 'moderator' | 'user';
+export type UserRole = 'active' | 'inactive' | 'suspended';
 export interface User {
   id: number;
   username: string;
   email: string;
-  role: 'admin' | 'moderator' | 'user';
-  status: 'active' | 'inactive' | 'suspended';
+  role: UserRole;
+  status: UserStatus;
   createdAt: string;
   lastLogin?: string;
 }

@@ -1,34 +1,18 @@
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui';
-import { PostManagement } from './PostManagement';
-import { UserManagement } from './UserManagement';
-import '@/styles/components.css';
+import { PostManagement } from '@/pages/PostManagement';
+import { UserManagement } from '@/pages/UserManagement';
 
 export const ManagementPage: React.FC = () => {
   return (
-    <div style={{ minHeight: '100vh', background: '#f0f0f0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-        <div style={{ marginBottom: '20px' }}>
-          <h1
-            style={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              marginBottom: '5px',
-              color: '#333',
-            }}
-          >
-            관리 시스템
-          </h1>
-          <p style={{ color: '#666', fontSize: '14px' }}>사용자와 게시글을 관리하세요</p>
+    <div className="min-h-screen bg-gray-100">
+      <div className="mx-auto max-w-7xl p-5">
+        <div className="mb-5">
+          <h1 className="mb-1 text-2xl font-bold text-gray-800">관리 시스템</h1>
+          <p className="text-sm text-gray-600">사용자와 게시글을 관리하세요</p>
         </div>
 
-        <div
-          style={{
-            background: 'white',
-            border: '1px solid #ddd',
-            padding: '10px',
-          }}
-        >
+        <div className="border border-gray-300 bg-white p-2.5">
           <Tabs defaultValue="post">
             <TabsList>
               <TabsTrigger value="post">게시글</TabsTrigger>

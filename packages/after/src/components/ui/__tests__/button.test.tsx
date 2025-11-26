@@ -69,7 +69,11 @@ describe('Button', () => {
   });
 
   it('HTML button 속성들이 전달된다', () => {
-    render(<Button type="submit" aria-label="제출">버튼</Button>);
+    render(
+      <Button type="submit" aria-label="제출">
+        버튼
+      </Button>
+    );
     const button = screen.getByRole('button');
     expect(button).toHaveAttribute('type', 'submit');
     expect(button).toHaveAttribute('aria-label', '제출');

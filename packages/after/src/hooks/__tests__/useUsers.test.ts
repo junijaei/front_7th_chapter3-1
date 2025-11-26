@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useUsers } from '../useUsers';
+import { useUsers } from '@/hooks/useUsers';
 import { userService } from '@/services/userService';
 
 describe('useUsers', () => {
@@ -41,7 +41,14 @@ describe('useUsers', () => {
     const { result } = renderHook(() => useUsers());
 
     const mockUsers = [
-      { id: 99, username: 'external', email: 'external@example.com', role: 'user' as const, status: 'active' as const, createdAt: '2024-01-01' }
+      {
+        id: 99,
+        username: 'external',
+        email: 'external@example.com',
+        role: 'user' as const,
+        status: 'active' as const,
+        createdAt: '2024-01-01',
+      },
     ];
     localStorage.setItem('users_data', JSON.stringify(mockUsers));
 

@@ -1,12 +1,11 @@
 import React from 'react';
-import { Header } from './components/layout';
-import { Toaster } from './components/ui/sonner';
-import { ManagementPage } from './pages/ManagementPage';
-import './styles/components.css';
+import { Header } from '@/components/layout';
+import { Toaster } from '@/components/ui/sonner';
+import { ManagementPage } from '@/pages/ManagementPage';
 
 export const App: React.FC = () => {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f7fafc' }}>
+    <div className="min-h-screen bg-gray-50">
       <Header>
         <Header.Logo
           logo={{
