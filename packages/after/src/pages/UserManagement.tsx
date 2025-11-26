@@ -1,0 +1,412 @@
+import React, { useState } from 'react';
+import {
+  Button,
+  Badge,
+  Input,
+  FormSelect,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@/components/ui';
+import { Modal } from '@/components/composed';
+import { useUsers, useAlert, useModal, type User } from '@/hooks';
+
+export const UserManagement: React.FC = () => {
+  const usersHook = useUsers();
+  const alert = useAlert();
+  const createModal = useModal();
+  const editModal = useModal();
+
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [formData, setFormData] = useState<any>({});
+
+  const handleCreate = async () => {
+    try {
+      usersHook.create({
+        username: formData.username,
+        email: formData.email,
+        role: formData.role || 'user',
+        status: formData.status || 'active',
+      });
+
+      createModal.close();
+      setFormData({});
+      alert.success('사용자가 생성되었습니다');
+    } catch (error: any) {
+      alert.error(error.message || '생성에 실패했습니다');
+    }
+  };
+
+  const handleEdit = (user: User) => {
+    setSelectedUser(user);
+    setFormData({
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      status: user.status,
+    });
+    editModal.open();
+  };
+
+  const handleUpdate = async () => {
+    if (!selectedUser) return;
+
+    try {
+      usersHook.update(selectedUser.id, formData);
+      editModal.close();
+      setFormData({});
+      setSelectedUser(null);
+      alert.success('사용자가 수정되었습니다');
+    } catch (error: any) {
+      alert.error(error.message || '수정에 실패했습니다');
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+
+    try {
+      usersHook.delete(id);
+      alert.success('삭제되었습니다');
+    } catch (error: any) {
+      alert.error(error.message || '삭제에 실패했습니다');
+    }
+  };
+
+  const renderRoleBadge = (role: string) => {
+    const roleVariant =
+      role === 'admin'
+        ? 'destructive'
+        : role === 'moderator'
+          ? 'warning'
+          : role === 'user'
+            ? 'default'
+            : 'secondary';
+    const roleLabel =
+      role === 'admin'
+        ? '관리자'
+        : role === 'moderator'
+          ? '운영자'
+          : role === 'user'
+            ? '사용자'
+            : '게스트';
+    return <Badge variant={roleVariant}>{roleLabel}</Badge>;
+  };
+
+  const renderStatusBadge = (status: string) => {
+    const statusVariant =
+      status === 'active' ? 'success' : status === 'inactive' ? 'warning' : 'destructive';
+    const statusLabel =
+      status === 'active' ? '활성' : status === 'inactive' ? '비활성' : '정지';
+    return <Badge variant={statusVariant}>{statusLabel}</Badge>;
+  };
+
+  const renderActions = (user: User) => (
+    <div style={{ display: 'flex', gap: '8px' }}>
+      <Button size="sm" variant="primary" onClick={() => handleEdit(user)}>
+        수정
+      </Button>
+      <Button size="sm" variant="danger" onClick={() => handleDelete(user.id)}>
+        삭제
+      </Button>
+    </div>
+  );
+
+  const getStats = () => {
+    const users = usersHook.users;
+    return {
+      total: users.length,
+      active: users.filter((u) => u.status === 'active').length,
+      inactive: users.filter((u) => u.status === 'inactive').length,
+      suspended: users.filter((u) => u.status === 'suspended').length,
+      admin: users.filter((u) => u.role === 'admin').length,
+    };
+  };
+
+  const stats = getStats();
+
+  return (
+    <>
+      <div style={{ marginBottom: '15px', textAlign: 'right' }}>
+        <Button variant="primary" size="md" onClick={createModal.open}>
+          새로 만들기
+        </Button>
+      </div>
+
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+          gap: '10px',
+          marginBottom: '15px',
+        }}
+      >
+        <div
+          style={{
+            padding: '12px 15px',
+            background: '#e3f2fd',
+            border: '1px solid #90caf9',
+            borderRadius: '3px',
+          }}
+        >
+          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>전체</div>
+          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#1976d2' }}>
+            {stats.total}
+          </div>
+        </div>
+
+        <div
+          style={{
+            padding: '12px 15px',
+            background: '#e8f5e9',
+            border: '1px solid #81c784',
+            borderRadius: '3px',
+          }}
+        >
+          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>활성</div>
+          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#388e3c' }}>
+            {stats.active}
+          </div>
+        </div>
+
+        <div
+          style={{
+            padding: '12px 15px',
+            background: '#fff3e0',
+            border: '1px solid #ffb74d',
+            borderRadius: '3px',
+          }}
+        >
+          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>비활성</div>
+          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#f57c00' }}>
+            {stats.inactive}
+          </div>
+        </div>
+
+        <div
+          style={{
+            padding: '12px 15px',
+            background: '#ffebee',
+            border: '1px solid #e57373',
+            borderRadius: '3px',
+          }}
+        >
+          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>정지</div>
+          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#d32f2f' }}>
+            {stats.suspended}
+          </div>
+        </div>
+
+        <div
+          style={{
+            padding: '12px 15px',
+            background: '#f5f5f5',
+            border: '1px solid #bdbdbd',
+            borderRadius: '3px',
+          }}
+        >
+          <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>관리자</div>
+          <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#424242' }}>
+            {stats.admin}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ border: '1px solid #ddd', background: 'white', overflow: 'auto' }}>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead style={{ width: '60px' }}>ID</TableHead>
+              <TableHead style={{ width: '150px' }}>사용자명</TableHead>
+              <TableHead>이메일</TableHead>
+              <TableHead style={{ width: '120px' }}>역할</TableHead>
+              <TableHead style={{ width: '120px' }}>상태</TableHead>
+              <TableHead style={{ width: '120px' }}>생성일</TableHead>
+              <TableHead style={{ width: '140px' }}>마지막 로그인</TableHead>
+              <TableHead style={{ width: '200px' }}>관리</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {usersHook.users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{renderRoleBadge(user.role)}</TableCell>
+                <TableCell>{renderStatusBadge(user.status)}</TableCell>
+                <TableCell>{user.createdAt}</TableCell>
+                <TableCell>{user.lastLogin || '-'}</TableCell>
+                <TableCell>{renderActions(user)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      <Modal
+        isOpen={createModal.isOpen}
+        onClose={() => {
+          createModal.close();
+          setFormData({});
+        }}
+        title="새 사용자 만들기"
+        size="large"
+        showFooter
+        footerContent={
+          <>
+            <Button
+              variant="secondary"
+              size="md"
+              onClick={() => {
+                createModal.close();
+                setFormData({});
+              }}
+            >
+              취소
+            </Button>
+            <Button variant="primary" size="md" onClick={handleCreate}>
+              생성
+            </Button>
+          </>
+        }
+      >
+        <div>
+          <Input
+            name="username"
+            value={formData.username || ''}
+            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+            placeholder="사용자명을 입력하세요"
+            required
+          />
+          <Input
+            name="email"
+            value={formData.email || ''}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="이메일을 입력하세요"
+            type="email"
+            required
+          />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <FormSelect
+              name="role"
+              value={formData.role || 'user'}
+              onChange={(value) => setFormData({ ...formData, role: value })}
+              options={[
+                { value: 'user', label: '사용자' },
+                { value: 'moderator', label: '운영자' },
+                { value: 'admin', label: '관리자' },
+              ]}
+              label="역할"
+              size="md"
+            />
+            <FormSelect
+              name="status"
+              value={formData.status || 'active'}
+              onChange={(value) => setFormData({ ...formData, status: value })}
+              options={[
+                { value: 'active', label: '활성' },
+                { value: 'inactive', label: '비활성' },
+                { value: 'suspended', label: '정지' },
+              ]}
+              label="상태"
+              size="md"
+            />
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={editModal.isOpen}
+        onClose={() => {
+          editModal.close();
+          setFormData({});
+          setSelectedUser(null);
+        }}
+        title="사용자 수정"
+        size="large"
+        showFooter
+        footerContent={
+          <>
+            <Button
+              variant="secondary"
+              size="md"
+              onClick={() => {
+                editModal.close();
+                setFormData({});
+                setSelectedUser(null);
+              }}
+            >
+              취소
+            </Button>
+            <Button variant="primary" size="md" onClick={handleUpdate}>
+              수정 완료
+            </Button>
+          </>
+        }
+      >
+        <div>
+          {selectedUser && (
+            <div
+              style={{
+                padding: '12px',
+                marginBottom: '16px',
+                background: '#e3f2fd',
+                border: '1px solid #90caf9',
+                borderRadius: '4px',
+                fontSize: '14px',
+                color: '#1976d2',
+              }}
+            >
+              ID: {selectedUser.id} | 생성일: {selectedUser.createdAt}
+            </div>
+          )}
+
+          <Input
+            name="username"
+            value={formData.username || ''}
+            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+            placeholder="사용자명을 입력하세요"
+            required
+          />
+          <Input
+            name="email"
+            value={formData.email || ''}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="이메일을 입력하세요"
+            type="email"
+            required
+          />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <FormSelect
+              name="role"
+              value={formData.role || 'user'}
+              onChange={(value) => setFormData({ ...formData, role: value })}
+              options={[
+                { value: 'user', label: '사용자' },
+                { value: 'moderator', label: '운영자' },
+                { value: 'admin', label: '관리자' },
+              ]}
+              label="역할"
+              size="md"
+            />
+            <FormSelect
+              name="status"
+              value={formData.status || 'active'}
+              onChange={(value) => setFormData({ ...formData, status: value })}
+              options={[
+                { value: 'active', label: '활성' },
+                { value: 'inactive', label: '비활성' },
+                { value: 'suspended', label: '정지' },
+              ]}
+              label="상태"
+              size="md"
+            />
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+};

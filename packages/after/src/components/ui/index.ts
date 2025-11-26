@@ -15,5 +15,5 @@ export {
   TableCell,
   TableCaption,
 } from './table';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
 export { FormTextarea } from './textarea';
-export { UserInfo } from './user-info';
