@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Badge,
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-  StatCard,
-} from '@/components/ui';
 import { PostFormModal } from '@/components/composed';
-import { usePosts, useAlert, useModal, type Post, type PostFormData } from '@/hooks';
+import {
+  Badge,
+  Button,
+  StatCard,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui';
+import { POST_CATEGORY_BADGE, POST_STATUS_BADGE } from '@/constants';
+import { useAlert, useModal, usePosts } from '@/hooks';
+import type { Post, PostFormData } from '@/types';
+import { useMemo, useState, type ReactNode } from 'react';
 
-export const PostManagement: React.FC = () => {
+export const PostManagement = () => {
   const postsHook = usePosts();
   const alert = useAlert();
-  const createModal = useModal();
-  const editModal = useModal();
+  const modal = useModal();
 
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState<Partial<PostFormData>>({});
@@ -37,8 +38,9 @@ export const PostManagement: React.FC = () => {
         status: formData.status || 'draft',
       });
 
-      createModal.close();
+      modal.close();
       setFormData({});
+      setSelectedPost(null);
       alert.success('게시글이 생성되었습니다');
     } catch (error) {
       const message = error instanceof Error ? error.message : '생성에 실패했습니다';
@@ -55,7 +57,11 @@ export const PostManagement: React.FC = () => {
       category: post.category,
       status: post.status,
     });
-    editModal.open();
+    modal.open();
+  };
+
+  const handleOpenCreate = () => {
+    modal.open();
   };
 
   const handleUpdate = async () => {
@@ -63,7 +69,7 @@ export const PostManagement: React.FC = () => {
 
     try {
       postsHook.update(selectedPost.id, formData);
-      editModal.close();
+      modal.close();
       setFormData({});
       setSelectedPost(null);
       alert.success('게시글이 수정되었습니다');
@@ -115,82 +121,44 @@ export const PostManagement: React.FC = () => {
     }
   };
 
-  const renderCategoryBadge = (category: string) => {
-    let variant: 'default' | 'info' | 'destructive' | 'secondary';
-
-    switch (category) {
-      case 'development':
-        variant = 'default';
-        break;
-      case 'design':
-        variant = 'info';
-        break;
-      case 'accessibility':
-        variant = 'destructive';
-        break;
-      default:
-        variant = 'secondary';
-    }
-
-    return <Badge variant={variant}>{category}</Badge>;
+  const resetPostForm = () => {
+    setSelectedPost(null);
+    setFormData({});
   };
 
-  const renderStatusBadge = (status: string) => {
-    let statusVariant: 'success' | 'warning' | 'secondary' | 'info' | 'destructive';
-    let statusLabel: string;
-
-    switch (status) {
-      case 'published':
-        statusVariant = 'success';
-        statusLabel = '게시됨';
-        break;
-      case 'draft':
-        statusVariant = 'warning';
-        statusLabel = '임시저장';
-        break;
-      case 'archived':
-        statusVariant = 'secondary';
-        statusLabel = '보관됨';
-        break;
-      case 'pending':
-        statusVariant = 'info';
-        statusLabel = '대기중';
-        break;
-      default:
-        statusVariant = 'destructive';
-        statusLabel = '거부됨';
-    }
-
-    return <Badge variant={statusVariant}>{statusLabel}</Badge>;
-  };
-
-  const renderActions = (post: Post) => (
-    <div className="flex flex-wrap gap-2">
-      <Button size="sm" variant="primary" onClick={() => handleEdit(post)}>
-        수정
-      </Button>
-      {post.status === 'draft' && (
+  const renderActions = (post: Post) => {
+    const statusActions: Record<string, ReactNode> = {
+      draft: (
         <Button size="sm" variant="success" onClick={() => handlePublish(post.id)}>
           게시
         </Button>
-      )}
-      {post.status === 'published' && (
+      ),
+      published: (
         <Button size="sm" variant="secondary" onClick={() => handleArchive(post.id)}>
           보관
         </Button>
-      )}
-      {post.status === 'archived' && (
+      ),
+      archived: (
         <Button size="sm" variant="primary" onClick={() => handleRestore(post.id)}>
           복원
         </Button>
-      )}
-      <Button size="sm" variant="danger" onClick={() => handleDelete(post.id)}>
-        삭제
-      </Button>
-    </div>
-  );
+      ),
+    };
 
-  const getStats = () => {
+    return (
+      <div className="flex flex-wrap gap-2">
+        <Button size="sm" variant="primary" onClick={() => handleEdit(post)}>
+          수정
+        </Button>
+        {statusActions[post.status]}
+        <Button size="sm" variant="danger" onClick={() => handleDelete(post.id)}>
+          삭제
+        </Button>
+      </div>
+    );
+  };
+
+  const stats = useMemo(() => {
     const posts = postsHook.posts;
     return {
       total: posts.length,
@@ -199,14 +167,12 @@ export const PostManagement: React.FC = () => {
       archived: posts.filter((p) => p.status === 'archived').length,
       totalViews: posts.reduce((sum, p) => sum + p.views, 0),
     };
-  };
-
-  const stats = getStats();
+  }, [postsHook.posts]);
 
   return (
     <>
       <div className="mb-4 text-right">
-        <Button variant="primary" size="md" onClick={createModal.open}>
+        <Button variant="primary" size="md" onClick={handleOpenCreate}>
           새로 만들기
         </Button>
       </div>
@@ -219,7 +185,7 @@ export const PostManagement: React.FC = () => {
         <StatCard variant="gray" label="총 조회수" value={stats.totalViews} />
       </div>
 
-      <div className="overflow-auto border border-gray-300 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+      <div className="overflow-auto border border-border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
@@ -239,8 +205,14 @@ export const PostManagement: React.FC = () => {
                 <TableCell>{post.id}</TableCell>
                 <TableCell>{post.title}</TableCell>
                 <TableCell>{post.author}</TableCell>
-                <TableCell>{renderCategoryBadge(post.category)}</TableCell>
-                <TableCell>{renderStatusBadge(post.status)}</TableCell>
+                <TableCell>
+                  <Badge variant={POST_CATEGORY_BADGE[post.category]}>{post.category}</Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant={POST_STATUS_BADGE[post.status].variant}>
+                    {POST_STATUS_BADGE[post.status].label}
+                  </Badge>
+                </TableCell>
                 <TableCell>{post.views.toLocaleString()}</TableCell>
                 <TableCell>{post.createdAt}</TableCell>
                 <TableCell>{renderActions(post)}</TableCell>
@@ -251,28 +223,14 @@ export const PostManagement: React.FC = () => {
       </div>
 
       <PostFormModal
-        isOpen={createModal.isOpen}
+        isOpen={modal.isOpen}
         onClose={() => {
-          createModal.close();
-          setFormData({});
+          modal.close();
+          resetPostForm();
         }}
-        title="새 게시글 만들기"
         formData={formData}
         setFormData={setFormData}
-        onSubmit={handleCreate}
-      />
-
-      <PostFormModal
-        isOpen={editModal.isOpen}
-        onClose={() => {
-          editModal.close();
-          setFormData({});
-          setSelectedPost(null);
-        }}
-        title="게시글 수정"
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={handleUpdate}
+        onSubmit={selectedPost ? handleUpdate : handleCreate}
         selectedPost={selectedPost}
       />
     </>

@@ -1,27 +1,27 @@
-import React from 'react';
 import { Button, Input, FormSelect } from '@/components/ui';
 import { Modal } from '@/components/composed';
-import type { User, UserFormData } from '@/hooks';
+import type { User, UserFormData } from '@/types';
 
 interface UserFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
   formData: Partial<UserFormData>;
   setFormData: (data: Partial<UserFormData>) => void;
   onSubmit: () => void;
   selectedUser?: User | null;
 }
 
-export const UserFormModal: React.FC<UserFormModalProps> = ({
+export const UserFormModal = ({
   isOpen,
   onClose,
-  title,
   formData,
   setFormData,
   onSubmit,
   selectedUser,
-}) => {
+}: UserFormModalProps) => {
+  const isEditMode = selectedUser !== null;
+  const title = isEditMode ? '사용자 수정' : '새 사용자 만들기';
+
   return (
     <Modal
       isOpen={isOpen}
@@ -35,7 +35,7 @@ export const UserFormModal: React.FC<UserFormModalProps> = ({
             취소
           </Button>
           <Button variant="primary" size="md" onClick={onSubmit}>
-            {selectedUser ? '수정 완료' : '생성'}
+            {isEditMode ? '수정 완료' : '생성'}
           </Button>
         </>
       }

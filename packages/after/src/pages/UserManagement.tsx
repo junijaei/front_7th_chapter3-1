@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Badge,
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-  StatCard,
-} from '@/components/ui';
 import { UserFormModal } from '@/components/composed';
-import { useUsers, useAlert, useModal, type User, type UserFormData } from '@/hooks';
+import {
+  Badge,
+  Button,
+  StatCard,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui';
+import { USER_ROLE_BADGE, USER_STATUS_BADGE } from '@/constants';
+import { useAlert, useModal, useUsers } from '@/hooks';
+import type { User, UserFormData } from '@/types';
+import { useMemo, useState } from 'react';
 
-export const UserManagement: React.FC = () => {
+export const UserManagement = () => {
   const usersHook = useUsers();
   const alert = useAlert();
-  const createModal = useModal();
-  const editModal = useModal();
+  const modal = useModal();
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [formData, setFormData] = useState<Partial<UserFormData>>({});
@@ -36,8 +37,9 @@ export const UserManagement: React.FC = () => {
         status: formData.status || 'active',
       });
 
-      createModal.close();
+      modal.close();
       setFormData({});
+      setSelectedUser(null);
       alert.success('사용자가 생성되었습니다');
     } catch (error) {
       const message = error instanceof Error ? error.message : '생성에 실패했습니다';
@@ -53,7 +55,11 @@ export const UserManagement: React.FC = () => {
       role: user.role,
       status: user.status,
     });
-    editModal.open();
+    modal.open();
+  };
+
+  const handleOpenCreate = () => {
+    modal.open();
   };
 
   const handleUpdate = async () => {
@@ -61,7 +67,7 @@ export const UserManagement: React.FC = () => {
 
     try {
       usersHook.update(selectedUser.id, formData);
-      editModal.close();
+      modal.close();
       setFormData({});
       setSelectedUser(null);
       alert.success('사용자가 수정되었습니다');
@@ -83,50 +89,9 @@ export const UserManagement: React.FC = () => {
     }
   };
 
-  const renderRoleBadge = (role: string) => {
-    let roleVariant: 'destructive' | 'warning' | 'default' | 'secondary';
-    let roleLabel: string;
-
-    switch (role) {
-      case 'admin':
-        roleVariant = 'destructive';
-        roleLabel = '관리자';
-        break;
-      case 'moderator':
-        roleVariant = 'warning';
-        roleLabel = '운영자';
-        break;
-      case 'user':
-        roleVariant = 'default';
-        roleLabel = '사용자';
-        break;
-      default:
-        roleVariant = 'secondary';
-        roleLabel = '게스트';
-    }
-
-    return <Badge variant={roleVariant}>{roleLabel}</Badge>;
-  };
-
-  const renderStatusBadge = (status: string) => {
-    let statusVariant: 'success' | 'warning' | 'destructive';
-    let statusLabel: string;
-
-    switch (status) {
-      case 'active':
-        statusVariant = 'success';
-        statusLabel = '활성';
-        break;
-      case 'inactive':
-        statusVariant = 'warning';
-        statusLabel = '비활성';
-        break;
-      default:
-        statusVariant = 'destructive';
-        statusLabel = '정지';
-    }
-
-    return <Badge variant={statusVariant}>{statusLabel}</Badge>;
+  const resetUserForm = () => {
+    setSelectedUser(null);
+    setFormData({});
   };
 
   const renderActions = (user: User) => (
@@ -140,7 +105,7 @@ export const UserManagement: React.FC = () => {
     </div>
   );
 
-  const getStats = () => {
+  const stats = useMemo(() => {
     const users = usersHook.users;
     return {
       total: users.length,
@@ -149,14 +114,12 @@ export const UserManagement: React.FC = () => {
       suspended: users.filter((u) => u.status === 'suspended').length,
       admin: users.filter((u) => u.role === 'admin').length,
     };
-  };
-
-  const stats = getStats();
+  }, [usersHook.users]);
 
   return (
     <>
       <div className="mb-4 text-right">
-        <Button variant="primary" size="md" onClick={createModal.open}>
+        <Button variant="primary" size="md" onClick={handleOpenCreate}>
           새로 만들기
         </Button>
       </div>
@@ -169,7 +132,7 @@ export const UserManagement: React.FC = () => {
         <StatCard variant="gray" label="관리자" value={stats.admin} />
       </div>
 
-      <div className="overflow-auto border border-gray-300 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+      <div className="overflow-auto border border-border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
@@ -189,8 +152,16 @@ export const UserManagement: React.FC = () => {
                 <TableCell>{user.id}</TableCell>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{renderRoleBadge(user.role)}</TableCell>
-                <TableCell>{renderStatusBadge(user.status)}</TableCell>
+                <TableCell>
+                  <Badge variant={USER_ROLE_BADGE[user.role].variant}>
+                    {USER_ROLE_BADGE[user.role].label}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant={USER_STATUS_BADGE[user.status].variant}>
+                    {USER_STATUS_BADGE[user.status].label}
+                  </Badge>
+                </TableCell>
                 <TableCell>{user.createdAt}</TableCell>
                 <TableCell>{user.lastLogin || '-'}</TableCell>
                 <TableCell>{renderActions(user)}</TableCell>
@@ -201,28 +172,14 @@ export const UserManagement: React.FC = () => {
       </div>
 
       <UserFormModal
-        isOpen={createModal.isOpen}
+        isOpen={modal.isOpen}
         onClose={() => {
-          createModal.close();
-          setFormData({});
+          modal.close();
+          resetUserForm();
         }}
-        title="새 사용자 만들기"
         formData={formData}
         setFormData={setFormData}
-        onSubmit={handleCreate}
-      />
-
-      <UserFormModal
-        isOpen={editModal.isOpen}
-        onClose={() => {
-          editModal.close();
-          setFormData({});
-          setSelectedUser(null);
-        }}
-        title="사용자 수정"
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={handleUpdate}
+        onSubmit={selectedUser ? handleUpdate : handleCreate}
         selectedUser={selectedUser}
       />
     </>

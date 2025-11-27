@@ -1,27 +1,27 @@
-import React from 'react';
 import { Button, Input, FormSelect, FormTextarea } from '@/components/ui';
 import { Modal } from '@/components/composed';
-import type { Post, PostFormData } from '@/hooks';
+import type { Post, PostFormData } from '@/types';
 
 interface PostFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
   formData: Partial<PostFormData>;
   setFormData: (data: Partial<PostFormData>) => void;
   onSubmit: () => void;
   selectedPost?: Post | null;
 }
 
-export const PostFormModal: React.FC<PostFormModalProps> = ({
+export const PostFormModal = ({
   isOpen,
   onClose,
-  title,
   formData,
   setFormData,
   onSubmit,
   selectedPost,
-}) => {
+}: PostFormModalProps) => {
+  const isEditMode = selectedPost !== null;
+  const title = isEditMode ? '게시글 수정' : '새 게시글 만들기';
+
   return (
     <Modal
       isOpen={isOpen}
@@ -35,7 +35,7 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
             취소
           </Button>
           <Button variant="primary" size="md" onClick={onSubmit}>
-            {selectedPost ? '수정 완료' : '생성'}
+            {isEditMode ? '수정 완료' : '생성'}
           </Button>
         </>
       }
@@ -67,7 +67,9 @@ export const PostFormModal: React.FC<PostFormModalProps> = ({
           <FormSelect
             name="category"
             value={formData.category || ''}
-            onChange={(value) => setFormData({ ...formData, category: value })}
+            onChange={(value) =>
+              setFormData({ ...formData, category: value as PostFormData['category'] })
+            }
             options={[
               { value: 'development', label: 'Development' },
               { value: 'design', label: 'Design' },
