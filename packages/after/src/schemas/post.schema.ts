@@ -16,7 +16,7 @@ export const postFormSchema = z.object({
     .min(1, '작성자명을 입력해주세요')
     .max(50, '작성자명은 50자 이내로 입력해주세요'),
   category: z.enum(['development', 'design', 'accessibility'], '카테고리를 선택해주세요'),
-  status: z.enum(['draft', 'published', 'archived']).default('draft'),
+  status: z.enum(['draft', 'published', 'archived', 'pending', 'rejected']),
 });
 
 export type PostFormSchema = z.infer<typeof postFormSchema>;

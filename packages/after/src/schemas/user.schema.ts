@@ -19,7 +19,7 @@ export const userFormSchema = z.object({
       (value) => value.endsWith('@company.com') || value.endsWith('@example.com'),
       '회사 이메일(@company.com 또는 @example.com)만 사용 가능합니다'
     ),
-  role: z.enum(['user', 'moderator', 'admin'], '역할을 선택해주세요'),
+  role: z.enum(['user', 'moderator', 'admin', 'guest'], '역할을 선택해주세요'),
   status: z.enum(['active', 'inactive', 'suspended'], '상태를 선택해주세요'),
 });
 

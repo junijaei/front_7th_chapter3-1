@@ -3,7 +3,7 @@ export type PostCategory = 'development' | 'design' | 'accessibility';
 export interface Post {
   id: number;
   title: string;
-  content: string;
+  content?: string;
   author: string;
   category: PostCategory;
   status: PostStatus;
@@ -18,8 +18,8 @@ export type UpdatePostData = Partial<Omit<Post, 'id' | 'createdAt' | 'views'>>;
 // Form data type for modals
 export interface PostFormData {
   title: string;
-  content: string;
+  content?: string;
   author: string;
   category: PostCategory;
-  status?: PostStatus;
+  status: PostStatus;
 }

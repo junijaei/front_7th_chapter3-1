@@ -15,7 +15,21 @@ export interface FormSelectProps extends SelectHTMLAttributes<HTMLSelectElement>
 }
 
 export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
-  ({ className, options, label, placeholder = 'Select an option...', error, helpText, required, id, name, ...props }, ref) => {
+  (
+    {
+      className,
+      options,
+      label,
+      placeholder = 'Select an option...',
+      error,
+      helpText,
+      required,
+      id,
+      name,
+      ...props
+    },
+    ref
+  ) => {
     const selectId = id || name;
 
     return (

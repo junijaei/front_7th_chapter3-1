@@ -13,12 +13,7 @@ interface UserFormModalProps {
   selectedUser?: User | null;
 }
 
-export const UserFormModal = ({
-  isOpen,
-  onClose,
-  onSubmit,
-  selectedUser,
-}: UserFormModalProps) => {
+export const UserFormModal = ({ isOpen, onClose, onSubmit, selectedUser }: UserFormModalProps) => {
   const isEditMode = selectedUser !== null;
   const title = isEditMode ? '사용자 수정' : '새 사용자 만들기';
 

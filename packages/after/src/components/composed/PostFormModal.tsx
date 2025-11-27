@@ -13,12 +13,7 @@ interface PostFormModalProps {
   selectedPost?: Post | null;
 }
 
-export const PostFormModal = ({
-  isOpen,
-  onClose,
-  onSubmit,
-  selectedPost,
-}: PostFormModalProps) => {
+export const PostFormModal = ({ isOpen, onClose, onSubmit, selectedPost }: PostFormModalProps) => {
   const isEditMode = selectedPost !== null;
   const title = isEditMode ? '게시글 수정' : '새 게시글 만들기';
 
