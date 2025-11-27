@@ -19,7 +19,7 @@ describe('useAlert', () => {
 
   it('success 메서드로 성공 토스트를 표시한다', () => {
     const { result } = renderHook(() => useAlert());
-    const mockToast = toast as any;
+    const mockToast = toast as unknown as { success: ReturnType<typeof vi.fn> };
     mockToast.success = vi.fn();
 
     result.current.success('작업이 완료되었습니다');
@@ -33,7 +33,7 @@ describe('useAlert', () => {
 
   it('error 메서드로 에러 토스트를 표시한다', () => {
     const { result } = renderHook(() => useAlert());
-    const mockToast = toast as any;
+    const mockToast = toast as unknown as { error: ReturnType<typeof vi.fn> };
     mockToast.error = vi.fn();
 
     result.current.error('오류가 발생했습니다');
@@ -47,7 +47,7 @@ describe('useAlert', () => {
 
   it('warning 메서드로 경고 토스트를 표시한다', () => {
     const { result } = renderHook(() => useAlert());
-    const mockToast = toast as any;
+    const mockToast = toast as unknown as { warning: ReturnType<typeof vi.fn> };
     mockToast.warning = vi.fn();
 
     result.current.warning('주의가 필요합니다');
@@ -61,7 +61,7 @@ describe('useAlert', () => {
 
   it('info 메서드로 정보 토스트를 표시한다', () => {
     const { result } = renderHook(() => useAlert());
-    const mockToast = toast as any;
+    const mockToast = toast as unknown as { info: ReturnType<typeof vi.fn> };
     mockToast.info = vi.fn();
 
     result.current.info('새로운 정보가 있습니다');
@@ -75,7 +75,7 @@ describe('useAlert', () => {
 
   it('커스텀 title을 지정할 수 있다', () => {
     const { result } = renderHook(() => useAlert());
-    const mockToast = toast as any;
+    const mockToast = toast as unknown as { success: ReturnType<typeof vi.fn> };
     mockToast.success = vi.fn();
 
     result.current.success('작업이 완료되었습니다', {
@@ -91,7 +91,7 @@ describe('useAlert', () => {
 
   it('duration을 지정할 수 있다', () => {
     const { result } = renderHook(() => useAlert());
-    const mockToast = toast as any;
+    const mockToast = toast as unknown as { success: ReturnType<typeof vi.fn> };
     mockToast.success = vi.fn();
 
     result.current.success('작업이 완료되었습니다', {
@@ -107,7 +107,7 @@ describe('useAlert', () => {
 
   it('action을 지정할 수 있다', () => {
     const { result } = renderHook(() => useAlert());
-    const mockToast = toast as any;
+    const mockToast = toast as unknown as { success: ReturnType<typeof vi.fn> };
     mockToast.success = vi.fn();
 
     const mockAction = {
@@ -128,7 +128,12 @@ describe('useAlert', () => {
 
   it('showAlert로 다양한 variant를 표시할 수 있다', () => {
     const { result } = renderHook(() => useAlert());
-    const mockToast = toast as any;
+    const mockToast = toast as unknown as {
+      success: ReturnType<typeof vi.fn>;
+      error: ReturnType<typeof vi.fn>;
+      warning: ReturnType<typeof vi.fn>;
+      info: ReturnType<typeof vi.fn>;
+    };
     mockToast.success = vi.fn();
     mockToast.error = vi.fn();
     mockToast.warning = vi.fn();

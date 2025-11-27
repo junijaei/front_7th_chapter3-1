@@ -11,7 +11,7 @@ describe('Avatar', () => {
   it('기본 variant와 size가 적용된다', () => {
     const { container } = render(<Avatar>AB</Avatar>);
     const avatar = container.firstChild as HTMLElement;
-    expect(avatar).toHaveClass('bg-blue-50', 'text-primary', 'h-10', 'w-10');
+    expect(avatar).toHaveClass('bg-blue-50', 'text-blue-700', 'h-10', 'w-10');
   });
 
   it('size prop이 올바르게 적용된다', () => {
@@ -23,7 +23,7 @@ describe('Avatar', () => {
   it('variant prop이 올바르게 적용된다', () => {
     const { container } = render(<Avatar variant="success">AB</Avatar>);
     const avatar = container.firstChild as HTMLElement;
-    expect(avatar).toHaveClass('bg-green-50', 'text-green-600');
+    expect(avatar).toHaveClass('bg-green-50', 'text-green-700');
   });
 
   it('이미지를 src prop으로 렌더링한다', () => {

@@ -118,7 +118,7 @@ const UserInfoAvatar = forwardRef<HTMLDivElement, UserInfoAvatarProps>(
 
 UserInfoAvatar.displayName = 'UserInfo.Avatar';
 
-export interface UserInfoTextProps extends HTMLAttributes<HTMLDivElement> {}
+export type UserInfoTextProps = HTMLAttributes<HTMLDivElement>;
 
 const UserInfoText = forwardRef<HTMLDivElement, UserInfoTextProps>(
   ({ className, children, ...props }, ref) => {
@@ -133,7 +133,7 @@ const UserInfoText = forwardRef<HTMLDivElement, UserInfoTextProps>(
 
 UserInfoText.displayName = 'UserInfo.Text';
 
-export interface UserInfoNameProps extends HTMLAttributes<HTMLDivElement> {}
+export type UserInfoNameProps = HTMLAttributes<HTMLDivElement>;
 
 const UserInfoName = forwardRef<HTMLDivElement, UserInfoNameProps>(
   ({ className, children, ...props }, ref) => {
@@ -148,7 +148,7 @@ const UserInfoName = forwardRef<HTMLDivElement, UserInfoNameProps>(
 
 UserInfoName.displayName = 'UserInfo.Name';
 
-export interface UserInfoEmailProps extends HTMLAttributes<HTMLDivElement> {}
+export type UserInfoEmailProps = HTMLAttributes<HTMLDivElement>;
 
 const UserInfoEmail = forwardRef<HTMLDivElement, UserInfoEmailProps>(
   ({ className, children, ...props }, ref) => {

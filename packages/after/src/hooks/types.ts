@@ -28,3 +28,19 @@ export type UpdatePostData = Partial<Omit<Post, 'id' | 'createdAt' | 'views'>>;
 
 export type CreateUserData = Omit<User, 'id' | 'createdAt'>;
 export type UpdateUserData = Partial<Omit<User, 'id' | 'createdAt'>>;
+
+// Form data types for modals
+export interface PostFormData {
+  title: string;
+  content: string;
+  author: string;
+  category: string;
+  status?: PostStatus;
+}
+
+export interface UserFormData {
+  username: string;
+  email: string;
+  role: UserRole;
+  status: UserStatus;
+}

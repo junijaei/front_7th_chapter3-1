@@ -53,7 +53,9 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
       />
 
       {error && <span className="mt-1 block text-xs text-red-600 dark:text-red-400">{error}</span>}
-      {helpText && !error && <span className="mt-1 block text-xs text-gray-600 dark:text-neutral-400">{helpText}</span>}
+      {helpText && !error && (
+        <span className="mt-1 block text-xs text-gray-600 dark:text-neutral-400">{helpText}</span>
+      )}
     </div>
   );
 };

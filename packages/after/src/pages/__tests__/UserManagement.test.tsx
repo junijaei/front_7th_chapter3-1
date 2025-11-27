@@ -59,10 +59,12 @@ describe('UserManagement', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (hooks.useUsers as any).mockReturnValue(mockUsersHook);
-    (hooks.useAlert as any).mockReturnValue(mockAlert);
+    (hooks.useUsers as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockUsersHook);
+    (hooks.useAlert as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockAlert);
     // useModal is called twice: createModal and editModal
-    (hooks.useModal as any).mockReturnValueOnce(mockCreateModal).mockReturnValueOnce(mockEditModal);
+    (hooks.useModal as unknown as ReturnType<typeof vi.fn>)
+      .mockReturnValueOnce(mockCreateModal)
+      .mockReturnValueOnce(mockEditModal);
   });
 
   describe('렌더링', () => {

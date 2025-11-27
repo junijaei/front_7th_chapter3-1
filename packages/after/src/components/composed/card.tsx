@@ -17,7 +17,9 @@ const cardVariants = cva('rounded-lg card', {
   },
 });
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
+export interface CardProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardVariants> {
   title?: string;
   subtitle?: string;
   headerActions?: ReactNode;
