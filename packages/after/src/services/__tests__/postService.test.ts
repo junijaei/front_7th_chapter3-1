@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { postService } from '@/services/postService';
-import type { CreatePostData, UpdatePostData } from '@/hooks/types';
+import type { CreatePostData, UpdatePostData } from '@/types';
 
 describe('postService', () => {
   beforeEach(() => {

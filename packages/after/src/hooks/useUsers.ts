@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { userService } from '@/services/userService';
-import type { User, CreateUserData, UpdateUserData } from '@/hooks/types';
+import type { User, CreateUserData, UpdateUserData } from '@/types';
 
 export const useUsers = () => {
   const [users, setUsers] = useState<User[]>(() => userService.getAll());

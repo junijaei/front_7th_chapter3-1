@@ -1,4 +1,4 @@
-import type { Post, CreatePostData, UpdatePostData } from '@/hooks/types';
+import type { Post, CreatePostData, UpdatePostData } from '@/types';
 
 const STORAGE_KEY = 'posts_data';
 

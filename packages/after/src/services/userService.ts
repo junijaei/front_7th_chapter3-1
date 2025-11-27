@@ -1,4 +1,4 @@
-import type { User, CreateUserData, UpdateUserData } from '@/hooks/types';
+import type { User, CreateUserData, UpdateUserData } from '@/types';
 
 const STORAGE_KEY = 'users_data';
 

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { postService } from '@/services/postService';
-import type { Post, CreatePostData, UpdatePostData } from '@/hooks/types';
+import type { Post, CreatePostData, UpdatePostData } from '@/types';
 
 export const usePosts = () => {
   const [posts, setPosts] = useState<Post[]>(() => postService.getAll());

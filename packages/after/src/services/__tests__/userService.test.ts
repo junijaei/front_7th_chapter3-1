@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { userService } from '@/services/userService';
-import type { CreateUserData, UpdateUserData } from '@/hooks/types';
+import type { CreateUserData, UpdateUserData } from '@/types';
 
 describe('userService', () => {
   beforeEach(() => {
