@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { Button, Input, FormSelect, FormTextarea } from '@/components/ui';
 import { Modal } from '@/components/composed';
 import type { Post, PostFormData } from '@/types';
@@ -5,36 +7,77 @@ import type { Post, PostFormData } from '@/types';
 interface PostFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  formData: Partial<PostFormData>;
-  setFormData: (data: Partial<PostFormData>) => void;
-  onSubmit: () => void;
+  onSubmit: (data: PostFormData) => void;
   selectedPost?: Post | null;
 }
 
 export const PostFormModal = ({
   isOpen,
   onClose,
-  formData,
-  setFormData,
   onSubmit,
   selectedPost,
 }: PostFormModalProps) => {
   const isEditMode = selectedPost !== null;
   const title = isEditMode ? '게시글 수정' : '새 게시글 만들기';
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<PostFormData>({
+    defaultValues: {
+      title: '',
+      content: '',
+      author: '',
+      category: 'development',
+      status: 'draft',
+    },
+  });
+
+  useEffect(() => {
+    if (selectedPost) {
+      reset({
+        title: selectedPost.title,
+        content: selectedPost.content,
+        author: selectedPost.author,
+        category: selectedPost.category,
+        status: selectedPost.status,
+      });
+    } else {
+      reset({
+        title: '',
+        content: '',
+        author: '',
+        category: 'development',
+        status: 'draft',
+      });
+    }
+  }, [selectedPost, reset]);
+
+  const handleFormSubmit = handleSubmit((data) => {
+    onSubmit(data);
+    reset();
+  });
+
+  const handleClose = () => {
+    reset();
+    onClose();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       title={title}
       size="large"
       showFooter
       footerContent={
         <>
-          <Button variant="secondary" size="md" onClick={onClose}>
+          <Button variant="secondary" size="md" onClick={handleClose}>
             취소
           </Button>
-          <Button variant="primary" size="md" onClick={onSubmit}>
+          <Button variant="primary" size="md" onClick={handleFormSubmit}>
             {isEditMode ? '수정 완료' : '생성'}
           </Button>
         </>
@@ -48,28 +91,25 @@ export const PostFormModal = ({
         )}
 
         <Input
-          name="title"
           label="제목"
-          value={formData.title || ''}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
           placeholder="게시글 제목을 입력하세요"
+          error={errors.title?.message}
           required
+          {...register('title', {
+            required: '제목을 입력해주세요',
+          })}
         />
         <div className="grid grid-cols-2 gap-4">
           <Input
-            name="author"
             label="작성자명"
-            value={formData.author || ''}
-            onChange={(e) => setFormData({ ...formData, author: e.target.value })}
             placeholder="작성자명"
+            error={errors.author?.message}
             required
+            {...register('author', {
+              required: '작성자명을 입력해주세요',
+            })}
           />
           <FormSelect
-            name="category"
-            value={formData.category || ''}
-            onChange={(value) =>
-              setFormData({ ...formData, category: value as PostFormData['category'] })
-            }
             options={[
               { value: 'development', label: 'Development' },
               { value: 'design', label: 'Design' },
@@ -77,16 +117,19 @@ export const PostFormModal = ({
             ]}
             label="카테고리"
             placeholder="카테고리 선택"
-            size="md"
+            error={errors.category?.message}
+            required
+            {...register('category', {
+              required: '카테고리를 선택해주세요',
+            })}
           />
         </div>
         <FormTextarea
-          name="content"
-          value={formData.content || ''}
-          onChange={(value) => setFormData({ ...formData, content: value })}
           label="내용"
           placeholder="게시글 내용을 입력하세요"
           rows={6}
+          error={errors.content?.message}
+          {...register('content')}
         />
       </div>
     </Modal>

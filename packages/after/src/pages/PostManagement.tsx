@@ -21,62 +21,32 @@ export const PostManagement = () => {
   const modal = useModal();
 
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-  const [formData, setFormData] = useState<Partial<PostFormData>>({});
 
-  const handleCreate = async () => {
+  const handleFormSubmit = async (data: PostFormData) => {
     try {
-      if (!formData.title || !formData.author || !formData.category) {
-        alert.error('필수 항목을 입력해주세요');
-        return;
+      if (selectedPost) {
+        postsHook.update(selectedPost.id, data);
+        alert.success('게시글이 수정되었습니다');
+      } else {
+        postsHook.create(data);
+        alert.success('게시글이 생성되었습니다');
       }
-
-      postsHook.create({
-        title: formData.title,
-        content: formData.content || '',
-        author: formData.author,
-        category: formData.category,
-        status: formData.status || 'draft',
-      });
-
       modal.close();
-      setFormData({});
       setSelectedPost(null);
-      alert.success('게시글이 생성되었습니다');
     } catch (error) {
-      const message = error instanceof Error ? error.message : '생성에 실패했습니다';
+      const message = error instanceof Error ? error.message : '작업에 실패했습니다';
       alert.error(message);
     }
   };
 
   const handleEdit = (post: Post) => {
     setSelectedPost(post);
-    setFormData({
-      title: post.title,
-      content: post.content,
-      author: post.author,
-      category: post.category,
-      status: post.status,
-    });
     modal.open();
   };
 
   const handleOpenCreate = () => {
+    setSelectedPost(null);
     modal.open();
-  };
-
-  const handleUpdate = async () => {
-    if (!selectedPost) return;
-
-    try {
-      postsHook.update(selectedPost.id, formData);
-      modal.close();
-      setFormData({});
-      setSelectedPost(null);
-      alert.success('게시글이 수정되었습니다');
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '수정에 실패했습니다';
-      alert.error(message);
-    }
   };
 
   const handleDelete = async (id: number) => {
@@ -123,7 +93,6 @@ export const PostManagement = () => {
 
   const resetPostForm = () => {
     setSelectedPost(null);
-    setFormData({});
   };
 
   const renderActions = (post: Post) => {
@@ -228,9 +197,7 @@ export const PostManagement = () => {
           modal.close();
           resetPostForm();
         }}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={selectedPost ? handleUpdate : handleCreate}
+        onSubmit={handleFormSubmit}
         selectedPost={selectedPost}
       />
     </>

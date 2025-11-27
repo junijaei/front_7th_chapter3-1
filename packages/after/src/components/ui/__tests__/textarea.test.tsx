@@ -5,17 +5,17 @@ import { FormTextarea } from '@/components/ui/Textarea';
 
 describe('FormTextarea', () => {
   it('기본 텍스트에어리어가 렌더링된다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} />);
+    render(<FormTextarea name="test" />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('라벨이 표시된다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} label="테스트 라벨" />);
+    render(<FormTextarea name="test" label="테스트 라벨" />);
     expect(screen.getByText('테스트 라벨')).toBeInTheDocument();
   });
 
   it('required일 때 별표가 표시된다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} label="필수 필드" required />);
+    render(<FormTextarea name="test" label="필수 필드" required />);
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 
@@ -23,65 +23,62 @@ describe('FormTextarea', () => {
     const handleChange = vi.fn();
     const user = userEvent.setup();
 
-    render(<FormTextarea name="test" value="" onChange={handleChange} />);
+    render(<FormTextarea name="test" onChange={handleChange} />);
 
     await user.type(screen.getByRole('textbox'), 'a');
-    expect(handleChange).toHaveBeenCalledWith('a');
+    expect(handleChange).toHaveBeenCalled();
+    expect((handleChange.mock.calls[0][0].target as HTMLTextAreaElement).value).toBe('a');
   });
 
   it('placeholder가 표시된다', () => {
-    render(
-      <FormTextarea name="test" value="" onChange={() => {}} placeholder="내용을 입력해주세요" />
-    );
+    render(<FormTextarea name="test" placeholder="내용을 입력해주세요" />);
     expect(screen.getByPlaceholderText('내용을 입력해주세요')).toBeInTheDocument();
   });
 
   it('disabled 상태가 적용된다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} disabled />);
+    render(<FormTextarea name="test" disabled />);
     expect(screen.getByRole('textbox')).toBeDisabled();
   });
 
   it('error 메시지가 표시된다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} error="에러가 발생했습니다" />);
+    render(<FormTextarea name="test" error="에러가 발생했습니다" />);
     expect(screen.getByText('에러가 발생했습니다')).toBeInTheDocument();
     expect(screen.getByRole('textbox')).toHaveClass('border-destructive');
   });
 
   it('helpText가 표시된다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} helpText="도움말 텍스트" />);
+    render(<FormTextarea name="test" helpText="도움말 텍스트" />);
     expect(screen.getByText('도움말 텍스트')).toBeInTheDocument();
   });
 
   it('error가 있을 때 helpText는 표시되지 않는다', () => {
-    render(
-      <FormTextarea name="test" value="" onChange={() => {}} error="에러" helpText="도움말" />
-    );
+    render(<FormTextarea name="test" error="에러" helpText="도움말" />);
     expect(screen.getByText('에러')).toBeInTheDocument();
     expect(screen.queryByText('도움말')).not.toBeInTheDocument();
   });
 
   it('rows 속성이 올바르게 설정된다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} rows={6} />);
+    render(<FormTextarea name="test" rows={6} />);
     expect(screen.getByRole('textbox')).toHaveAttribute('rows', '6');
   });
 
   it('기본 rows는 4이다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} />);
+    render(<FormTextarea name="test" />);
     expect(screen.getByRole('textbox')).toHaveAttribute('rows', '4');
   });
 
   it('name 속성이 올바르게 설정된다', () => {
-    render(<FormTextarea name="test-textarea" value="" onChange={() => {}} />);
+    render(<FormTextarea name="test-textarea" />);
     expect(screen.getByRole('textbox')).toHaveAttribute('name', 'test-textarea');
   });
 
   it('required 속성이 올바르게 설정된다', () => {
-    render(<FormTextarea name="test" value="" onChange={() => {}} required />);
+    render(<FormTextarea name="test" required />);
     expect(screen.getByRole('textbox')).toBeRequired();
   });
 
   it('value가 올바르게 표시된다', () => {
-    render(<FormTextarea name="test" value="테스트 내용" onChange={() => {}} />);
+    render(<FormTextarea name="test" defaultValue="테스트 내용" />);
     expect(screen.getByRole('textbox')).toHaveValue('테스트 내용');
   });
 });

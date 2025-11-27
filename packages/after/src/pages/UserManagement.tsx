@@ -21,60 +21,32 @@ export const UserManagement = () => {
   const modal = useModal();
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [formData, setFormData] = useState<Partial<UserFormData>>({});
 
-  const handleCreate = async () => {
+  const handleFormSubmit = async (data: UserFormData) => {
     try {
-      if (!formData.username || !formData.email) {
-        alert.error('필수 항목을 입력해주세요');
-        return;
+      if (selectedUser) {
+        usersHook.update(selectedUser.id, data);
+        alert.success('사용자가 수정되었습니다');
+      } else {
+        usersHook.create(data);
+        alert.success('사용자가 생성되었습니다');
       }
-
-      usersHook.create({
-        username: formData.username,
-        email: formData.email,
-        role: formData.role || 'user',
-        status: formData.status || 'active',
-      });
-
       modal.close();
-      setFormData({});
       setSelectedUser(null);
-      alert.success('사용자가 생성되었습니다');
     } catch (error) {
-      const message = error instanceof Error ? error.message : '생성에 실패했습니다';
+      const message = error instanceof Error ? error.message : '작업에 실패했습니다';
       alert.error(message);
     }
   };
 
   const handleEdit = (user: User) => {
     setSelectedUser(user);
-    setFormData({
-      username: user.username,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-    });
     modal.open();
   };
 
   const handleOpenCreate = () => {
+    setSelectedUser(null);
     modal.open();
-  };
-
-  const handleUpdate = async () => {
-    if (!selectedUser) return;
-
-    try {
-      usersHook.update(selectedUser.id, formData);
-      modal.close();
-      setFormData({});
-      setSelectedUser(null);
-      alert.success('사용자가 수정되었습니다');
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '수정에 실패했습니다';
-      alert.error(message);
-    }
   };
 
   const handleDelete = async (id: number) => {
@@ -91,7 +63,6 @@ export const UserManagement = () => {
 
   const resetUserForm = () => {
     setSelectedUser(null);
-    setFormData({});
   };
 
   const renderActions = (user: User) => (
@@ -177,9 +148,7 @@ export const UserManagement = () => {
           modal.close();
           resetUserForm();
         }}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={selectedUser ? handleUpdate : handleCreate}
+        onSubmit={handleFormSubmit}
         selectedUser={selectedUser}
       />
     </>
