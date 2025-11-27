@@ -6,21 +6,18 @@ import { Avatar, type AvatarProps } from '@/components/ui/avatar';
 import { UserInfo, type UserInfoProps } from '@/components/composed/user-info';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
-const headerVariants = cva(
-  'sticky top-0 z-1000 border-b bg-card border-border shadow-sm',
-  {
-    variants: {
-      size: {
-        sm: 'h-12',
-        md: 'h-16',
-        lg: 'h-20',
-      },
+const headerVariants = cva('sticky top-0 z-1000 border-b bg-card border-border shadow-sm', {
+  variants: {
+    size: {
+      sm: 'h-12',
+      md: 'h-16',
+      lg: 'h-20',
     },
-    defaultVariants: {
-      size: 'md',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
 
 const containerVariants = cva('mx-auto flex items-center justify-between px-6', {
   variants: {

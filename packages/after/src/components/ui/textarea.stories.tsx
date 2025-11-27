@@ -32,120 +32,136 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const DefaultStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormTextarea
+      name="default"
+      value={value}
+      onChange={setValue}
+      placeholder="Enter your text..."
+    />
+  );
+};
+
 export const Default: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormTextarea
-        name="default"
-        value={value}
-        onChange={setValue}
-        placeholder="Enter your text..."
-      />
-    );
-  },
+  render: () => <DefaultStory />,
+};
+
+const WithLabelStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormTextarea
+      name="withLabel"
+      value={value}
+      onChange={setValue}
+      label="Description"
+      placeholder="Enter description..."
+    />
+  );
 };
 
 export const WithLabel: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormTextarea
-        name="withLabel"
-        value={value}
-        onChange={setValue}
-        label="Description"
-        placeholder="Enter description..."
-      />
-    );
-  },
+  render: () => <WithLabelStory />,
+};
+
+const RequiredStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormTextarea
+      name="required"
+      value={value}
+      onChange={setValue}
+      label="Required Field"
+      placeholder="This field is required..."
+      required
+    />
+  );
 };
 
 export const Required: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormTextarea
-        name="required"
-        value={value}
-        onChange={setValue}
-        label="Required Field"
-        placeholder="This field is required..."
-        required
-      />
-    );
-  },
+  render: () => <RequiredStory />,
+};
+
+const WithErrorStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormTextarea
+      name="error"
+      value={value}
+      onChange={setValue}
+      label="Comment"
+      placeholder="Enter comment..."
+      error="Comment must be at least 10 characters"
+    />
+  );
 };
 
 export const WithError: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormTextarea
-        name="error"
-        value={value}
-        onChange={setValue}
-        label="Comment"
-        placeholder="Enter comment..."
-        error="Comment must be at least 10 characters"
-      />
-    );
-  },
+  render: () => <WithErrorStory />,
+};
+
+const WithHelpTextStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormTextarea
+      name="helpText"
+      value={value}
+      onChange={setValue}
+      label="Feedback"
+      placeholder="Share your feedback..."
+      helpText="Your feedback helps us improve"
+    />
+  );
 };
 
 export const WithHelpText: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormTextarea
-        name="helpText"
-        value={value}
-        onChange={setValue}
-        label="Feedback"
-        placeholder="Share your feedback..."
-        helpText="Your feedback helps us improve"
-      />
-    );
-  },
+  render: () => <WithHelpTextStory />,
+};
+
+const DisabledStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormTextarea
+      name="disabled"
+      value={value}
+      onChange={setValue}
+      label="Disabled Textarea"
+      placeholder="This is disabled..."
+      disabled
+    />
+  );
 };
 
 export const Disabled: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormTextarea
-        name="disabled"
-        value={value}
-        onChange={setValue}
-        label="Disabled Textarea"
-        placeholder="This is disabled..."
-        disabled
-      />
-    );
-  },
+  render: () => <DisabledStory />,
+};
+
+const CustomRowsStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormTextarea
+      name="customRows"
+      value={value}
+      onChange={setValue}
+      label="Large Text Area"
+      placeholder="Enter a lot of text..."
+      rows={8}
+    />
+  );
 };
 
 export const CustomRows: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormTextarea
-        name="customRows"
-        value={value}
-        onChange={setValue}
-        label="Large Text Area"
-        placeholder="Enter a lot of text..."
-        rows={8}
-      />
-    );
-  },
+  render: () => <CustomRowsStory />,
+};
+
+const WithValueStory = () => {
+  const [value, setValue] = useState('This is pre-filled content.\nYou can edit it freely.');
+  return (
+    <FormTextarea name="withValue" value={value} onChange={setValue} label="Pre-filled Content" />
+  );
 };
 
 export const WithValue: Story = {
-  render: () => {
-    const [value, setValue] = useState('This is pre-filled content.\nYou can edit it freely.');
-    return (
-      <FormTextarea name="withValue" value={value} onChange={setValue} label="Pre-filled Content" />
-    );
-  },
+  render: () => <WithValueStory />,
 };

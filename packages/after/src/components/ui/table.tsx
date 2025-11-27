@@ -4,16 +4,10 @@ import { cn } from '@/lib/utils';
 
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (
-    <div
-      data-slot="table-container"
-      className="relative w-full overflow-x-auto bg-card"
-    >
+    <div data-slot="table-container" className="relative w-full overflow-x-auto bg-card">
       <table
         data-slot="table"
-        className={cn(
-          'w-full caption-bottom text-sm text-foreground',
-          className
-        )}
+        className={cn('w-full caption-bottom text-sm text-foreground', className)}
         {...props}
       />
     </div>
@@ -24,10 +18,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
   return (
     <thead
       data-slot="table-header"
-      className={cn(
-        'bg-muted/50 [&_tr]:border-b [&_tr]:border-border',
-        className
-      )}
+      className={cn('bg-muted/50 [&_tr]:border-b [&_tr]:border-border', className)}
       {...props}
     />
   );
@@ -57,10 +48,7 @@ function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
   return (
     <tr
       data-slot="table-row"
-      className={cn(
-        'border-b border-border hover:bg-muted/50 transition-colors',
-        className
-      )}
+      className={cn('border-b border-border hover:bg-muted/50 transition-colors', className)}
       {...props}
     />
   );

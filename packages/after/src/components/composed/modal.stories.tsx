@@ -28,166 +28,182 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const DefaultStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Modal Title">
+        <p>This is the modal content. You can put anything here.</p>
+      </Modal>
+    </>
+  );
+};
+
 export const Default: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Modal Title">
-          <p>This is the modal content. You can put anything here.</p>
-        </Modal>
-      </>
-    );
-  },
+  render: () => <DefaultStory />,
+};
+
+const WithDescriptionStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Modal with Description"
+        description="This is a helpful description that explains what this modal is about."
+      >
+        <p>Modal content goes here.</p>
+      </Modal>
+    </>
+  );
 };
 
 export const WithDescription: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
-        <Modal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          title="Modal with Description"
-          description="This is a helpful description that explains what this modal is about."
-        >
-          <p>Modal content goes here.</p>
-        </Modal>
-      </>
-    );
-  },
+  render: () => <WithDescriptionStory />,
+};
+
+const WithFooterStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Confirm Action"
+        showFooter
+        footerContent={
+          <>
+            <Button variant="secondary" onClick={() => setIsOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={() => setIsOpen(false)}>
+              Confirm
+            </Button>
+          </>
+        }
+      >
+        <p>Are you sure you want to proceed with this action?</p>
+      </Modal>
+    </>
+  );
 };
 
 export const WithFooter: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
-        <Modal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          title="Confirm Action"
-          showFooter
-          footerContent={
-            <>
-              <Button variant="secondary" onClick={() => setIsOpen(false)}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={() => setIsOpen(false)}>
-                Confirm
-              </Button>
-            </>
-          }
-        >
-          <p>Are you sure you want to proceed with this action?</p>
-        </Modal>
-      </>
-    );
-  },
+  render: () => <WithFooterStory />,
+};
+
+const SmallStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Small Modal</Button>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Small Modal" size="small">
+        <p>This is a small modal.</p>
+      </Modal>
+    </>
+  );
 };
 
 export const Small: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Open Small Modal</Button>
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Small Modal" size="small">
-          <p>This is a small modal.</p>
-        </Modal>
-      </>
-    );
-  },
+  render: () => <SmallStory />,
+};
+
+const MediumStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Medium Modal</Button>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Medium Modal" size="medium">
+        <p>This is a medium modal (default size).</p>
+      </Modal>
+    </>
+  );
 };
 
 export const Medium: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Open Medium Modal</Button>
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Medium Modal" size="medium">
-          <p>This is a medium modal (default size).</p>
-        </Modal>
-      </>
-    );
-  },
+  render: () => <MediumStory />,
+};
+
+const LargeStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Large Modal</Button>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Large Modal" size="large">
+        <p>This is a large modal with more space for content.</p>
+        <p>You can add more complex content here.</p>
+      </Modal>
+    </>
+  );
 };
 
 export const Large: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Open Large Modal</Button>
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Large Modal" size="large">
-          <p>This is a large modal with more space for content.</p>
-          <p>You can add more complex content here.</p>
-        </Modal>
-      </>
-    );
-  },
+  render: () => <LargeStory />,
+};
+
+const WithFormStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Form Modal</Button>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Create User"
+        size="large"
+        showFooter
+        footerContent={
+          <>
+            <Button variant="secondary" onClick={() => setIsOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={() => setIsOpen(false)}>
+              Create
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <Input placeholder="Enter username" />
+          <Input type="email" placeholder="Enter email" />
+          <Input type="password" placeholder="Enter password" />
+        </div>
+      </Modal>
+    </>
+  );
 };
 
 export const WithForm: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Open Form Modal</Button>
-        <Modal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          title="Create User"
-          size="large"
-          showFooter
-          footerContent={
-            <>
-              <Button variant="secondary" onClick={() => setIsOpen(false)}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={() => setIsOpen(false)}>
-                Create
-              </Button>
-            </>
-          }
-        >
-          <div className="space-y-4">
-            <Input placeholder="Enter username" />
-            <Input type="email" placeholder="Enter email" />
-            <Input type="password" placeholder="Enter password" />
-          </div>
-        </Modal>
-      </>
-    );
-  },
+  render: () => <WithFormStory />,
+};
+
+const NoCloseButtonStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="No Close Button"
+        showCloseButton={false}
+        showFooter
+        footerContent={
+          <Button variant="primary" onClick={() => setIsOpen(false)}>
+            OK
+          </Button>
+        }
+      >
+        <p>This modal has no close button. You must click OK to close it.</p>
+      </Modal>
+    </>
+  );
 };
 
 export const NoCloseButton: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
-        <Modal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          title="No Close Button"
-          showCloseButton={false}
-          showFooter
-          footerContent={
-            <Button variant="primary" onClick={() => setIsOpen(false)}>
-              OK
-            </Button>
-          }
-        >
-          <p>This modal has no close button. You must click OK to close it.</p>
-        </Modal>
-      </>
-    );
-  },
+  render: () => <NoCloseButtonStory />,
 };

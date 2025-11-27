@@ -39,112 +39,126 @@ const sampleOptions = [
   { value: 'option3', label: 'Option 3' },
 ];
 
+const DefaultStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormSelect
+      name="default"
+      value={value}
+      onChange={setValue}
+      options={sampleOptions}
+      placeholder="Select an option"
+    />
+  );
+};
+
 export const Default: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormSelect
-        name="default"
-        value={value}
-        onChange={setValue}
-        options={sampleOptions}
-        placeholder="Select an option"
-      />
-    );
-  },
+  render: () => <DefaultStory />,
+};
+
+const WithLabelStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormSelect
+      name="withLabel"
+      value={value}
+      onChange={setValue}
+      options={sampleOptions}
+      label="Select Option"
+      placeholder="Choose one"
+    />
+  );
 };
 
 export const WithLabel: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormSelect
-        name="withLabel"
-        value={value}
-        onChange={setValue}
-        options={sampleOptions}
-        label="Select Option"
-        placeholder="Choose one"
-      />
-    );
-  },
+  render: () => <WithLabelStory />,
+};
+
+const RequiredStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormSelect
+      name="required"
+      value={value}
+      onChange={setValue}
+      options={sampleOptions}
+      label="Required Field"
+      required
+    />
+  );
 };
 
 export const Required: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormSelect
-        name="required"
-        value={value}
-        onChange={setValue}
-        options={sampleOptions}
-        label="Required Field"
-        required
-      />
-    );
-  },
+  render: () => <RequiredStory />,
+};
+
+const WithErrorStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormSelect
+      name="error"
+      value={value}
+      onChange={setValue}
+      options={sampleOptions}
+      label="Select with Error"
+      error="This field is required"
+    />
+  );
 };
 
 export const WithError: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormSelect
-        name="error"
-        value={value}
-        onChange={setValue}
-        options={sampleOptions}
-        label="Select with Error"
-        error="This field is required"
-      />
-    );
-  },
+  render: () => <WithErrorStory />,
+};
+
+const WithHelpTextStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormSelect
+      name="helpText"
+      value={value}
+      onChange={setValue}
+      options={sampleOptions}
+      label="Select with Help"
+      helpText="Choose the best option for you"
+    />
+  );
 };
 
 export const WithHelpText: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormSelect
-        name="helpText"
-        value={value}
-        onChange={setValue}
-        options={sampleOptions}
-        label="Select with Help"
-        helpText="Choose the best option for you"
-      />
-    );
-  },
+  render: () => <WithHelpTextStory />,
+};
+
+const DisabledStory = () => {
+  const [value, setValue] = useState('');
+  return (
+    <FormSelect
+      name="disabled"
+      value={value}
+      onChange={setValue}
+      options={sampleOptions}
+      label="Disabled Select"
+      disabled
+    />
+  );
 };
 
 export const Disabled: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <FormSelect
-        name="disabled"
-        value={value}
-        onChange={setValue}
-        options={sampleOptions}
-        label="Disabled Select"
-        disabled
-      />
-    );
-  },
+  render: () => <DisabledStory />,
+};
+
+const PreSelectedStory = () => {
+  const [value, setValue] = useState('option2');
+  return (
+    <FormSelect
+      name="preSelected"
+      value={value}
+      onChange={setValue}
+      options={sampleOptions}
+      label="Pre-selected Option"
+    />
+  );
 };
 
 export const PreSelected: Story = {
-  render: () => {
-    const [value, setValue] = useState('option2');
-    return (
-      <FormSelect
-        name="preSelected"
-        value={value}
-        onChange={setValue}
-        options={sampleOptions}
-        label="Pre-selected Option"
-      />
-    );
-  },
+  render: () => <PreSelectedStory />,
 };
