@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface Option {
@@ -20,7 +19,7 @@ interface FormSelectProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const FormSelect: React.FC<FormSelectProps> = ({
+export const FormSelect = ({
   name,
   value,
   onChange,
@@ -32,15 +31,15 @@ export const FormSelect: React.FC<FormSelectProps> = ({
   error,
   helpText,
   size = 'md',
-}) => {
+}: FormSelectProps) => {
   void size; // Keep for API consistency
 
   return (
     <div className="mb-4">
       {label && (
-        <label className="mb-1.5 block text-xs font-bold text-gray-800 dark:text-neutral-200">
+        <label className="mb-1.5 block text-xs font-bold text-foreground">
           {label}
-          {required && <span className="text-red-600 dark:text-red-400">*</span>}
+          {required && <span className="text-destructive">*</span>}
         </label>
       )}
 
@@ -51,10 +50,10 @@ export const FormSelect: React.FC<FormSelectProps> = ({
         required={required}
         disabled={disabled}
         className={cn(
-          'w-full rounded border border-gray-400 dark:border-neutral-600 bg-white dark:bg-neutral-800 px-2.5 py-2 text-sm text-gray-900 dark:text-neutral-100 outline-none',
-          'focus:border-blue-700 dark:focus:border-blue-400',
-          error && 'border-red-600 dark:border-red-400',
-          disabled && 'cursor-not-allowed bg-gray-100 dark:bg-neutral-700'
+          'w-full rounded border border-input bg-background px-2.5 py-2 text-sm text-foreground outline-none',
+          'focus:border-ring focus:ring-2 focus:ring-ring',
+          error && 'border-destructive',
+          disabled && 'cursor-not-allowed opacity-50'
         )}
       >
         <option value="" disabled>
@@ -67,9 +66,9 @@ export const FormSelect: React.FC<FormSelectProps> = ({
         ))}
       </select>
 
-      {error && <span className="mt-1 block text-xs text-red-600 dark:text-red-400">{error}</span>}
+      {error && <span className="mt-1 block text-xs text-destructive">{error}</span>}
       {helpText && !error && (
-        <span className="mt-1 block text-xs text-gray-600 dark:text-neutral-400">{helpText}</span>
+        <span className="mt-1 block text-xs text-muted-foreground">{helpText}</span>
       )}
     </div>
   );

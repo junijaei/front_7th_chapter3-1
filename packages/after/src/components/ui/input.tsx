@@ -18,10 +18,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {label && (
             <label
               htmlFor={inputId}
-              className="mb-1.5 block text-xs font-bold text-gray-800 dark:text-neutral-200"
+              className="mb-1.5 block text-xs font-bold text-foreground"
             >
               {label}
-              {required && <span className="text-red-600 dark:text-red-400">*</span>}
+              {required && <span className="text-destructive">*</span>}
             </label>
           )}
           <input
@@ -32,18 +32,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             required={required}
             className={cn(
               'flex h-10 w-full rounded-md border px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-              'border-gray-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-gray-900 dark:text-neutral-100 placeholder:text-gray-400 dark:placeholder:text-neutral-500',
-              'focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400',
-              error && 'border-red-600 dark:border-red-400',
+              'border-input bg-background text-foreground placeholder:text-muted-foreground',
+              'focus-visible:ring-ring',
+              error && 'border-destructive',
               className
             )}
             {...props}
           />
           {error && (
-            <span className="mt-1 block text-xs text-red-600 dark:text-red-400">{error}</span>
+            <span className="mt-1 block text-xs text-destructive">{error}</span>
           )}
           {helpText && !error && (
-            <span className="mt-1 block text-xs text-gray-600 dark:text-neutral-400">
+            <span className="mt-1 block text-xs text-muted-foreground">
               {helpText}
             </span>
           )}
@@ -59,7 +59,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         required={required}
         className={cn(
-          'flex h-10 w-full rounded-md border border-gray-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 px-3 py-2 text-sm text-gray-900 dark:text-neutral-100 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-gray-400 dark:placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+          'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
           className
         )}
         {...props}

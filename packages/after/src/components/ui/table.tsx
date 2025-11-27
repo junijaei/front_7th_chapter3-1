@@ -6,12 +6,12 @@ function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto bg-white dark:bg-neutral-800"
+      className="relative w-full overflow-x-auto bg-card"
     >
       <table
         data-slot="table"
         className={cn(
-          'w-full caption-bottom text-sm text-gray-900 dark:text-neutral-100',
+          'w-full caption-bottom text-sm text-foreground',
           className
         )}
         {...props}
@@ -25,7 +25,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
     <thead
       data-slot="table-header"
       className={cn(
-        'bg-gray-50 dark:bg-neutral-700 [&_tr]:border-b [&_tr]:border-gray-200 dark:[&_tr]:border-gray-600',
+        'bg-muted/50 [&_tr]:border-b [&_tr]:border-border',
         className
       )}
       {...props}
@@ -58,7 +58,7 @@ function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
     <tr
       data-slot="table-row"
       className={cn(
-        'border-b border-gray-200 dark:border-neutral-700 hover:bg-gray-50 dark:hover:bg-neutral-700/50 transition-colors',
+        'border-b border-border hover:bg-muted/50 transition-colors',
         className
       )}
       {...props}
@@ -71,7 +71,7 @@ function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
     <th
       data-slot="table-head"
       className={cn(
-        'h-10 px-2 text-left align-middle font-semibold whitespace-nowrap text-gray-700 dark:text-neutral-200 [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        'h-10 px-2 text-left align-middle font-semibold whitespace-nowrap text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
         className
       )}
       {...props}
@@ -84,7 +84,7 @@ function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
     <td
       data-slot="table-cell"
       className={cn(
-        'p-2 align-middle whitespace-nowrap text-gray-900 dark:text-neutral-100 [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        'p-2 align-middle whitespace-nowrap text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
         className
       )}
       {...props}

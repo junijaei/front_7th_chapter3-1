@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface FormTextareaProps {
@@ -14,7 +13,7 @@ interface FormTextareaProps {
   rows?: number;
 }
 
-export const FormTextarea: React.FC<FormTextareaProps> = ({
+export const FormTextarea = ({
   name,
   value,
   onChange,
@@ -25,13 +24,13 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
   error,
   helpText,
   rows = 4,
-}) => {
+}: FormTextareaProps) => {
   return (
     <div className="mb-4">
       {label && (
-        <label className="mb-1.5 block text-xs font-bold text-gray-800 dark:text-neutral-200">
+        <label className="mb-1.5 block text-xs font-bold text-foreground">
           {label}
-          {required && <span className="text-red-600 dark:text-red-400">*</span>}
+          {required && <span className="text-destructive">*</span>}
         </label>
       )}
 
@@ -44,17 +43,17 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
         disabled={disabled}
         rows={rows}
         className={cn(
-          'w-full resize-y rounded border px-3.5 py-4 text-base font-normal leading-tight text-gray-900 dark:text-neutral-100 outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-neutral-500',
-          'border-gray-400 dark:border-neutral-600 bg-white dark:bg-neutral-800',
-          'focus:border-blue-700 dark:focus:border-blue-400 focus:border-2 focus:px-[13px] focus:py-[15px]',
-          error && 'border-red-600 dark:border-red-400',
-          disabled && 'cursor-not-allowed bg-gray-200 dark:bg-neutral-700'
+          'w-full resize-y rounded border px-3.5 py-4 text-base font-normal leading-tight text-foreground outline-none transition-all placeholder:text-muted-foreground',
+          'border-input bg-background',
+          'focus:border-ring focus:ring-2 focus:ring-ring focus:px-[13px] focus:py-[15px]',
+          error && 'border-destructive',
+          disabled && 'cursor-not-allowed opacity-50'
         )}
       />
 
-      {error && <span className="mt-1 block text-xs text-red-600 dark:text-red-400">{error}</span>}
+      {error && <span className="mt-1 block text-xs text-destructive">{error}</span>}
       {helpText && !error && (
-        <span className="mt-1 block text-xs text-gray-600 dark:text-neutral-400">{helpText}</span>
+        <span className="mt-1 block text-xs text-muted-foreground">{helpText}</span>
       )}
     </div>
   );

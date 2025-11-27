@@ -7,7 +7,7 @@ import { UserInfo, type UserInfoProps } from '@/components/composed/user-info';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const headerVariants = cva(
-  'sticky top-0 z-1000 border-b bg-white shadow-sm dark:bg-neutral-800 dark:border-gray-700',
+  'sticky top-0 z-1000 border-b bg-card border-border shadow-sm',
   {
     variants: {
       size: {

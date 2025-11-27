@@ -1,13 +1,12 @@
-import React from 'react';
 import { ThemeProvider } from '@/hooks';
 import { Header } from '@/components/layout';
 import { Toaster } from '@/components/ui/sonner';
 import { ManagementPage } from '@/pages/ManagementPage';
 
-export const App: React.FC = () => {
+export const App = () => {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
+      <div className="min-h-screen bg-background">
         <Header>
           <Header.Logo
             logo={{

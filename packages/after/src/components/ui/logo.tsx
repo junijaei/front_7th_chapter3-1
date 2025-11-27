@@ -21,7 +21,7 @@ const logoVariants = cva('flex items-center justify-center rounded-lg font-bold 
   },
 });
 
-const logoTextVariants = cva('m-0 font-bold leading-none text-gray-900 dark:text-neutral-100', {
+const logoTextVariants = cva('m-0 font-bold leading-none text-foreground', {
   variants: {
     size: {
       sm: 'text-base',
@@ -34,7 +34,7 @@ const logoTextVariants = cva('m-0 font-bold leading-none text-gray-900 dark:text
   },
 });
 
-const logoSubtextVariants = cva('m-0 leading-none text-gray-600 dark:text-neutral-400', {
+const logoSubtextVariants = cva('m-0 leading-none text-muted-foreground', {
   variants: {
     size: {
       sm: 'text-[10px] mt-0',
