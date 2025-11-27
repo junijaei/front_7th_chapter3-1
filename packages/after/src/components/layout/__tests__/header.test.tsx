@@ -1,10 +1,15 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from '@/hooks';
 import { Header } from '@/components/layout/header';
+
+const renderWithTheme = (ui: React.ReactElement) => {
+  return render(<ThemeProvider>{ui}</ThemeProvider>);
+};
 
 describe('Header', () => {
   it('기본 헤더가 렌더링된다', () => {
-    const { container } = render(
+    const { container } = renderWithTheme(
       <Header>
         <Header.Logo logo={{ text: 'L' }} />
         <Header.User
@@ -17,7 +22,7 @@ describe('Header', () => {
   });
 
   it('Logo 컴포넌트가 렌더링된다', () => {
-    render(
+    renderWithTheme(
       <Header>
         <Header.Logo
           logo={{
@@ -34,7 +39,7 @@ describe('Header', () => {
   });
 
   it('User 컴포넌트가 렌더링된다', () => {
-    render(
+    renderWithTheme(
       <Header>
         <Header.User
           userInfo={{ name: 'John Doe', email: 'john@example.com' }}
@@ -48,7 +53,7 @@ describe('Header', () => {
   });
 
   it('size prop이 하위 컴포넌트에 전달된다', () => {
-    const { container } = render(
+    const { container } = renderWithTheme(
       <Header size="sm">
         <Header.Logo logo={{ text: 'L' }} />
         <Header.User
@@ -62,7 +67,7 @@ describe('Header', () => {
   });
 
   it('maxWidth prop이 올바르게 적용된다', () => {
-    const { container } = render(
+    const { container } = renderWithTheme(
       <Header maxWidth="lg">
         <Header.Logo logo={{ text: 'L' }} />
       </Header>
@@ -71,7 +76,7 @@ describe('Header', () => {
   });
 
   it('커스텀 className이 적용된다', () => {
-    const { container } = render(
+    const { container } = renderWithTheme(
       <Header className="custom-header">
         <Header.Logo logo={{ text: 'L' }} />
       </Header>
@@ -81,7 +86,7 @@ describe('Header', () => {
   });
 
   it('Logo와 User를 모두 포함할 수 있다', () => {
-    render(
+    renderWithTheme(
       <Header>
         <Header.Logo
           logo={{
@@ -103,7 +108,7 @@ describe('Header', () => {
   });
 
   it('개별 컴포넌트의 size를 오버라이드할 수 있다', () => {
-    render(
+    renderWithTheme(
       <Header size="md">
         <Header.Logo logo={{ text: 'L', size: 'lg' }} />
         <Header.User
@@ -117,7 +122,7 @@ describe('Header', () => {
   });
 
   it('Avatar에 src prop을 전달할 수 있다', () => {
-    render(
+    renderWithTheme(
       <Header>
         <Header.User
           userInfo={{ name: 'Test User', email: 'test@example.com' }}
@@ -133,7 +138,7 @@ describe('Header', () => {
   it('모든 size variant가 올바르게 렌더링된다', () => {
     const sizes = ['sm', 'md', 'lg'] as const;
     sizes.forEach((size) => {
-      const { container } = render(
+      const { container } = renderWithTheme(
         <Header size={size}>
           <Header.Logo logo={{ text: 'L' }} />
         </Header>
@@ -147,11 +152,11 @@ describe('Header', () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     expect(() => {
-      render(<Header.Logo logo={{ text: 'L' }} />);
+      renderWithTheme(<Header.Logo logo={{ text: 'L' }} />);
     }).toThrow('Header compound components must be used within Header');
 
     expect(() => {
-      render(
+      renderWithTheme(
         <Header.User
           userInfo={{ name: 'Test', email: 'test@example.com' }}
           avatar={{ children: 'T' }}
@@ -163,7 +168,7 @@ describe('Header', () => {
   });
 
   it('기본값으로 헤더가 렌더링된다 (하위 호환성)', () => {
-    render(
+    renderWithTheme(
       <Header>
         <Header.Logo
           logo={{

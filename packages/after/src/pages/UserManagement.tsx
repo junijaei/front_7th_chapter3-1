@@ -144,7 +144,7 @@ export const UserManagement: React.FC = () => {
         <StatCard variant="gray" label="관리자" value={stats.admin} />
       </div>
 
-      <div className="overflow-auto border border-gray-300 bg-white">
+      <div className="overflow-auto border border-gray-300 bg-white dark:border-neutral-700 dark:bg-neutral-800">
         <Table>
           <TableHeader>
             <TableRow>

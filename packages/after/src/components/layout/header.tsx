@@ -1,22 +1,26 @@
-import { createContext, forwardRef, useContext, type HTMLAttributes } from 'react';
+import { createContext, forwardRef, useContext, type HTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Logo, type LogoProps } from '@/components/ui/logo';
 import { Avatar, type AvatarProps } from '@/components/ui/avatar';
 import { UserInfo, type UserInfoProps } from '@/components/composed/user-info';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
-const headerVariants = cva('sticky top-0 z-1000 border-b bg-white shadow-sm', {
-  variants: {
-    size: {
-      sm: 'h-12',
-      md: 'h-16',
-      lg: 'h-20',
+const headerVariants = cva(
+  'sticky top-0 z-1000 border-b bg-white shadow-sm dark:bg-neutral-800 dark:border-gray-700',
+  {
+    variants: {
+      size: {
+        sm: 'h-12',
+        md: 'h-16',
+        lg: 'h-20',
+      },
     },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
+    defaultVariants: {
+      size: 'md',
+    },
+  }
+);
 
 const containerVariants = cva('mx-auto flex items-center justify-between px-6', {
   variants: {
@@ -100,6 +104,7 @@ const HeaderUser = forwardRef<HTMLDivElement, HeaderUserProps>(
     const { size: headerSize } = useHeaderContext();
     return (
       <div ref={ref} className={cn('flex items-center gap-3', className)} {...props}>
+        <ThemeToggle variant="icon" />
         <UserInfo {...userInfo} size={userInfo.size || headerSize} />
         <Avatar {...avatar} size={avatar.size || headerSize} />
       </div>
@@ -109,7 +114,24 @@ const HeaderUser = forwardRef<HTMLDivElement, HeaderUserProps>(
 
 HeaderUser.displayName = 'Header.User';
 
+interface HeaderActionsProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+}
+
+const HeaderActions = forwardRef<HTMLDivElement, HeaderActionsProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <div ref={ref} className={cn('flex items-center gap-2', className)} {...props}>
+        {children}
+      </div>
+    );
+  }
+);
+
+HeaderActions.displayName = 'Header.Actions';
+
 export const Header = Object.assign(HeaderRoot, {
   Logo: HeaderLogo,
   User: HeaderUser,
+  Actions: HeaderActions,
 });

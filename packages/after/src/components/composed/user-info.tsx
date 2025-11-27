@@ -29,7 +29,7 @@ const userTextVariants = cva('flex flex-col text-right', {
   },
 });
 
-const userNameVariants = cva('font-semibold text-gray-900', {
+const userNameVariants = cva('font-semibold text-gray-900 dark:text-neutral-100', {
   variants: {
     size: {
       sm: 'text-xs',
@@ -42,7 +42,7 @@ const userNameVariants = cva('font-semibold text-gray-900', {
   },
 });
 
-const userEmailVariants = cva('text-gray-600', {
+const userEmailVariants = cva('text-gray-600 dark:text-neutral-400', {
   variants: {
     size: {
       sm: 'text-[10px]',

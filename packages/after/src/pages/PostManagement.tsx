@@ -198,7 +198,7 @@ export const PostManagement: React.FC = () => {
         <StatCard variant="gray" label="총 조회수" value={stats.totalViews} />
       </div>
 
-      <div className="overflow-auto border border-gray-300 bg-white">
+      <div className="overflow-auto border border-gray-300 bg-white dark:border-neutral-700 dark:bg-neutral-800">
         <Table>
           <TableHeader>
             <TableRow>

@@ -18,3 +18,4 @@ export {
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
 export { FormTextarea } from './textarea';
 export { StatCard } from './stat-card';
+export { ThemeToggle } from './theme-toggle';

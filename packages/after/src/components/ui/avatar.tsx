@@ -11,12 +11,12 @@ const avatarVariants = cva('flex items-center justify-center rounded-full font-s
       xl: 'h-16 w-16 text-xl',
     },
     variant: {
-      default: 'bg-blue-50 text-primary',
+      default: 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
       primary: 'bg-primary text-primary-foreground',
       secondary: 'bg-secondary text-secondary-foreground',
-      success: 'bg-green-50 text-green-600',
-      warning: 'bg-yellow-50 text-yellow-600',
-      error: 'bg-red-50 text-red-600',
+      success: 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300',
+      warning: 'bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300',
+      error: 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300',
     },
   },
   defaultVariants: {
