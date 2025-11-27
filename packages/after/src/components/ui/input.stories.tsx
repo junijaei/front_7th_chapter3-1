@@ -16,7 +16,13 @@ const meta = {
     disabled: {
       control: 'boolean',
     },
+    required: {
+      control: 'boolean',
+    },
     placeholder: {
+      control: 'text',
+    },
+    label: {
       control: 'text',
     },
   },
@@ -31,24 +37,18 @@ export const Default: Story = {
   },
 };
 
-export const Email: Story = {
+export const Label: Story = {
   args: {
-    type: 'email',
+    label: 'Email',
     placeholder: 'Enter email...',
   },
 };
 
-export const Password: Story = {
+export const RequiredLabel: Story = {
   args: {
-    type: 'password',
-    placeholder: 'Enter password...',
-  },
-};
-
-export const Number: Story = {
-  args: {
-    type: 'number',
-    placeholder: 'Enter number...',
+    label: 'Email',
+    placeholder: 'Enter email...',
+    required: true,
   },
 };
 

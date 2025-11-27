@@ -205,6 +205,7 @@ export const UserManagement: React.FC = () => {
         <div className="space-y-4">
           <Input
             name="username"
+            label="사용자명"
             value={formData.username || ''}
             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
             placeholder="사용자명을 입력하세요"
@@ -212,6 +213,7 @@ export const UserManagement: React.FC = () => {
           />
           <Input
             name="email"
+            label="이메일"
             value={formData.email || ''}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             placeholder="이메일을 입력하세요"
@@ -285,6 +287,7 @@ export const UserManagement: React.FC = () => {
 
           <Input
             name="username"
+            label="사용자명"
             value={formData.username || ''}
             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
             placeholder="사용자명을 입력하세요"
@@ -292,6 +295,7 @@ export const UserManagement: React.FC = () => {
           />
           <Input
             name="email"
+            label="이메일"
             value={formData.email || ''}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             placeholder="이메일을 입력하세요"

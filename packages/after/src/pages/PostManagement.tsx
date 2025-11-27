@@ -259,6 +259,7 @@ export const PostManagement: React.FC = () => {
         <div className="space-y-4">
           <Input
             name="title"
+            label="제목"
             value={formData.title || ''}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             placeholder="게시글 제목을 입력하세요"
@@ -267,6 +268,7 @@ export const PostManagement: React.FC = () => {
           <div className="grid grid-cols-2 gap-4">
             <Input
               name="author"
+              label="작성자명"
               value={formData.author || ''}
               onChange={(e) => setFormData({ ...formData, author: e.target.value })}
               placeholder="작성자명"
@@ -336,6 +338,7 @@ export const PostManagement: React.FC = () => {
 
           <Input
             name="title"
+            label="제목"
             value={formData.title || ''}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             placeholder="게시글 제목을 입력하세요"
@@ -344,6 +347,7 @@ export const PostManagement: React.FC = () => {
           <div className="grid grid-cols-2 gap-4">
             <Input
               name="author"
+              label="작성자명"
               value={formData.author || ''}
               onChange={(e) => setFormData({ ...formData, author: e.target.value })}
               placeholder="작성자명"
