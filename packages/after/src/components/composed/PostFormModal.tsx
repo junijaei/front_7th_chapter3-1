@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, FormSelect, FormTextarea } from '@/components/ui';
 import { Modal } from '@/components/composed';
+import { postFormSchema, type PostFormSchema } from '@/schemas';
 import type { Post, PostFormData } from '@/types';
 
 interface PostFormModalProps {
@@ -25,7 +27,8 @@ export const PostFormModal = ({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<PostFormData>({
+  } = useForm<PostFormSchema>({
+    resolver: zodResolver(postFormSchema),
     defaultValues: {
       title: '',
       content: '',
@@ -95,9 +98,7 @@ export const PostFormModal = ({
           placeholder="게시글 제목을 입력하세요"
           error={errors.title?.message}
           required
-          {...register('title', {
-            required: '제목을 입력해주세요',
-          })}
+          {...register('title')}
         />
         <div className="grid grid-cols-2 gap-4">
           <Input
@@ -105,9 +106,7 @@ export const PostFormModal = ({
             placeholder="작성자명"
             error={errors.author?.message}
             required
-            {...register('author', {
-              required: '작성자명을 입력해주세요',
-            })}
+            {...register('author')}
           />
           <FormSelect
             options={[
@@ -119,9 +118,7 @@ export const PostFormModal = ({
             placeholder="카테고리 선택"
             error={errors.category?.message}
             required
-            {...register('category', {
-              required: '카테고리를 선택해주세요',
-            })}
+            {...register('category')}
           />
         </div>
         <FormTextarea

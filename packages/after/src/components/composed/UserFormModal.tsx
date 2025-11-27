@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, FormSelect } from '@/components/ui';
 import { Modal } from '@/components/composed';
+import { userFormSchema, type UserFormSchema } from '@/schemas';
 import type { User, UserFormData } from '@/types';
 
 interface UserFormModalProps {
@@ -25,7 +27,8 @@ export const UserFormModal = ({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<UserFormData>({
+  } = useForm<UserFormSchema>({
+    resolver: zodResolver(userFormSchema),
     defaultValues: {
       username: '',
       email: '',
@@ -92,9 +95,7 @@ export const UserFormModal = ({
           placeholder="사용자명을 입력하세요"
           error={errors.username?.message}
           required
-          {...register('username', {
-            required: '사용자명을 입력해주세요',
-          })}
+          {...register('username')}
         />
         <Input
           label="이메일"
@@ -102,13 +103,7 @@ export const UserFormModal = ({
           type="email"
           error={errors.email?.message}
           required
-          {...register('email', {
-            required: '이메일을 입력해주세요',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: '올바른 이메일 형식이 아닙니다',
-            },
-          })}
+          {...register('email')}
         />
         <div className="grid grid-cols-2 gap-4">
           <FormSelect
@@ -120,9 +115,7 @@ export const UserFormModal = ({
             label="역할"
             error={errors.role?.message}
             required
-            {...register('role', {
-              required: '역할을 선택해주세요',
-            })}
+            {...register('role')}
           />
           <FormSelect
             options={[
@@ -133,9 +126,7 @@ export const UserFormModal = ({
             label="상태"
             error={errors.status?.message}
             required
-            {...register('status', {
-              required: '상태를 선택해주세요',
-            })}
+            {...register('status')}
           />
         </div>
       </div>
