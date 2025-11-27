@@ -157,7 +157,12 @@ export const CustomRows = {
 const WithValueStory = () => {
   const [value, setValue] = useState('This is pre-filled content.\nYou can edit it freely.');
   return (
-    <FormTextarea name="withValue" value={value} onChange={(e) => setValue(e.target.value)} label="Pre-filled Content" />
+    <FormTextarea
+      name="withValue"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      label="Pre-filled Content"
+    />
   );
 };
 
