@@ -1,5 +1,3 @@
-import React from 'react';
-
 import '@/stories/button.css';
 
 export interface ButtonProps {

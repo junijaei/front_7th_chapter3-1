@@ -25,12 +25,12 @@ describe('Logo', () => {
   });
 
   it('텍스트만 있을 때 회사명과 프로젝트명이 없다', () => {
-    const { container } = render(<Logo text="L" />);
+    render(<Logo text="L" />);
     expect(screen.queryByRole('heading')).not.toBeInTheDocument();
   });
 
   it('기본 size와 variant가 적용된다', () => {
-    const { container } = render(<Logo text="L" />);
+    render(<Logo text="L" />);
     const logoIcon = screen.getByText('L');
     expect(logoIcon).toHaveClass('h-10', 'w-10', 'bg-primary');
   });

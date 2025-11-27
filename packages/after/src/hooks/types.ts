@@ -11,8 +11,8 @@ export interface Post {
   updatedAt?: string;
 }
 
-export type UserStatus = 'admin' | 'moderator' | 'user' | 'guest';
-export type UserRole = 'active' | 'inactive' | 'suspended';
+export type UserRole = 'admin' | 'moderator' | 'user' | 'guest';
+export type UserStatus = 'active' | 'inactive' | 'suspended';
 export interface User {
   id: number;
   username: string;

@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 const viteConfig = defineConfig({
+  base: '/front_7th_chapter3-1/',
   plugins: [react()],
   resolve: {
     alias: {

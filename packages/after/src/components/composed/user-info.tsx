@@ -56,7 +56,7 @@ const userEmailVariants = cva('text-gray-600', {
 });
 
 type UserInfoContextValue = {
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | null;
   name?: string;
   email?: string;
 };

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button } from '@/stories/Button';
 import '@/stories/header.css';
 

@@ -16,7 +16,7 @@ describe('usePosts', () => {
   });
 
   it('refreshPosts를 호출하면 최신 데이터를 가져온다', () => {
-    const { result, rerender } = renderHook(() => usePosts());
+    const { result } = renderHook(() => usePosts());
 
     const initialLength = result.current.posts.length;
 

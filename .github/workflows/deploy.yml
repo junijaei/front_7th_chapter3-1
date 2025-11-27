@@ -34,8 +34,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build
-        run: pnpm run build && cp packages/app/dist/index.html packages/app/dist/404.html
+      - name: Build Main App
+        run: pnpm run build:after
+
+      - name: Build Storybook
+        run: pnpm run build:storybook
+
+      - name: Prepare deployment
+        run: |
+          cp packages/after/dist/index.html packages/after/dist/404.html
+          cp -r packages/after/storybook-static packages/after/dist/storybook
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -43,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./packages/app/dist"
+          path: "./packages/after/dist"
 
       - name: Deploy to GitHub Pages
         id: deployment
