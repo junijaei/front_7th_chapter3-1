@@ -2,6 +2,7 @@ export type UserRole = 'admin' | 'moderator' | 'user' | 'guest';
 export type UserStatus = 'active' | 'inactive' | 'suspended';
 
 export interface User {
+  [key: string]: unknown;
   id: number;
   username: string;
   email: string;
@@ -16,6 +17,7 @@ export type UpdateUserData = Partial<Omit<User, 'id' | 'createdAt'>>;
 
 // Form data type for modals
 export interface UserFormData {
+  [key: string]: unknown;
   username: string;
   email: string;
   role: UserRole;

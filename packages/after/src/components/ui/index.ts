@@ -20,3 +20,4 @@ export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
 export { FormTextarea } from './Textarea';
 export { StatCard } from './StatCard';
 export { ThemeToggle } from './ThemeToggle';
+export { Pagination, type PaginationProps } from './Pagination';

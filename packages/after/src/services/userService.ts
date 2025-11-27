@@ -70,10 +70,10 @@ export const userService = {
     }
 
     const newUser: User = {
-      id: Math.max(...users.map((u) => u.id), 0) + 1,
       ...userData,
+      id: Math.max(...users.map((u) => u.id), 0) + 1,
       createdAt: new Date().toISOString().split('T')[0],
-    };
+    } as User;
 
     users.push(newUser);
     saveUsers(users);

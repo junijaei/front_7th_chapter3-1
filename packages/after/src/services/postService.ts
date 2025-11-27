@@ -77,16 +77,16 @@ export const postService = {
   create(postData: CreatePostData): Post {
     const posts = getPosts();
 
-    if (postData.title.length < 5) {
+    if ((postData.title as string).length < 5) {
       throw new Error('Title must be at least 5 characters');
     }
 
     const newPost: Post = {
-      id: Math.max(...posts.map((p) => p.id), 0) + 1,
       ...postData,
+      id: Math.max(...posts.map((p) => p.id), 0) + 1,
       views: 0,
       createdAt: new Date().toISOString().split('T')[0],
-    };
+    } as Post;
 
     posts.push(newPost);
     savePosts(posts);

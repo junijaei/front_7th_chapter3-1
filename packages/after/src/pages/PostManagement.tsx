@@ -1,19 +1,10 @@
-import { PostFormModal } from '@/components/composed';
-import {
-  Badge,
-  Button,
-  StatCard,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui';
+import { DataTable, PostFormModal, type ColumnDef } from '@/components/composed';
+import { Badge, Button, StatCard } from '@/components/ui';
 import { POST_CATEGORY_BADGE, POST_STATUS_BADGE } from '@/constants';
 import { useAlert, useModal, usePosts } from '@/hooks';
 import type { Post, PostFormData } from '@/types';
-import { useMemo, useState, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export const PostManagement = () => {
   const postsHook = usePosts();
@@ -39,93 +30,162 @@ export const PostManagement = () => {
     }
   };
 
-  const handleEdit = (post: Post) => {
-    setSelectedPost(post);
-    modal.open();
-  };
+  const handleEdit = useCallback(
+    (post: Post) => {
+      setSelectedPost(post);
+      modal.open();
+    },
+    [modal]
+  );
 
   const handleOpenCreate = () => {
     setSelectedPost(null);
     modal.open();
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('정말 삭제하시겠습니까?')) return;
+  const handleDelete = useCallback(
+    async (id: number) => {
+      if (!confirm('정말 삭제하시겠습니까?')) return;
 
-    try {
-      postsHook.delete(id);
-      alert.success('삭제되었습니다');
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '삭제에 실패했습니다';
-      alert.error(message);
-    }
-  };
+      try {
+        postsHook.delete(id);
+        alert.success('삭제되었습니다');
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '삭제에 실패했습니다';
+        alert.error(message);
+      }
+    },
+    [postsHook, alert]
+  );
 
-  const handlePublish = async (id: number) => {
-    try {
-      postsHook.publish(id);
-      alert.success('게시되었습니다');
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '작업에 실패했습니다';
-      alert.error(message);
-    }
-  };
+  const handlePublish = useCallback(
+    async (id: number) => {
+      try {
+        postsHook.publish(id);
+        alert.success('게시되었습니다');
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '작업에 실패했습니다';
+        alert.error(message);
+      }
+    },
+    [postsHook, alert]
+  );
 
-  const handleArchive = async (id: number) => {
-    try {
-      postsHook.archive(id);
-      alert.success('보관되었습니다');
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '작업에 실패했습니다';
-      alert.error(message);
-    }
-  };
+  const handleArchive = useCallback(
+    async (id: number) => {
+      try {
+        postsHook.archive(id);
+        alert.success('보관되었습니다');
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '작업에 실패했습니다';
+        alert.error(message);
+      }
+    },
+    [postsHook, alert]
+  );
 
-  const handleRestore = async (id: number) => {
-    try {
-      postsHook.restore(id);
-      alert.success('복원되었습니다');
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '작업에 실패했습니다';
-      alert.error(message);
-    }
-  };
+  const handleRestore = useCallback(
+    async (id: number) => {
+      try {
+        postsHook.restore(id);
+        alert.success('복원되었습니다');
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '작업에 실패했습니다';
+        alert.error(message);
+      }
+    },
+    [postsHook, alert]
+  );
 
   const resetPostForm = () => {
     setSelectedPost(null);
   };
 
-  const renderActions = (post: Post) => {
-    const statusActions: Record<string, ReactNode> = {
-      draft: (
-        <Button size="sm" variant="success" onClick={() => handlePublish(post.id)}>
-          게시
-        </Button>
-      ),
-      published: (
-        <Button size="sm" variant="secondary" onClick={() => handleArchive(post.id)}>
-          보관
-        </Button>
-      ),
-      archived: (
-        <Button size="sm" variant="primary" onClick={() => handleRestore(post.id)}>
-          복원
-        </Button>
-      ),
-    };
+  const columns: ColumnDef<Post>[] = useMemo(
+    () => [
+      {
+        key: 'id',
+        header: 'ID',
+        width: '60px',
+        align: 'center',
+      },
+      {
+        key: 'title',
+        header: '제목',
+      },
+      {
+        key: 'author',
+        header: '작성자',
+        width: '120px',
+      },
+      {
+        key: 'category',
+        header: '카테고리',
+        width: '140px',
+        render: (post) => (
+          <Badge variant={POST_CATEGORY_BADGE[post.category]}>{post.category}</Badge>
+        ),
+      },
+      {
+        key: 'status',
+        header: '상태',
+        width: '120px',
+        render: (post) => (
+          <Badge variant={POST_STATUS_BADGE[post.status].variant}>
+            {POST_STATUS_BADGE[post.status].label}
+          </Badge>
+        ),
+      },
+      {
+        key: 'views',
+        header: '조회수',
+        width: '100px',
+        render: (post) => post.views.toLocaleString(),
+      },
+      {
+        key: 'createdAt',
+        header: '작성일',
+        width: '120px',
+      },
+      {
+        key: 'actions',
+        header: '관리',
+        width: '250px',
+        render: (post) => {
+          const statusActions: Record<string, ReactNode> = {
+            draft: (
+              <Button size="sm" variant="success" onClick={() => handlePublish(post.id)}>
+                게시
+              </Button>
+            ),
+            published: (
+              <Button size="sm" variant="secondary" onClick={() => handleArchive(post.id)}>
+                보관
+              </Button>
+            ),
+            archived: (
+              <Button size="sm" variant="primary" onClick={() => handleRestore(post.id)}>
+                복원
+              </Button>
+            ),
+          };
 
-    return (
-      <div className="flex flex-wrap gap-2">
-        <Button size="sm" variant="primary" onClick={() => handleEdit(post)}>
-          수정
-        </Button>
-        {statusActions[post.status]}
-        <Button size="sm" variant="danger" onClick={() => handleDelete(post.id)}>
-          삭제
-        </Button>
-      </div>
-    );
-  };
+          return (
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant="primary" onClick={() => handleEdit(post)}>
+                수정
+              </Button>
+              {statusActions[post.status]}
+              <Button size="sm" variant="danger" onClick={() => handleDelete(post.id)}>
+                삭제
+              </Button>
+            </div>
+          );
+        },
+      },
+    ],
+    [handleEdit, handlePublish, handleArchive, handleRestore, handleDelete]
+  );
 
   const stats = useMemo(() => {
     const posts = postsHook.posts;
@@ -154,42 +214,13 @@ export const PostManagement = () => {
         <StatCard variant="gray" label="총 조회수" value={stats.totalViews} />
       </div>
 
-      <div className="overflow-auto border border-border bg-card">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[60px]">ID</TableHead>
-              <TableHead>제목</TableHead>
-              <TableHead className="w-[120px]">작성자</TableHead>
-              <TableHead className="w-[140px]">카테고리</TableHead>
-              <TableHead className="w-[120px]">상태</TableHead>
-              <TableHead className="w-[100px]">조회수</TableHead>
-              <TableHead className="w-[120px]">작성일</TableHead>
-              <TableHead className="w-[250px]">관리</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {postsHook.posts.map((post) => (
-              <TableRow key={post.id}>
-                <TableCell>{post.id}</TableCell>
-                <TableCell>{post.title}</TableCell>
-                <TableCell>{post.author}</TableCell>
-                <TableCell>
-                  <Badge variant={POST_CATEGORY_BADGE[post.category]}>{post.category}</Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge variant={POST_STATUS_BADGE[post.status].variant}>
-                    {POST_STATUS_BADGE[post.status].label}
-                  </Badge>
-                </TableCell>
-                <TableCell>{post.views.toLocaleString()}</TableCell>
-                <TableCell>{post.createdAt}</TableCell>
-                <TableCell>{renderActions(post)}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <DataTable
+        data={postsHook.posts}
+        columns={columns}
+        pageSize={10}
+        showPagination={true}
+        emptyMessage="등록된 게시글이 없습니다."
+      />
 
       <PostFormModal
         isOpen={modal.isOpen}

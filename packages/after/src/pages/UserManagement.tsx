@@ -1,19 +1,9 @@
-import { UserFormModal } from '@/components/composed';
-import {
-  Badge,
-  Button,
-  StatCard,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui';
+import { DataTable, UserFormModal, type ColumnDef } from '@/components/composed';
+import { Badge, Button, StatCard } from '@/components/ui';
 import { USER_ROLE_BADGE, USER_STATUS_BADGE } from '@/constants';
 import { useAlert, useModal, useUsers } from '@/hooks';
 import type { User, UserFormData } from '@/types';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export const UserManagement = () => {
   const usersHook = useUsers();
@@ -39,41 +29,103 @@ export const UserManagement = () => {
     }
   };
 
-  const handleEdit = (user: User) => {
-    setSelectedUser(user);
-    modal.open();
-  };
+  const handleEdit = useCallback(
+    (user: User) => {
+      setSelectedUser(user);
+      modal.open();
+    },
+    [modal]
+  );
 
   const handleOpenCreate = () => {
     setSelectedUser(null);
     modal.open();
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('정말 삭제하시겠습니까?')) return;
+  const handleDelete = useCallback(
+    async (id: number) => {
+      if (!confirm('정말 삭제하시겠습니까?')) return;
 
-    try {
-      usersHook.delete(id);
-      alert.success('삭제되었습니다');
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '삭제에 실패했습니다';
-      alert.error(message);
-    }
-  };
+      try {
+        usersHook.delete(id);
+        alert.success('삭제되었습니다');
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '삭제에 실패했습니다';
+        alert.error(message);
+      }
+    },
+    [usersHook, alert]
+  );
 
   const resetUserForm = () => {
     setSelectedUser(null);
   };
 
-  const renderActions = (user: User) => (
-    <div className="flex gap-2">
-      <Button size="sm" variant="primary" onClick={() => handleEdit(user)}>
-        수정
-      </Button>
-      <Button size="sm" variant="danger" onClick={() => handleDelete(user.id)}>
-        삭제
-      </Button>
-    </div>
+  const columns: ColumnDef<User>[] = useMemo(
+    () => [
+      {
+        key: 'id',
+        header: 'ID',
+        width: '60px',
+        align: 'center',
+      },
+      {
+        key: 'username',
+        header: '사용자명',
+        width: '150px',
+      },
+      {
+        key: 'email',
+        header: '이메일',
+      },
+      {
+        key: 'role',
+        header: '역할',
+        width: '120px',
+        render: (user) => (
+          <Badge variant={USER_ROLE_BADGE[user.role].variant}>
+            {USER_ROLE_BADGE[user.role].label}
+          </Badge>
+        ),
+      },
+      {
+        key: 'status',
+        header: '상태',
+        width: '120px',
+        render: (user) => (
+          <Badge variant={USER_STATUS_BADGE[user.status].variant}>
+            {USER_STATUS_BADGE[user.status].label}
+          </Badge>
+        ),
+      },
+      {
+        key: 'createdAt',
+        header: '생성일',
+        width: '120px',
+      },
+      {
+        key: 'lastLogin',
+        header: '마지막 로그인',
+        width: '140px',
+        render: (user) => user.lastLogin || '-',
+      },
+      {
+        key: 'actions',
+        header: '관리',
+        width: '200px',
+        render: (user) => (
+          <div className="flex gap-2">
+            <Button size="sm" variant="primary" onClick={() => handleEdit(user)}>
+              수정
+            </Button>
+            <Button size="sm" variant="danger" onClick={() => handleDelete(user.id)}>
+              삭제
+            </Button>
+          </div>
+        ),
+      },
+    ],
+    [handleEdit, handleDelete]
   );
 
   const stats = useMemo(() => {
@@ -103,44 +155,13 @@ export const UserManagement = () => {
         <StatCard variant="gray" label="관리자" value={stats.admin} />
       </div>
 
-      <div className="overflow-auto border border-border bg-card">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[60px]">ID</TableHead>
-              <TableHead className="w-[150px]">사용자명</TableHead>
-              <TableHead>이메일</TableHead>
-              <TableHead className="w-[120px]">역할</TableHead>
-              <TableHead className="w-[120px]">상태</TableHead>
-              <TableHead className="w-[120px]">생성일</TableHead>
-              <TableHead className="w-[140px]">마지막 로그인</TableHead>
-              <TableHead className="w-[200px]">관리</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {usersHook.users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <Badge variant={USER_ROLE_BADGE[user.role].variant}>
-                    {USER_ROLE_BADGE[user.role].label}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge variant={USER_STATUS_BADGE[user.status].variant}>
-                    {USER_STATUS_BADGE[user.status].label}
-                  </Badge>
-                </TableCell>
-                <TableCell>{user.createdAt}</TableCell>
-                <TableCell>{user.lastLogin || '-'}</TableCell>
-                <TableCell>{renderActions(user)}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <DataTable
+        data={usersHook.users}
+        columns={columns}
+        pageSize={10}
+        showPagination={true}
+        emptyMessage="등록된 사용자가 없습니다."
+      />
 
       <UserFormModal
         isOpen={modal.isOpen}
