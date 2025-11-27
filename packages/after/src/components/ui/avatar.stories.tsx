@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Avatar } from '@/components/ui/avatar';
+import type { Meta } from '@storybook/react';
+import { Avatar } from '@/components/ui/Avatar';
 
 const meta = {
   title: 'UI/Avatar',
@@ -21,85 +21,84 @@ const meta = {
 } satisfies Meta<typeof Avatar>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default = {
   args: {
     children: 'AB',
   },
 };
 
-export const WithImage: Story = {
+export const WithImage = {
   args: {
     src: 'https://github.com/shadcn.png',
     alt: 'User Avatar',
   },
 };
 
-export const Small: Story = {
+export const Small = {
   args: {
     children: 'SM',
     size: 'sm',
   },
 };
 
-export const Medium: Story = {
+export const Medium = {
   args: {
     children: 'MD',
     size: 'md',
   },
 };
 
-export const Large: Story = {
+export const Large = {
   args: {
     children: 'LG',
     size: 'lg',
   },
 };
 
-export const ExtraLarge: Story = {
+export const ExtraLarge = {
   args: {
     children: 'XL',
     size: 'xl',
   },
 };
 
-export const Primary: Story = {
+export const Primary = {
   args: {
     children: 'PR',
     variant: 'primary',
   },
 };
 
-export const Secondary: Story = {
+export const Secondary = {
   args: {
     children: 'SC',
     variant: 'secondary',
   },
 };
 
-export const Success: Story = {
+export const Success = {
   args: {
     children: 'SU',
     variant: 'success',
   },
 };
 
-export const Warning: Story = {
+export const Warning = {
   args: {
     children: 'WA',
     variant: 'warning',
   },
 };
 
-export const Error: Story = {
+export const Error = {
   args: {
     children: 'ER',
     variant: 'error',
   },
 };
 
-export const AllSizes: Story = {
+export const AllSizes = {
   render: () => (
     <div className="flex items-center gap-4">
       <Avatar size="sm">SM</Avatar>
@@ -110,7 +109,7 @@ export const AllSizes: Story = {
   ),
 };
 
-export const AllVariants: Story = {
+export const AllVariants = {
   render: () => (
     <div className="flex flex-wrap gap-4">
       <Avatar variant="default">DF</Avatar>
@@ -123,7 +122,7 @@ export const AllVariants: Story = {
   ),
 };
 
-export const WithImages: Story = {
+export const WithImages = {
   render: () => (
     <div className="flex items-center gap-4">
       <Avatar src="https://github.com/shadcn.png" alt="User 1" size="sm" />

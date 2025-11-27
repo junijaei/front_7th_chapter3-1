@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { Modal } from '@/components/composed/modal';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import type { Meta } from '@storybook/react';
+import { Modal } from '@/components/composed/Modal';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 
 const meta = {
   title: 'Composed/Modal',
@@ -26,7 +26,6 @@ const meta = {
 } satisfies Meta<typeof Modal>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
 const DefaultStory = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +39,7 @@ const DefaultStory = () => {
   );
 };
 
-export const Default: Story = {
+export const Default = {
   render: () => <DefaultStory />,
 };
 
@@ -61,7 +60,7 @@ const WithDescriptionStory = () => {
   );
 };
 
-export const WithDescription: Story = {
+export const WithDescription = {
   render: () => <WithDescriptionStory />,
 };
 
@@ -92,7 +91,7 @@ const WithFooterStory = () => {
   );
 };
 
-export const WithFooter: Story = {
+export const WithFooter = {
   render: () => <WithFooterStory />,
 };
 
@@ -108,7 +107,7 @@ const SmallStory = () => {
   );
 };
 
-export const Small: Story = {
+export const Small = {
   render: () => <SmallStory />,
 };
 
@@ -124,7 +123,7 @@ const MediumStory = () => {
   );
 };
 
-export const Medium: Story = {
+export const Medium = {
   render: () => <MediumStory />,
 };
 
@@ -141,7 +140,7 @@ const LargeStory = () => {
   );
 };
 
-export const Large: Story = {
+export const Large = {
   render: () => <LargeStory />,
 };
 
@@ -177,7 +176,7 @@ const WithFormStory = () => {
   );
 };
 
-export const WithForm: Story = {
+export const WithForm = {
   render: () => <WithFormStory />,
 };
 
@@ -204,6 +203,6 @@ const NoCloseButtonStory = () => {
   );
 };
 
-export const NoCloseButton: Story = {
+export const NoCloseButton = {
   render: () => <NoCloseButtonStory />,
 };

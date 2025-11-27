@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@/components/ui/dialog';
+} from '@/components/ui/Dialog';
 import { cn } from '@/lib/utils';
 
 const modalVariants = cva('', {
@@ -49,7 +49,7 @@ export const Modal: React.FC<ModalProps> = ({
   ...props
 }) => {
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()} {...props}>
+    <Dialog open={isOpen} onOpenChange={(open: boolean) => !open && onClose()} {...props}>
       <DialogContent
         className={cn(modalVariants({ size }))}
         showCloseButton={showCloseButton}

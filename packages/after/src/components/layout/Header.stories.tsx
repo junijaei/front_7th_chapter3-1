@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Header } from '@/components/layout/header';
+import type { Meta } from '@storybook/react';
+import { Header } from '@/components/layout/Header';
 
 const meta = {
   title: 'Layout/Header',
@@ -21,9 +21,8 @@ const meta = {
 } satisfies Meta<typeof Header>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default = {
   render: () => (
     <Header>
       <Header.Logo
@@ -46,7 +45,7 @@ export const Default: Story = {
   ),
 };
 
-export const Small: Story = {
+export const Small = {
   render: () => (
     <Header size="sm">
       <Header.Logo
@@ -69,7 +68,7 @@ export const Small: Story = {
   ),
 };
 
-export const Medium: Story = {
+export const Medium = {
   render: () => (
     <Header size="md">
       <Header.Logo
@@ -92,7 +91,7 @@ export const Medium: Story = {
   ),
 };
 
-export const Large: Story = {
+export const Large = {
   render: () => (
     <Header size="lg">
       <Header.Logo
@@ -115,7 +114,7 @@ export const Large: Story = {
   ),
 };
 
-export const WithImage: Story = {
+export const WithImage = {
   render: () => (
     <Header>
       <Header.Logo
@@ -139,7 +138,7 @@ export const WithImage: Story = {
   ),
 };
 
-export const CustomMaxWidth: Story = {
+export const CustomMaxWidth = {
   render: () => (
     <Header maxWidth="lg">
       <Header.Logo
@@ -162,7 +161,7 @@ export const CustomMaxWidth: Story = {
   ),
 };
 
-export const WithContent: Story = {
+export const WithContent = {
   render: () => (
     <div>
       <Header>

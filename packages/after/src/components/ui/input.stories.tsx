@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Input } from '@/components/ui/input';
+import type { Meta } from '@storybook/react';
+import { Input } from '@/components/ui/Input';
 
 const meta = {
   title: 'UI/Input',
@@ -29,22 +29,21 @@ const meta = {
 } satisfies Meta<typeof Input>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default = {
   args: {
     placeholder: 'Enter text...',
   },
 };
 
-export const Label: Story = {
+export const Label = {
   args: {
     label: 'Email',
     placeholder: 'Enter email...',
   },
 };
 
-export const RequiredLabel: Story = {
+export const RequiredLabel = {
   args: {
     label: 'Email',
     placeholder: 'Enter email...',
@@ -52,20 +51,20 @@ export const RequiredLabel: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const Disabled = {
   args: {
     placeholder: 'Disabled input',
     disabled: true,
   },
 };
 
-export const WithValue: Story = {
+export const WithValue = {
   args: {
     defaultValue: 'Pre-filled value',
   },
 };
 
-export const AllTypes: Story = {
+export const AllTypes = {
   render: () => (
     <div className="flex w-80 flex-col gap-4">
       <Input type="text" placeholder="Text input" />

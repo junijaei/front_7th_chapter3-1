@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { UserInfo } from '@/components/composed/user-info';
+import { UserInfo } from '@/components/composed/UserInfo';
 
 describe('UserInfo', () => {
   it('사용자 이름과 이메일을 렌더링한다', () => {
@@ -93,8 +93,8 @@ describe('UserInfo', () => {
     const nameElement = screen.getByText('John Doe');
     const emailElement = screen.getByText('john@example.com');
 
-    expect(nameElement).toHaveClass('font-semibold', 'text-gray-900');
-    expect(emailElement).toHaveClass('text-gray-600');
+    expect(nameElement).toHaveClass('font-semibold', 'text-foreground');
+    expect(emailElement).toHaveClass('text-muted-foreground');
   });
 
   it('모든 size variant가 올바르게 렌더링된다', () => {

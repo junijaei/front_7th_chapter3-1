@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@/hooks';
 import { Header } from '@/components/layout';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@/components/ui';
 import { ManagementPage } from '@/pages/ManagementPage';
 
 export const App = () => {

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { StatCard } from '@/components/ui/stat-card';
+import type { Meta } from '@storybook/react';
+import { StatCard } from '@/components/ui/StatCard';
 
 const meta = {
   title: 'UI/StatCard',
@@ -17,9 +17,8 @@ const meta = {
 } satisfies Meta<typeof StatCard>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default = {
   args: {
     label: '전체',
     value: 150,
@@ -27,7 +26,7 @@ export const Default: Story = {
   },
 };
 
-export const Success: Story = {
+export const Success = {
   args: {
     label: '활성',
     value: 120,
@@ -35,7 +34,7 @@ export const Success: Story = {
   },
 };
 
-export const Warning: Story = {
+export const Warning = {
   args: {
     label: '비활성',
     value: 25,
@@ -43,7 +42,7 @@ export const Warning: Story = {
   },
 };
 
-export const Danger: Story = {
+export const Danger = {
   args: {
     label: '정지',
     value: 5,
@@ -51,7 +50,7 @@ export const Danger: Story = {
   },
 };
 
-export const Gray: Story = {
+export const Gray = {
   args: {
     label: '관리자',
     value: 8,
@@ -59,7 +58,7 @@ export const Gray: Story = {
   },
 };
 
-export const LargeNumber: Story = {
+export const LargeNumber = {
   args: {
     label: '총 조회수',
     value: 1234567,
@@ -67,7 +66,7 @@ export const LargeNumber: Story = {
   },
 };
 
-export const StringValue: Story = {
+export const StringValue = {
   args: {
     label: '상태',
     value: 'Active',
@@ -75,7 +74,7 @@ export const StringValue: Story = {
   },
 };
 
-export const AllVariants: Story = {
+export const AllVariants = {
   render: () => (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-2.5">
       <StatCard variant="default" label="전체" value={150} />

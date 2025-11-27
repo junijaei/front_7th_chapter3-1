@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { FormTextarea } from '@/components/ui/textarea';
+import type { Meta } from '@storybook/react';
+import { FormTextarea } from '@/components/ui/Textarea';
 
 const meta = {
   title: 'UI/FormTextarea',
@@ -30,7 +30,6 @@ const meta = {
 } satisfies Meta<typeof FormTextarea>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
 const DefaultStory = () => {
   const [value, setValue] = useState('');
@@ -44,7 +43,7 @@ const DefaultStory = () => {
   );
 };
 
-export const Default: Story = {
+export const Default = {
   render: () => <DefaultStory />,
 };
 
@@ -61,7 +60,7 @@ const WithLabelStory = () => {
   );
 };
 
-export const WithLabel: Story = {
+export const WithLabel = {
   render: () => <WithLabelStory />,
 };
 
@@ -79,7 +78,7 @@ const RequiredStory = () => {
   );
 };
 
-export const Required: Story = {
+export const Required = {
   render: () => <RequiredStory />,
 };
 
@@ -97,7 +96,7 @@ const WithErrorStory = () => {
   );
 };
 
-export const WithError: Story = {
+export const WithError = {
   render: () => <WithErrorStory />,
 };
 
@@ -115,7 +114,7 @@ const WithHelpTextStory = () => {
   );
 };
 
-export const WithHelpText: Story = {
+export const WithHelpText = {
   render: () => <WithHelpTextStory />,
 };
 
@@ -133,7 +132,7 @@ const DisabledStory = () => {
   );
 };
 
-export const Disabled: Story = {
+export const Disabled = {
   render: () => <DisabledStory />,
 };
 
@@ -151,7 +150,7 @@ const CustomRowsStory = () => {
   );
 };
 
-export const CustomRows: Story = {
+export const CustomRows = {
   render: () => <CustomRowsStory />,
 };
 
@@ -162,6 +161,6 @@ const WithValueStory = () => {
   );
 };
 
-export const WithValue: Story = {
+export const WithValue = {
   render: () => <WithValueStory />,
 };

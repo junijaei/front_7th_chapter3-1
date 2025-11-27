@@ -1,10 +1,11 @@
-export { Avatar } from './avatar';
-export { Badge } from './badge';
-export { Button } from './button';
-export { Checkbox } from './checkbox';
-export { Input } from './input';
-export { Logo } from './logo';
-export { FormSelect } from './select';
+export { Avatar } from './Avatar';
+export { Badge } from './Badge';
+export { Button } from './Button';
+export { Checkbox } from './Checkbox';
+export { Input } from './Input';
+export { Logo } from './Logo';
+export { FormSelect } from './Select';
+export { Toaster } from './Sonner';
 export {
   Table,
   TableHeader,
@@ -14,8 +15,8 @@ export {
   TableRow,
   TableCell,
   TableCaption,
-} from './table';
-export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
-export { FormTextarea } from './textarea';
-export { StatCard } from './stat-card';
-export { ThemeToggle } from './theme-toggle';
+} from './Table';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
+export { FormTextarea } from './Textarea';
+export { StatCard } from './StatCard';
+export { ThemeToggle } from './ThemeToggle';

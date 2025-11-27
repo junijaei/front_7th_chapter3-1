@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Logo } from '@/components/ui/logo';
+import type { Meta } from '@storybook/react';
+import { Logo } from '@/components/ui/Logo';
 
 const meta = {
   title: 'UI/Logo',
@@ -21,9 +21,8 @@ const meta = {
 } satisfies Meta<typeof Logo>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default = {
   args: {
     text: 'L',
     companyName: 'Company Name',
@@ -31,27 +30,27 @@ export const Default: Story = {
   },
 };
 
-export const IconOnly: Story = {
+export const IconOnly = {
   args: {
     text: 'L',
   },
 };
 
-export const WithCompany: Story = {
+export const WithCompany = {
   args: {
     text: 'H',
     companyName: 'Hanghae Company',
   },
 };
 
-export const WithProject: Story = {
+export const WithProject = {
   args: {
     text: 'D',
     projectName: 'Design System',
   },
 };
 
-export const Small: Story = {
+export const Small = {
   args: {
     text: 'S',
     companyName: 'Small Company',
@@ -60,7 +59,7 @@ export const Small: Story = {
   },
 };
 
-export const Medium: Story = {
+export const Medium = {
   args: {
     text: 'M',
     companyName: 'Medium Company',
@@ -69,7 +68,7 @@ export const Medium: Story = {
   },
 };
 
-export const Large: Story = {
+export const Large = {
   args: {
     text: 'L',
     companyName: 'Large Company',
@@ -78,7 +77,7 @@ export const Large: Story = {
   },
 };
 
-export const Primary: Story = {
+export const Primary = {
   args: {
     text: 'P',
     companyName: 'Primary Brand',
@@ -87,7 +86,7 @@ export const Primary: Story = {
   },
 };
 
-export const Secondary: Story = {
+export const Secondary = {
   args: {
     text: 'S',
     companyName: 'Secondary Brand',
@@ -96,7 +95,7 @@ export const Secondary: Story = {
   },
 };
 
-export const Accent: Story = {
+export const Accent = {
   args: {
     text: 'A',
     companyName: 'Accent Brand',
@@ -105,7 +104,7 @@ export const Accent: Story = {
   },
 };
 
-export const AllSizes: Story = {
+export const AllSizes = {
   render: () => (
     <div className="flex flex-col gap-6">
       <Logo text="S" companyName="Small Size" projectName="Small Project" size="sm" />
@@ -115,7 +114,7 @@ export const AllSizes: Story = {
   ),
 };
 
-export const AllVariants: Story = {
+export const AllVariants = {
   render: () => (
     <div className="flex flex-col gap-6">
       <Logo text="P" companyName="Primary" projectName="Primary Variant" variant="primary" />
@@ -125,7 +124,7 @@ export const AllVariants: Story = {
   ),
 };
 
-export const RealWorld: Story = {
+export const RealWorld = {
   render: () => (
     <Logo
       text="H"

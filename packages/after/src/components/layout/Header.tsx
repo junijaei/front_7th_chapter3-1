@@ -1,10 +1,10 @@
 import { createContext, forwardRef, useContext, type HTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
-import { Logo, type LogoProps } from '@/components/ui/logo';
-import { Avatar, type AvatarProps } from '@/components/ui/avatar';
-import { UserInfo, type UserInfoProps } from '@/components/composed/user-info';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { Logo, type LogoProps } from '@/components/ui/Logo';
+import { Avatar, type AvatarProps } from '@/components/ui/Avatar';
+import { UserInfo, type UserInfoProps } from '@/components/composed/UserInfo';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 const headerVariants = cva('sticky top-0 z-1000 border-b bg-card border-border shadow-sm', {
   variants: {

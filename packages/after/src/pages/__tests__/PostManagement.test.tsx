@@ -50,13 +50,7 @@ describe('PostManagement', () => {
     info: vi.fn(),
   };
 
-  const mockCreateModal = {
-    isOpen: false,
-    open: vi.fn(),
-    close: vi.fn(),
-  };
-
-  const mockEditModal = {
+  const mockModal = {
     isOpen: false,
     open: vi.fn(),
     close: vi.fn(),
@@ -66,10 +60,7 @@ describe('PostManagement', () => {
     vi.clearAllMocks();
     (hooks.usePosts as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockPostsHook);
     (hooks.useAlert as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockAlert);
-    // useModal is called twice: createModal and editModal
-    (hooks.useModal as unknown as ReturnType<typeof vi.fn>)
-      .mockReturnValueOnce(mockCreateModal)
-      .mockReturnValueOnce(mockEditModal);
+    (hooks.useModal as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockModal);
   });
 
   describe('렌더링', () => {
@@ -113,7 +104,7 @@ describe('PostManagement', () => {
       const createButton = screen.getByRole('button', { name: '새로 만들기' });
       fireEvent.click(createButton);
 
-      expect(mockCreateModal.open).toHaveBeenCalled();
+      expect(mockModal.open).toHaveBeenCalled();
     });
   });
 

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '@/components/ui/button';
+import type { Meta } from '@storybook/react';
+import { Button } from '@/components/ui/Button';
 
 const meta = {
   title: 'UI/Button',
@@ -24,79 +24,78 @@ const meta = {
 } satisfies Meta<typeof Button>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Primary = {
   args: {
     children: 'Primary Button',
     variant: 'primary',
   },
 };
 
-export const Secondary: Story = {
+export const Secondary = {
   args: {
     children: 'Secondary Button',
     variant: 'secondary',
   },
 };
 
-export const Danger: Story = {
+export const Danger = {
   args: {
     children: 'Danger Button',
     variant: 'danger',
   },
 };
 
-export const Success: Story = {
+export const Success = {
   args: {
     children: 'Success Button',
     variant: 'success',
   },
 };
 
-export const Outline: Story = {
+export const Outline = {
   args: {
     children: 'Outline Button',
     variant: 'outline',
   },
 };
 
-export const Ghost: Story = {
+export const Ghost = {
   args: {
     children: 'Ghost Button',
     variant: 'ghost',
   },
 };
 
-export const Small: Story = {
+export const Small = {
   args: {
     children: 'Small Button',
     size: 'sm',
   },
 };
 
-export const Medium: Story = {
+export const Medium = {
   args: {
     children: 'Medium Button',
     size: 'md',
   },
 };
 
-export const Large: Story = {
+export const Large = {
   args: {
     children: 'Large Button',
     size: 'lg',
   },
 };
 
-export const Disabled: Story = {
+export const Disabled = {
   args: {
     children: 'Disabled Button',
     disabled: true,
   },
 };
 
-export const AllVariants: Story = {
+export const AllVariants = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="flex gap-2">

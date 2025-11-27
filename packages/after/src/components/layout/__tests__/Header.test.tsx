@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from '@/hooks';
-import { Header } from '@/components/layout/header';
+import { Header } from '@/components/layout/Header';
 
 const renderWithTheme = (ui: React.ReactElement) => {
   return render(<ThemeProvider>{ui}</ThemeProvider>);

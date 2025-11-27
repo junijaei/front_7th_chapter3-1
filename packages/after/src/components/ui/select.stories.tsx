@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { FormSelect } from '@/components/ui/select';
+import type { Meta } from '@storybook/react';
+import { FormSelect } from '@/components/ui/Select';
 
 const meta = {
   title: 'UI/FormSelect',
@@ -31,7 +31,6 @@ const meta = {
 } satisfies Meta<typeof FormSelect>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
 const sampleOptions = [
   { value: 'option1', label: 'Option 1' },
@@ -52,7 +51,7 @@ const DefaultStory = () => {
   );
 };
 
-export const Default: Story = {
+export const Default = {
   render: () => <DefaultStory />,
 };
 
@@ -70,7 +69,7 @@ const WithLabelStory = () => {
   );
 };
 
-export const WithLabel: Story = {
+export const WithLabel = {
   render: () => <WithLabelStory />,
 };
 
@@ -88,7 +87,7 @@ const RequiredStory = () => {
   );
 };
 
-export const Required: Story = {
+export const Required = {
   render: () => <RequiredStory />,
 };
 
@@ -106,7 +105,7 @@ const WithErrorStory = () => {
   );
 };
 
-export const WithError: Story = {
+export const WithError = {
   render: () => <WithErrorStory />,
 };
 
@@ -124,7 +123,7 @@ const WithHelpTextStory = () => {
   );
 };
 
-export const WithHelpText: Story = {
+export const WithHelpText = {
   render: () => <WithHelpTextStory />,
 };
 
@@ -142,7 +141,7 @@ const DisabledStory = () => {
   );
 };
 
-export const Disabled: Story = {
+export const Disabled = {
   render: () => <DisabledStory />,
 };
 
@@ -159,6 +158,6 @@ const PreSelectedStory = () => {
   );
 };
 
-export const PreSelected: Story = {
+export const PreSelected = {
   render: () => <PreSelectedStory />,
 };

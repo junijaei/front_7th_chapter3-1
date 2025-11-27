@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormTextarea } from '@/components/ui/textarea';
+import { FormTextarea } from '@/components/ui/Textarea';
 
 describe('FormTextarea', () => {
   it('기본 텍스트에어리어가 렌더링된다', () => {
@@ -44,7 +44,7 @@ describe('FormTextarea', () => {
   it('error 메시지가 표시된다', () => {
     render(<FormTextarea name="test" value="" onChange={() => {}} error="에러가 발생했습니다" />);
     expect(screen.getByText('에러가 발생했습니다')).toBeInTheDocument();
-    expect(screen.getByRole('textbox')).toHaveClass('border-red-600');
+    expect(screen.getByRole('textbox')).toHaveClass('border-destructive');
   });
 
   it('helpText가 표시된다', () => {

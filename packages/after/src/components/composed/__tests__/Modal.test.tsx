@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Modal } from '@/components/composed/modal';
+import { Modal } from '@/components/composed/Modal';
 
 describe('Modal', () => {
   it('isOpen이 false일 때 모달이 렌더링되지 않는다', () => {

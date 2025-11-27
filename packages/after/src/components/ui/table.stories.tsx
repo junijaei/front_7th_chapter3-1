@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import {
   Table,
   TableHeader,
@@ -8,8 +8,8 @@ import {
   TableRow,
   TableCell,
   TableCaption,
-} from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+} from '@/components/ui/Table';
+import { Badge } from '@/components/ui/Badge';
 
 const meta = {
   title: 'UI/Table',
@@ -21,7 +21,6 @@ const meta = {
 } satisfies Meta<typeof Table>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
 const sampleData = [
   { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'active' },
@@ -30,7 +29,7 @@ const sampleData = [
   { id: 4, name: 'Alice Brown', email: 'alice@example.com', role: 'Moderator', status: 'active' },
 ];
 
-export const Default: Story = {
+export const Default = {
   render: () => (
     <div className="overflow-auto border border-gray-300 bg-white">
       <Table>
@@ -59,7 +58,7 @@ export const Default: Story = {
   ),
 };
 
-export const WithBadges: Story = {
+export const WithBadges = {
   render: () => (
     <div className="overflow-auto border border-gray-300 bg-white">
       <Table>
@@ -96,7 +95,7 @@ export const WithBadges: Story = {
   ),
 };
 
-export const WithCaption: Story = {
+export const WithCaption = {
   render: () => (
     <div className="overflow-auto border border-gray-300 bg-white">
       <Table>
@@ -120,7 +119,7 @@ export const WithCaption: Story = {
   ),
 };
 
-export const WithFooter: Story = {
+export const WithFooter = {
   render: () => (
     <div className="overflow-auto border border-gray-300 bg-white">
       <Table>
@@ -155,7 +154,7 @@ export const WithFooter: Story = {
   ),
 };
 
-export const Empty: Story = {
+export const Empty = {
   render: () => (
     <div className="overflow-auto border border-gray-300 bg-white">
       <Table>

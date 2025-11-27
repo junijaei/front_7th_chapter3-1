@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Badge } from '@/components/ui/badge';
+import type { Meta } from '@storybook/react';
+import { Badge } from '@/components/ui/Badge';
 
 const meta = {
   title: 'UI/Badge',
@@ -17,58 +17,57 @@ const meta = {
 } satisfies Meta<typeof Badge>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default = {
   args: {
     children: 'Default',
     variant: 'default',
   },
 };
 
-export const Secondary: Story = {
+export const Secondary = {
   args: {
     children: 'Secondary',
     variant: 'secondary',
   },
 };
 
-export const Success: Story = {
+export const Success = {
   args: {
     children: 'Success',
     variant: 'success',
   },
 };
 
-export const Destructive: Story = {
+export const Destructive = {
   args: {
     children: 'Destructive',
     variant: 'destructive',
   },
 };
 
-export const Warning: Story = {
+export const Warning = {
   args: {
     children: 'Warning',
     variant: 'warning',
   },
 };
 
-export const Info: Story = {
+export const Info = {
   args: {
     children: 'Info',
     variant: 'info',
   },
 };
 
-export const Outline: Story = {
+export const Outline = {
   args: {
     children: 'Outline',
     variant: 'outline',
   },
 };
 
-export const AllVariants: Story = {
+export const AllVariants = {
   render: () => (
     <div className="flex flex-wrap gap-2">
       <Badge variant="default">Default</Badge>

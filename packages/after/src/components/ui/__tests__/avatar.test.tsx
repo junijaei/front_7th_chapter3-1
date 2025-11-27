@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar } from '@/components/ui/Avatar';
 
 describe('Avatar', () => {
   it('텍스트를 children으로 렌더링한다', () => {
@@ -11,7 +11,7 @@ describe('Avatar', () => {
   it('기본 variant와 size가 적용된다', () => {
     const { container } = render(<Avatar>AB</Avatar>);
     const avatar = container.firstChild as HTMLElement;
-    expect(avatar).toHaveClass('bg-blue-50', 'text-blue-700', 'h-10', 'w-10');
+    expect(avatar).toHaveClass('bg-primary/10', 'text-primary', 'h-10', 'w-10');
   });
 
   it('size prop이 올바르게 적용된다', () => {
@@ -23,7 +23,7 @@ describe('Avatar', () => {
   it('variant prop이 올바르게 적용된다', () => {
     const { container } = render(<Avatar variant="success">AB</Avatar>);
     const avatar = container.firstChild as HTMLElement;
-    expect(avatar).toHaveClass('bg-green-50', 'text-green-700');
+    expect(avatar).toHaveClass('bg-success/10', 'text-success');
   });
 
   it('이미지를 src prop으로 렌더링한다', () => {

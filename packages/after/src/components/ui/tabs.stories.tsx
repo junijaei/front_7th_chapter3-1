@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
+import type { Meta } from '@storybook/react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
+import { Button } from '@/components/ui/Button';
 
 const meta = {
   title: 'UI/Tabs',
@@ -12,9 +12,8 @@ const meta = {
 } satisfies Meta<typeof Tabs>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default = {
   render: () => (
     <Tabs defaultValue="tab1" className="w-96">
       <TabsList>
@@ -44,7 +43,7 @@ export const Default: Story = {
   ),
 };
 
-export const TwoTabs: Story = {
+export const TwoTabs = {
   render: () => (
     <Tabs defaultValue="posts" className="w-96">
       <TabsList>
@@ -67,7 +66,7 @@ export const TwoTabs: Story = {
   ),
 };
 
-export const WithActions: Story = {
+export const WithActions = {
   render: () => (
     <Tabs defaultValue="overview" className="w-[600px]">
       <TabsList>
@@ -106,7 +105,7 @@ export const WithActions: Story = {
   ),
 };
 
-export const FullWidth: Story = {
+export const FullWidth = {
   render: () => (
     <Tabs defaultValue="all" className="w-full">
       <TabsList className="w-full">
@@ -139,7 +138,7 @@ export const FullWidth: Story = {
   ),
 };
 
-export const ManyTabs: Story = {
+export const ManyTabs = {
   render: () => (
     <Tabs defaultValue="1" className="w-full">
       <TabsList>

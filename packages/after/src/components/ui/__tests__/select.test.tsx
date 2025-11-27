@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormSelect } from '@/components/ui/select';
+import { FormSelect } from '@/components/ui/Select';
 
 const mockOptions = [
   { value: 'option1', label: '옵션 1' },
@@ -89,7 +89,7 @@ describe('FormSelect', () => {
       />
     );
     expect(screen.getByText('에러가 발생했습니다')).toBeInTheDocument();
-    expect(screen.getByRole('combobox')).toHaveClass('border-red-600');
+    expect(screen.getByRole('combobox')).toHaveClass('border-destructive');
   });
 
   it('helpText가 표시된다', () => {
