@@ -44,7 +44,7 @@ const DefaultStory = () => {
     <FormSelect
       name="default"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       options={sampleOptions}
       placeholder="Select an option"
     />
@@ -61,7 +61,7 @@ const WithLabelStory = () => {
     <FormSelect
       name="withLabel"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       options={sampleOptions}
       label="Select Option"
       placeholder="Choose one"
@@ -79,7 +79,7 @@ const RequiredStory = () => {
     <FormSelect
       name="required"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       options={sampleOptions}
       label="Required Field"
       required
@@ -97,7 +97,7 @@ const WithErrorStory = () => {
     <FormSelect
       name="error"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       options={sampleOptions}
       label="Select with Error"
       error="This field is required"
@@ -115,7 +115,7 @@ const WithHelpTextStory = () => {
     <FormSelect
       name="helpText"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       options={sampleOptions}
       label="Select with Help"
       helpText="Choose the best option for you"
@@ -133,7 +133,7 @@ const DisabledStory = () => {
     <FormSelect
       name="disabled"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       options={sampleOptions}
       label="Disabled Select"
       disabled
@@ -151,7 +151,7 @@ const PreSelectedStory = () => {
     <FormSelect
       name="preSelected"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       options={sampleOptions}
       label="Pre-selected Option"
     />

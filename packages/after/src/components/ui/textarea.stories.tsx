@@ -37,7 +37,7 @@ const DefaultStory = () => {
     <FormTextarea
       name="default"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       placeholder="Enter your text..."
     />
   );
@@ -53,7 +53,7 @@ const WithLabelStory = () => {
     <FormTextarea
       name="withLabel"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       label="Description"
       placeholder="Enter description..."
     />
@@ -70,7 +70,7 @@ const RequiredStory = () => {
     <FormTextarea
       name="required"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       label="Required Field"
       placeholder="This field is required..."
       required
@@ -88,7 +88,7 @@ const WithErrorStory = () => {
     <FormTextarea
       name="error"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       label="Comment"
       placeholder="Enter comment..."
       error="Comment must be at least 10 characters"
@@ -106,7 +106,7 @@ const WithHelpTextStory = () => {
     <FormTextarea
       name="helpText"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       label="Feedback"
       placeholder="Share your feedback..."
       helpText="Your feedback helps us improve"
@@ -124,7 +124,7 @@ const DisabledStory = () => {
     <FormTextarea
       name="disabled"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       label="Disabled Textarea"
       placeholder="This is disabled..."
       disabled
@@ -142,7 +142,7 @@ const CustomRowsStory = () => {
     <FormTextarea
       name="customRows"
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       label="Large Text Area"
       placeholder="Enter a lot of text..."
       rows={8}
@@ -157,7 +157,7 @@ export const CustomRows = {
 const WithValueStory = () => {
   const [value, setValue] = useState('This is pre-filled content.\nYou can edit it freely.');
   return (
-    <FormTextarea name="withValue" value={value} onChange={setValue} label="Pre-filled Content" />
+    <FormTextarea name="withValue" value={value} onChange={(e) => setValue(e.target.value)} label="Pre-filled Content" />
   );
 };
 
