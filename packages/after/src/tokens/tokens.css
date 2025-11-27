@@ -1,0 +1,7 @@
+/* ============================================
+   Design Tokens - Entry Point
+   Primitives와 Semantic 토큰을 통합
+   ============================================ */
+
+@import './primitives.css';
+@import './semantic.css';

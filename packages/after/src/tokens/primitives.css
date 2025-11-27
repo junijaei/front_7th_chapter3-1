@@ -1,0 +1,108 @@
+/* ============================================
+   Design Tokens - Primitives
+   기본 색상 팔레트 및 원시 값 정의
+   ============================================ */
+
+:root {
+  /* Gray Scale */
+  --gray-50: #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #e0e0e0;
+  --gray-300: #d1d5db;
+  --gray-500: #757575;
+  --gray-600: #6b7280;
+  --gray-700: #424242;
+  --gray-800: oklch(0.22 0 0);
+  --gray-900: oklch(0.18 0 0);
+  --gray-950: oklch(0.145 0 0);
+
+  /* White & Black */
+  --white: oklch(1 0 0);
+  --black: oklch(0.145 0 0);
+  --near-white: oklch(0.985 0 0);
+  --near-black: oklch(0.205 0 0);
+
+  /* Brand Colors */
+  --brand-primary-light: oklch(0.205 0 0);
+  --brand-primary-dark: oklch(0.5 0.15 264);
+
+  /* Neutral Colors */
+  --neutral-50: oklch(0.985 0 0);
+  --neutral-100: oklch(0.97 0 0);
+  --neutral-200: oklch(0.922 0 0);
+  --neutral-300: oklch(0.708 0 0);
+  --neutral-400: oklch(0.556 0 0);
+  --neutral-700: oklch(0.35 0 0);
+  --neutral-800: oklch(0.28 0 0);
+  --neutral-900: oklch(0.22 0 0);
+  --neutral-950: oklch(0.18 0 0);
+
+  /* Semantic Color Values */
+  --green-600: hsl(122 39% 39%);
+  --green-700: hsl(122 39% 49%);
+  --orange-500: hsl(27 100% 48%);
+  --orange-600: hsl(27 100% 58%);
+  --blue-500: hsl(199 89% 41%);
+  --blue-600: hsl(199 89% 51%);
+  --red-500: oklch(0.577 0.245 27.325);
+  --red-600: oklch(0.6 0.2 25);
+
+  /* Chart Colors */
+  --chart-orange: oklch(0.646 0.222 41.116);
+  --chart-cyan: oklch(0.6 0.118 184.704);
+  --chart-blue: oklch(0.398 0.07 227.392);
+  --chart-yellow: oklch(0.828 0.189 84.429);
+  --chart-amber: oklch(0.769 0.188 70.08);
+  --chart-purple: oklch(0.5 0.15 264);
+  --chart-teal: oklch(0.65 0.12 180);
+  --chart-lime: oklch(0.7 0.15 80);
+  --chart-magenta: oklch(0.6 0.2 300);
+  --chart-peach: oklch(0.65 0.18 20);
+
+  /* Spacing Scale */
+  --spacing-0: 0;
+  --spacing-0-5: 0.125rem;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+
+  /* Border Radius Scale */
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-full: 9999px;
+
+  /* Font Size Scale */
+  --font-size-xs: 0.625rem;
+  --font-size-sm: 0.75rem;
+  --font-size-base: 0.8125rem;
+  --font-size-md: 0.875rem;
+  --font-size-lg: 0.9375rem;
+  --font-size-xl: 1rem;
+  --font-size-2xl: 1.125rem;
+  --font-size-3xl: 1.25rem;
+
+  /* Font Weight Scale */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Height Scale */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.4;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+
+  /* Shadow Scale */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
