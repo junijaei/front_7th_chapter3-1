@@ -25,7 +25,7 @@ describe('usePosts', () => {
       title: 'New Post',
       content: 'Content',
       author: 'Author',
-      category: 'test',
+      category: 'development',
       status: 'draft',
     });
 

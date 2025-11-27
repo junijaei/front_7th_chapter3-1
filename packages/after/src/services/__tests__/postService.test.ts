@@ -28,7 +28,7 @@ describe('postService', () => {
       title: 'New Post',
       content: 'Content',
       author: 'Author',
-      category: 'test',
+      category: 'development',
       status: 'draft',
     };
 
@@ -46,7 +46,7 @@ describe('postService', () => {
       title: 'Test',
       content: 'Content',
       author: 'Author',
-      category: 'test',
+      category: 'development',
       status: 'draft',
     };
 
