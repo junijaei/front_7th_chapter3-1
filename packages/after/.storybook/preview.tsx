@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react-vite';
 import { useEffect } from 'react';
-import { ThemeProvider } from '../src/hooks/ThemeProvider';
+import { ThemeProvider } from '../src/context/ThemeProvider';
 import '../src/index.css';
 
 const preview: Preview = {

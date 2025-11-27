@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { ThemeContext, type Theme } from '@/hooks/ThemeContext';
+import { ThemeContext, type Theme } from '@/context/ThemeContext';
 
 const getSystemTheme = (): 'light' | 'dark' => {
   if (typeof window === 'undefined') return 'light';
