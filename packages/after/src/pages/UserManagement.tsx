@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import {
   Button,
   Badge,
-  Input,
-  FormSelect,
   Table,
   TableHeader,
   TableBody,
@@ -12,8 +10,8 @@ import {
   TableCell,
   StatCard,
 } from '@/components/ui';
-import { Modal } from '@/components/composed';
-import { useUsers, useAlert, useModal, type User } from '@/hooks';
+import { UserFormModal } from '@/components/composed';
+import { useUsers, useAlert, useModal, type User, type UserFormData } from '@/hooks';
 
 export const UserManagement: React.FC = () => {
   const usersHook = useUsers();
@@ -22,10 +20,15 @@ export const UserManagement: React.FC = () => {
   const editModal = useModal();
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<Partial<UserFormData>>({});
 
   const handleCreate = async () => {
     try {
+      if (!formData.username || !formData.email) {
+        alert.error('필수 항목을 입력해주세요');
+        return;
+      }
+
       usersHook.create({
         username: formData.username,
         email: formData.email,
@@ -36,8 +39,9 @@ export const UserManagement: React.FC = () => {
       createModal.close();
       setFormData({});
       alert.success('사용자가 생성되었습니다');
-    } catch (error: any) {
-      alert.error(error.message || '생성에 실패했습니다');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : '생성에 실패했습니다';
+      alert.error(message);
     }
   };
 
@@ -61,8 +65,9 @@ export const UserManagement: React.FC = () => {
       setFormData({});
       setSelectedUser(null);
       alert.success('사용자가 수정되었습니다');
-    } catch (error: any) {
-      alert.error(error.message || '수정에 실패했습니다');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : '수정에 실패했습니다';
+      alert.error(message);
     }
   };
 
@@ -72,35 +77,55 @@ export const UserManagement: React.FC = () => {
     try {
       usersHook.delete(id);
       alert.success('삭제되었습니다');
-    } catch (error: any) {
-      alert.error(error.message || '삭제에 실패했습니다');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : '삭제에 실패했습니다';
+      alert.error(message);
     }
   };
 
   const renderRoleBadge = (role: string) => {
-    const roleVariant =
-      role === 'admin'
-        ? 'destructive'
-        : role === 'moderator'
-          ? 'warning'
-          : role === 'user'
-            ? 'default'
-            : 'secondary';
-    const roleLabel =
-      role === 'admin'
-        ? '관리자'
-        : role === 'moderator'
-          ? '운영자'
-          : role === 'user'
-            ? '사용자'
-            : '게스트';
+    let roleVariant: 'destructive' | 'warning' | 'default' | 'secondary';
+    let roleLabel: string;
+
+    switch (role) {
+      case 'admin':
+        roleVariant = 'destructive';
+        roleLabel = '관리자';
+        break;
+      case 'moderator':
+        roleVariant = 'warning';
+        roleLabel = '운영자';
+        break;
+      case 'user':
+        roleVariant = 'default';
+        roleLabel = '사용자';
+        break;
+      default:
+        roleVariant = 'secondary';
+        roleLabel = '게스트';
+    }
+
     return <Badge variant={roleVariant}>{roleLabel}</Badge>;
   };
 
   const renderStatusBadge = (status: string) => {
-    const statusVariant =
-      status === 'active' ? 'success' : status === 'inactive' ? 'warning' : 'destructive';
-    const statusLabel = status === 'active' ? '활성' : status === 'inactive' ? '비활성' : '정지';
+    let statusVariant: 'success' | 'warning' | 'destructive';
+    let statusLabel: string;
+
+    switch (status) {
+      case 'active':
+        statusVariant = 'success';
+        statusLabel = '활성';
+        break;
+      case 'inactive':
+        statusVariant = 'warning';
+        statusLabel = '비활성';
+        break;
+      default:
+        statusVariant = 'destructive';
+        statusLabel = '정지';
+    }
+
     return <Badge variant={statusVariant}>{statusLabel}</Badge>;
   };
 
@@ -175,81 +200,19 @@ export const UserManagement: React.FC = () => {
         </Table>
       </div>
 
-      <Modal
+      <UserFormModal
         isOpen={createModal.isOpen}
         onClose={() => {
           createModal.close();
           setFormData({});
         }}
         title="새 사용자 만들기"
-        size="large"
-        showFooter
-        footerContent={
-          <>
-            <Button
-              variant="secondary"
-              size="md"
-              onClick={() => {
-                createModal.close();
-                setFormData({});
-              }}
-            >
-              취소
-            </Button>
-            <Button variant="primary" size="md" onClick={handleCreate}>
-              생성
-            </Button>
-          </>
-        }
-      >
-        <div className="space-y-4">
-          <Input
-            name="username"
-            label="사용자명"
-            value={formData.username || ''}
-            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-            placeholder="사용자명을 입력하세요"
-            required
-          />
-          <Input
-            name="email"
-            label="이메일"
-            value={formData.email || ''}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            placeholder="이메일을 입력하세요"
-            type="email"
-            required
-          />
-          <div className="grid grid-cols-2 gap-4">
-            <FormSelect
-              name="role"
-              value={formData.role || 'user'}
-              onChange={(value) => setFormData({ ...formData, role: value })}
-              options={[
-                { value: 'user', label: '사용자' },
-                { value: 'moderator', label: '운영자' },
-                { value: 'admin', label: '관리자' },
-              ]}
-              label="역할"
-              size="md"
-            />
-            <FormSelect
-              name="status"
-              value={formData.status || 'active'}
-              onChange={(value) => setFormData({ ...formData, status: value })}
-              options={[
-                { value: 'active', label: '활성' },
-                { value: 'inactive', label: '비활성' },
-                { value: 'suspended', label: '정지' },
-              ]}
-              label="상태"
-              size="md"
-            />
-          </div>
-        </div>
-      </Modal>
+        formData={formData}
+        setFormData={setFormData}
+        onSubmit={handleCreate}
+      />
 
-      <Modal
+      <UserFormModal
         isOpen={editModal.isOpen}
         onClose={() => {
           editModal.close();
@@ -257,79 +220,11 @@ export const UserManagement: React.FC = () => {
           setSelectedUser(null);
         }}
         title="사용자 수정"
-        size="large"
-        showFooter
-        footerContent={
-          <>
-            <Button
-              variant="secondary"
-              size="md"
-              onClick={() => {
-                editModal.close();
-                setFormData({});
-                setSelectedUser(null);
-              }}
-            >
-              취소
-            </Button>
-            <Button variant="primary" size="md" onClick={handleUpdate}>
-              수정 완료
-            </Button>
-          </>
-        }
-      >
-        <div className="space-y-4">
-          {selectedUser && (
-            <div className="mb-4 rounded border border-blue-300 bg-blue-50 p-3 text-sm text-blue-700">
-              ID: {selectedUser.id} | 생성일: {selectedUser.createdAt}
-            </div>
-          )}
-
-          <Input
-            name="username"
-            label="사용자명"
-            value={formData.username || ''}
-            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-            placeholder="사용자명을 입력하세요"
-            required
-          />
-          <Input
-            name="email"
-            label="이메일"
-            value={formData.email || ''}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            placeholder="이메일을 입력하세요"
-            type="email"
-            required
-          />
-          <div className="grid grid-cols-2 gap-4">
-            <FormSelect
-              name="role"
-              value={formData.role || 'user'}
-              onChange={(value) => setFormData({ ...formData, role: value })}
-              options={[
-                { value: 'user', label: '사용자' },
-                { value: 'moderator', label: '운영자' },
-                { value: 'admin', label: '관리자' },
-              ]}
-              label="역할"
-              size="md"
-            />
-            <FormSelect
-              name="status"
-              value={formData.status || 'active'}
-              onChange={(value) => setFormData({ ...formData, status: value })}
-              options={[
-                { value: 'active', label: '활성' },
-                { value: 'inactive', label: '비활성' },
-                { value: 'suspended', label: '정지' },
-              ]}
-              label="상태"
-              size="md"
-            />
-          </div>
-        </div>
-      </Modal>
+        formData={formData}
+        setFormData={setFormData}
+        onSubmit={handleUpdate}
+        selectedUser={selectedUser}
+      />
     </>
   );
 };
